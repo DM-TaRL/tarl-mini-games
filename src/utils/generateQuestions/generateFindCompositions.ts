@@ -36,7 +36,8 @@ export function generateFindCompositions(
   const maxValue = Math.pow(10, maxNumberRange) - 1;
   const minValue = Math.pow(10, maxNumberRange - 1);
 
-  while (questions.length < 5 && attempts < maxAttempts) {
+  const numQuestions = 1;
+  while (questions.length < numQuestions && attempts < maxAttempts) {
     attempts++;
     const compositions: [number, number][] = [];
     let target: number;
@@ -105,11 +106,20 @@ export function generateFindCompositions(
         }
 
         if (compositions.length >= minNumCompositions) {
-          const [a, b] =
-            compositions[Math.floor(Math.random() * compositions.length)];
-          target = a / b;
+          // Collect all valid integer targets
+          const validTargets = Array.from(
+            new Set(
+              compositions
+                .map(([a, b]) => a / b)
+                .filter((t) => Number.isInteger(t))
+            )
+          ).filter((t) => !seenTargets.has(t));
 
-          if (seenTargets.has(target)) continue;
+          if (validTargets.length === 0) continue;
+
+          // Pick a random integer target
+          target =
+            validTargets[Math.floor(Math.random() * validTargets.length)];
           seenTargets.add(target);
 
           questions.push({
