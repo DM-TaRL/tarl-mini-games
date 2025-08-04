@@ -23,11 +23,6 @@ export function applyOperation(a: number, b: number, op: Operation): number {
   }
 }
 
-function isValid(op: Operation, a: number, b: number, target: number): boolean {
-  if (op === "Division" && b === 0) return false;
-  return applyOperation(a, b, op) === target;
-}
-
 export function generateFindCompositions(
   config: FindCompositionsConfig
 ): FindCompositionsQuestion[] {
@@ -35,6 +30,7 @@ export function generateFindCompositions(
   const questions: FindCompositionsQuestion[] = [];
   const maxAttempts = 50;
   let attempts = 0;
+  const seenTargets = new Set<number>();
 
   // Calculate the actual numeric range based on digit count
   const maxValue = Math.pow(10, maxNumberRange) - 1;
@@ -42,13 +38,14 @@ export function generateFindCompositions(
 
   while (questions.length < 5 && attempts < maxAttempts) {
     attempts++;
-    const target = getRandomInt(minValue, maxValue);
     const compositions: [number, number][] = [];
+    let target: number;
 
     // Operation-specific generation that respects digit count
     switch (operation) {
       case "Addition":
         // Generate pairs where both numbers have <= maxNumberRange digits
+        target = getRandomInt(minValue, maxValue);
         for (let a = 1; a < target; a++) {
           const b = target - a;
           if (
@@ -62,6 +59,7 @@ export function generateFindCompositions(
 
       case "Subtraction":
         // Generate pairs where result is positive and respects digit count
+        target = getRandomInt(minValue, maxValue);
         for (let a = target; a <= maxValue; a++) {
           const b = a - target;
           if (b.toString().length <= maxNumberRange) {
@@ -72,6 +70,7 @@ export function generateFindCompositions(
 
       case "Multiplication":
         // Find factors respecting digit count
+        target = getRandomInt(minValue, maxValue);
         for (let a = 1; a <= Math.sqrt(target); a++) {
           if (target % a === 0) {
             const b = target / a;
@@ -89,15 +88,44 @@ export function generateFindCompositions(
         break;
 
       case "Division":
-        // Generate divisible pairs respecting digit count
         for (let b = 1; b <= maxValue; b++) {
-          const a = target * b;
-          if (a <= maxValue) {
-            compositions.push([a, b]);
+          for (let a = b; a <= maxValue; a++) {
+            if (a % b === 0) {
+              const t = a / b;
+              if (
+                t >= minValue &&
+                t <= maxValue &&
+                a.toString().length <= maxNumberRange &&
+                b.toString().length <= maxNumberRange
+              ) {
+                compositions.push([a, b]);
+              }
+            }
           }
         }
-        break;
+
+        if (compositions.length >= minNumCompositions) {
+          const [a, b] =
+            compositions[Math.floor(Math.random() * compositions.length)];
+          target = a / b;
+
+          if (seenTargets.has(target)) continue;
+          seenTargets.add(target);
+
+          questions.push({
+            target,
+            operation,
+            compositions: shuffleArray(
+              compositions.filter(([x, y]) => x / y === target)
+            ).slice(0, minNumCompositions),
+            correctAnswerCount: minNumCompositions,
+          });
+        }
+        continue;
     }
+
+    if (seenTargets.has(target)) continue;
+    seenTargets.add(target);
 
     if (compositions.length >= minNumCompositions) {
       questions.push({
@@ -110,4 +138,45 @@ export function generateFindCompositions(
   }
 
   return questions;
+}
+
+export function validateFindCompositionsParams(
+  config: FindCompositionsConfig
+): { valid: boolean; reason?: string; key?: string } {
+  const { operation, maxNumberRange, minNumCompositions } = config;
+
+  const roughMax = {
+    Addition: 8,
+    Subtraction: 6,
+    Multiplication: maxNumberRange === 1 ? 3 : 6,
+    Division: maxNumberRange === 1 ? 2 : 5,
+  }[operation];
+
+  if (minNumCompositions > roughMax) {
+    return {
+      valid: false,
+      reason: `عدد التركيبات كبير جدًا (${minNumCompositions}) للعملية ${operation} والمدى ${maxNumberRange}. الحد الأقصى التقريبي هو ${roughMax}`,
+      key: "minNumCompositions",
+    };
+  }
+
+  return { valid: true };
+}
+
+export function getMaxCompositions(
+  operation: Operation,
+  maxNumberRange: number
+): number {
+  switch (operation) {
+    case "Addition":
+      return 8;
+    case "Subtraction":
+      return 6;
+    case "Multiplication":
+      return maxNumberRange === 1 ? 3 : 6;
+    case "Division":
+      return maxNumberRange === 1 ? 2 : 5;
+    default:
+      return 5;
+  }
 }
