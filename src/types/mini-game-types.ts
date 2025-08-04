@@ -5,6 +5,8 @@ export type Operation =
   | "Multiplication"
   | "Division";
 
+export type LanguageCode = "fr" | "ar" | "en";
+
 export interface FindCompositionsConfig {
   minNumCompositions: number;
   maxNumberRange: number;
@@ -23,6 +25,8 @@ export interface ChooseAnswerConfig {
   numOptions: number;
   maxNumberRange: number;
   operationsAllowed: Operation[];
+  numQuestions: number;
+  requiredCorrectAnswersMinimumPercent: number;
 }
 
 export interface MultiStepProblemConfig {
