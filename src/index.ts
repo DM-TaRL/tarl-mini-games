@@ -9,6 +9,7 @@ export * from "./utils/generateQuestions/generateVerticalOperation";
 export * from "./utils/generateQuestions/generateFindCompositions";
 export * from "./utils/generateQuestions/generateTapMatchingPairs";
 export * from "./utils/generateQuestions/generateOrderNumbers";
+export * from "./utils/generateQuestions/generateCompareNumbers";
 
 import miniGames from "./config/mini-games.json";
 import defaultTestConfig from "./config/default-test-config.json";
