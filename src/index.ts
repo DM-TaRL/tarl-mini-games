@@ -10,6 +10,7 @@ export * from "./utils/generateQuestions/generateFindCompositions";
 export * from "./utils/generateQuestions/generateTapMatchingPairs";
 export * from "./utils/generateQuestions/generateOrderNumbers";
 export * from "./utils/generateQuestions/generateCompareNumbers";
+export * from "./utils/generateQuestions/generateFindPreviousNextNumber";
 
 import miniGames from "./config/mini-games.json";
 import defaultTestConfig from "./config/default-test-config.json";
