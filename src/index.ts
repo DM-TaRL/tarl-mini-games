@@ -11,6 +11,9 @@ export * from "./utils/generateQuestions/generateTapMatchingPairs";
 export * from "./utils/generateQuestions/generateOrderNumbers";
 export * from "./utils/generateQuestions/generateCompareNumbers";
 export * from "./utils/generateQuestions/generateFindPreviousNextNumber";
+export * from "./utils/generateQuestions/generateDecomposeNumber";
+export * from "./utils/generateQuestions/generateIdentifyPlaceValue";
+export * from "./utils/generateQuestions/generateWriteNumberInLetters";
 
 import miniGames from "./config/mini-games.json";
 import defaultTestConfig from "./config/default-test-config.json";
