@@ -6,13 +6,13 @@
         "fr": "Salwa possède 30 dirhams et son père lui a donné 20 dirhams. Combien de dirhams Salwa possède-t-elle actuellement ?",
         "en": "Salwa owns 30 dirhams and her father gave her 20 dirhams. How many dirhams does Salwa now have?"
       },
-      "numbersInOptions": [30, 20, 10],
-      "operationInOptions": ["Addition", "Subtraction"],
+      "numbersInOptions": [30, 20, 50],
+      "operationsInOptions": ["Addition", "Subtraction"],
       "options": [
-        { "text": "30 + 10", "correct": true },
+        { "text": "30 + 20", "correct": true },
         { "text": "30 - 20", "correct": false },
-        { "text": "20 + 30", "correct": false },
-        { "text": "30 - 10", "correct": false }
+        { "text": "20 + 30", "correct": true },
+        { "text": "50 - 20", "correct": false }
       ]
     },
     {
@@ -26,8 +26,8 @@
       "options": [
         { "text": "3 + 4", "correct": true },
         { "text": "4 - 3", "correct": false },
-        { "text": "3 x 4", "correct": false },
-        { "text": "7 + 3", "correct": false }
+        { "text": "3 × 4", "correct": false },
+        { "text": "7 - 3", "correct": false }
       ]
     },
     {
@@ -56,8 +56,8 @@
       "options": [
         { "text": "45 + 12", "correct": true },
         { "text": "45 - 12", "correct": false },
-        { "text": "12 x 45", "correct": false },
-        { "text": "45 + 45", "correct": false }
+        { "text": "12 × 45", "correct": false },
+        { "text": "57 - 12", "correct": false }
       ]
     },
     {
@@ -71,7 +71,7 @@
       "options": [
         { "text": "120 - 50", "correct": true },
         { "text": "120 + 50", "correct": false },
-        { "text": "50 x 120", "correct": false },
+        { "text": "50 × 120", "correct": false },
         { "text": "70 + 50", "correct": false }
       ]
     },
@@ -82,12 +82,12 @@
         "en": "I am building 6 houses in a new neighborhood, and each house has 8 windows. How many windows are there in total in the neighborhood?"
       },
       "numbersInOptions": [6, 8, 48],
-      "operationsInOptions": ["Multiplication", "Subtraction", "Addition"],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "6 x 8", "correct": true },
+        { "text": "6 × 8", "correct": true },
         { "text": "6 + 8", "correct": false },
         { "text": "48 - 8", "correct": false },
-        { "text": "8 x 6", "correct": false }
+        { "text": "8 - 6", "correct": false }
       ]
     },
     {
@@ -99,10 +99,10 @@
       "numbersInOptions": [2, 15, 30],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "2 x 15", "correct": true },
+        { "text": "2 × 15", "correct": true },
         { "text": "2 + 15", "correct": false },
         { "text": "30 - 2", "correct": false },
-        { "text": "15 x 2", "correct": false }
+        { "text": "15 - 2", "correct": false }
       ]
     },
     {
@@ -114,10 +114,10 @@
       "numbersInOptions": [15, 35, 525],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "15 x 35", "correct": true },
+        { "text": "15 × 35", "correct": true },
         { "text": "15 + 35", "correct": false },
         { "text": "35 - 15", "correct": false },
-        { "text": "525 - 15", "correct": false }
+        { "text": "525 ÷ 15", "correct": false }
       ]
     },
     {
@@ -129,10 +129,10 @@
       "numbersInOptions": [3, 40, 120],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "3 x 40", "correct": true },
+        { "text": "3 × 40", "correct": true },
         { "text": "3 + 40", "correct": false },
         { "text": "120 - 40", "correct": false },
-        { "text": "40 x 3", "correct": false }
+        { "text": "40 - 3", "correct": false }
       ]
     },
     {
@@ -144,10 +144,10 @@
       "numbersInOptions": [8, 10, 80],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "8 x 10", "correct": true },
+        { "text": "8 × 10", "correct": true },
         { "text": "8 + 10", "correct": false },
-        { "text": "80 - 10", "correct": false },
-        { "text": "10 x 8", "correct": false }
+        { "text": "80 ÷ 10", "correct": false },
+        { "text": "10 - 8", "correct": false }
       ]
     },
     {
@@ -161,8 +161,8 @@
       "options": [
         { "text": "100 - 25", "correct": true },
         { "text": "100 + 25", "correct": false },
-        { "text": "75 + 25", "correct": false },
-        { "text": "25 x 100", "correct": false }
+        { "text": "25 × 4", "correct": false },
+        { "text": "75 + 25", "correct": false }
       ]
     },
     {
@@ -174,10 +174,10 @@
       "numbersInOptions": [15, 20, 300],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "15 x 20", "correct": true },
+        { "text": "15 × 20", "correct": true },
         { "text": "20 + 15", "correct": false },
-        { "text": "300 - 20", "correct": false },
-        { "text": "20 x 15", "correct": false }
+        { "text": "300 ÷ 15", "correct": false },
+        { "text": "20 - 15", "correct": false }
       ]
     },
     {
@@ -186,13 +186,13 @@
         "fr": "Si tu as 250 dirhams et que tu achètes 3 livres à 50 dirhams chacun, combien te reste-t-il ?",
         "en": "If you have 250 dirhams and you buy 3 books, each costing 50 dirhams, how much do you have left?"
       },
-      "numbersInOptions": [250, 50, 150],
+      "numbersInOptions": [250, 50, 150, 100],
       "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
       "options": [
-        { "text": "250 - (3 x 50)", "correct": true },
+        { "text": "250 - (3 × 50)", "correct": true },
         { "text": "250 - 50", "correct": false },
-        { "text": "150 + 50", "correct": false },
-        { "text": "50 x 3", "correct": false }
+        { "text": "3 × 50", "correct": false },
+        { "text": "250 + 50", "correct": false }
       ]
     },
     {
@@ -204,10 +204,10 @@
       "numbersInOptions": [12, 50, 600],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "12 x 50", "correct": true },
+        { "text": "12 × 50", "correct": true },
         { "text": "12 + 50", "correct": false },
-        { "text": "600 - 50", "correct": false },
-        { "text": "50 x 12", "correct": true }
+        { "text": "600 ÷ 12", "correct": false },
+        { "text": "50 - 12", "correct": false }
       ]
     },
     {
@@ -221,8 +221,8 @@
       "options": [
         { "text": "20 + 5", "correct": true },
         { "text": "25 - 5", "correct": false },
-        { "text": "5 x 20", "correct": false },
-        { "text": "20 x 5", "correct": false }
+        { "text": "5 × 20", "correct": false },
+        { "text": "20 - 5", "correct": false }
       ]
     },
     {
@@ -231,16 +231,13 @@
         "fr": "Tu as 250 dirhams et tu dois acheter 5 livres à 60 dirhams chacun. As-tu assez d'argent ?",
         "en": "You have 250 dirhams and need to buy 5 books, each costing 60 dirhams. Do you have enough money?"
       },
-      "numbersInOptions": [250, 60, 300],
-      "operationsInOptions": ["Multiplication", "Subtraction", "Addition"],
+      "numbersInOptions": [250, 60, 300, 5],
+      "operationsInOptions": ["Multiplication", "Subtraction", "Comparison"],
       "options": [
-        { "text": "5 x 60", "correct": false },
-        { "text": "250 - 300", "correct": false },
+        { "text": "5 × 60 = 300 > 250", "correct": true },
+        { "text": "250 - (5 × 60)", "correct": false },
         { "text": "250 + 60", "correct": false },
-        {
-          "text": "5 x 60 = 300, 250 < 300",
-          "correct": true
-        }
+        { "text": "60 × 5 = 250", "correct": false }
       ]
     },
     {
@@ -249,13 +246,13 @@
         "fr": "Ahmed a 150 dirhams. Il a acheté 3 livres, chaque livre coûte 40 dirhams. Combien lui reste-t-il ?",
         "en": "Ahmed has 150 dirhams. He bought 3 books, each costing 40 dirhams. How much does he have left?"
       },
-      "numbersInOptions": [150, 40, 30],
+      "numbersInOptions": [150, 40, 120, 30],
       "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
       "options": [
-        { "text": "150 - (3 x 40)", "correct": true },
+        { "text": "150 - (3 × 40)", "correct": true },
         { "text": "150 - 40", "correct": false },
-        { "text": "30 + 40", "correct": false },
-        { "text": "3 x 40", "correct": false }
+        { "text": "3 × 40", "correct": false },
+        { "text": "120 + 30", "correct": false }
       ]
     },
     {
@@ -264,13 +261,13 @@
         "fr": "Si tu as 500 dirhams et que tu donnes 200 dirhams à ton ami, combien te reste-t-il ?",
         "en": "If you have 500 dirhams and give 200 dirhams to your friend, how much do you have left?"
       },
-      "numbersInOptions": [500, 200, 300],
-      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "numbersInOptions": [500, 200, 300, 700],
+      "operationsInOptions": ["Subtraction", "Addition", "Multiplication"],
       "options": [
         { "text": "500 - 200", "correct": true },
-        { "text": "300 + 200", "correct": false },
-        { "text": "500 x 200", "correct": false },
-        { "text": "200 x 500", "correct": false }
+        { "text": "200 + 300", "correct": false },
+        { "text": "500 × 200", "correct": false },
+        { "text": "500 - 300", "correct": false }
       ]
     },
     {
@@ -279,13 +276,13 @@
         "fr": "Ali a acheté 5 livres, chaque livre coûte 70 dirhams. Combien Ali a-t-il payé au total ?",
         "en": "Ali bought 5 books, each costing 70 dirhams. How much did Ali pay in total?"
       },
-      "numbersInOptions": [5, 70, 350],
+      "numbersInOptions": [5, 70, 350, 75],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "5 x 70", "correct": true },
+        { "text": "5 × 70", "correct": true },
         { "text": "70 + 5", "correct": false },
-        { "text": "350 - 70", "correct": false },
-        { "text": "70 x 5", "correct": false }
+        { "text": "350 ÷ 5", "correct": false },
+        { "text": "70 × 5", "correct": true }
       ]
     },
     {
@@ -294,13 +291,13 @@
         "fr": "Si tu as économisé 300 dirhams et acheté 2 paires de chaussures à 80 dirhams chacune, combien te reste-t-il ?",
         "en": "If you saved 300 dirhams and bought 2 pairs of shoes at 80 dirhams each, how much money do you have left?"
       },
-      "numbersInOptions": [300, 80, 140],
+      "numbersInOptions": [300, 80, 160, 140],
       "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
       "options": [
-        { "text": "300 - (2 x 80)", "correct": true },
+        { "text": "300 - (2 × 80)", "correct": true },
         { "text": "300 - 80", "correct": false },
-        { "text": "140 + 80", "correct": false },
-        { "text": "2 x 80", "correct": false }
+        { "text": "2 × 80", "correct": false },
+        { "text": "160 + 80", "correct": false }
       ]
     },
     {
@@ -309,13 +306,13 @@
         "fr": "Fatima a 80 dirhams. Si elle achète 4 livres à 20 dirhams chacun, combien lui reste-t-il ?",
         "en": "Fatima has 80 dirhams. If she buys 4 books, each costing 20 dirhams, how much does she have left?"
       },
-      "numbersInOptions": [80, 20, 20],
+      "numbersInOptions": [80, 20, 80, 0],
       "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
       "options": [
-        { "text": "80 - (4 x 20)", "correct": true },
+        { "text": "80 - (4 × 20)", "correct": true },
         { "text": "80 + 20", "correct": false },
-        { "text": "4 x 20", "correct": false },
-        { "text": "20 x 80", "correct": false }
+        { "text": "4 × 20", "correct": false },
+        { "text": "20 × 4", "correct": false }
       ]
     },
     {
@@ -324,13 +321,13 @@
         "fr": "En été, Sarah a acheté 15 bouteilles de jus, chaque bouteille coûtant 30 dirhams. Combien Sarah a-t-elle payé au total ?",
         "en": "In the summer, Sarah bought 15 bottles of juice, each costing 30 dirhams. How much did Sarah pay in total?"
       },
-      "numbersInOptions": [15, 30, 450],
+      "numbersInOptions": [15, 30, 450, 45],
       "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
       "options": [
-        { "text": "15 x 30", "correct": true },
+        { "text": "15 × 30", "correct": true },
         { "text": "30 + 15", "correct": false },
-        { "text": "450 - 30", "correct": false },
-        { "text": "30 x 15", "correct": false }
+        { "text": "450 ÷ 15", "correct": false },
+        { "text": "30 × 15", "correct": true }
       ]
     },
     {
@@ -339,13 +336,13 @@
         "fr": "Tu avais 500 dirhams, tu as acheté 3 cadeaux à 120 dirhams chacun. Combien te reste-t-il ?",
         "en": "You had 500 dirhams and bought 3 gifts, each costing 120 dirhams. How much do you have left?"
       },
-      "numbersInOptions": [500, 120, 140],
+      "numbersInOptions": [500, 120, 360, 140],
       "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
       "options": [
-        { "text": "500 - (3 x 120)", "correct": true },
+        { "text": "500 - (3 × 120)", "correct": true },
         { "text": "500 - 120", "correct": false },
-        { "text": "140 + 120", "correct": false },
-        { "text": "3 x 120", "correct": false }
+        { "text": "3 × 120", "correct": false },
+        { "text": "360 + 140", "correct": false }
       ]
     }
   ]
