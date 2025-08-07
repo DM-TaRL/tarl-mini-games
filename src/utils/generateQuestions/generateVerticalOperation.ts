@@ -30,7 +30,15 @@ function applyOperation(a: number, b: number, operation: Operation): number {
 export function generateVerticalOperation(
   config: VerticalOperationsConfig
 ): VerticalOperationQuestion[] {
-  const { numOperations, maxNumberRange, operationsAllowed } = config;
+  const {
+    numOperations,
+    maxNumberRange,
+    operationsAllowed,
+    allowCarry = true,
+    allowBorrow = true,
+    allowMultiStepMul = true,
+    allowMultiStepDiv = true,
+  } = config;
 
   const questions: VerticalOperationQuestion[] = [];
 
@@ -44,15 +52,33 @@ export function generateVerticalOperation(
     let a = getRandomInt(min, max);
     let b = getRandomInt(min, max);
 
-    // Avoid division by 0 and ensure divisibility for clean division
-    if (operation === "Division") {
-      b = Math.max(1, b); // never 0
-      a = a - (a % b); // make divisible
+    if (operation === "Addition" && !allowCarry) {
+      a = a - (a % 10); // force no carry from units
+      b = Math.min(9, b); // single-digit b to avoid carry
     }
 
-    // Subtraction: ensure positive result
-    if (operation === "Subtraction" && b > a) {
-      [a, b] = [b, a];
+    if (operation === "Subtraction" && !allowBorrow) {
+      // Ensure a and b have no borrow (e.g., all digits in a >= b)
+      while (!digitsSafeSubtract(a, b)) {
+        a = getRandomInt(min, max);
+        b = getRandomInt(min, a); // ensure a >= b
+      }
+      //  ensure positive result
+      if (b > a) [a, b] = [b, a];
+    }
+
+    if (operation === "Multiplication" && !allowMultiStepMul) {
+      b = getRandomInt(1, 9); // single-digit multiplier only
+    }
+
+    if (operation === "Division") {
+      b = Math.max(1, b); // no zero division
+      if (!allowMultiStepDiv) {
+        a = b * getRandomInt(1, Math.floor(max / b)); // exact division
+      } else {
+        a = getRandomInt(min, max);
+        a = a - (a % b); // make divisible
+      }
     }
 
     const correctAnswer = applyOperation(a, b, operation);
@@ -67,4 +93,14 @@ export function generateVerticalOperation(
   }
 
   return shuffleArray(questions);
+}
+
+// Helper: checks no digit in b is greater than a for subtraction (avoid borrow)
+function digitsSafeSubtract(a: number, b: number): boolean {
+  const aStr = a.toString().padStart(5, "0");
+  const bStr = b.toString().padStart(5, "0");
+  for (let i = aStr.length - 1; i >= 0; i--) {
+    if (+bStr[i] > +aStr[i]) return false;
+  }
+  return true;
 }

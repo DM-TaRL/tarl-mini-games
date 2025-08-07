@@ -14,6 +14,10 @@ export * from "./utils/generateQuestions/generateFindPreviousNextNumber";
 export * from "./utils/generateQuestions/generateDecomposeNumber";
 export * from "./utils/generateQuestions/generateIdentifyPlaceValue";
 export * from "./utils/generateQuestions/generateWriteNumberInLetters";
+export * from "./utils/fuzzy-evaluator";
+export * from "./utils/weak-skill-detector";
+
+export * from "./utils/utils";
 
 import miniGames from "./config/mini-games.json";
 import defaultTestConfig from "./config/default-test-config.json";

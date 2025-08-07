@@ -19,6 +19,10 @@ export interface VerticalOperationsConfig {
   maxNumberRange: number;
   operationsAllowed: Operation[];
   requiredCorrectAnswersMinimumPercent: number;
+  allowCarry?: boolean; // For Addition
+  allowBorrow?: boolean; // For Subtraction
+  allowMultiStepMul?: boolean; // For Multiplication (e.g., >1 digit in operand2)
+  allowMultiStepDiv?: boolean; // For Division (e.g., not exact, remainder steps)
 }
 
 export interface ChooseAnswerConfig {
@@ -109,8 +113,8 @@ export type GameType =
   | "decompose_number"
   | "write_number_in_letters"
   | "identify_place_value"
-  | "read_number_aloud";
-
+  | "read_number_aloud"
+  | string;
 /**
  * The common params shape for any mini‐game
  */
@@ -143,6 +147,10 @@ export const configLabels: Record<string, string> = {
   numQuestions: "عدد الأسئلة",
   maxNumbersInSequence: "الحد الأقصى لطول السلسلة",
   displayTime: "زمن العرض (بالثواني)",
+  allowCarry: "السماح بالاحتفاظ (الجمع)",
+  allowBorrow: "السماح بالاستلاف (الطرح)",
+  allowMultiStepMul: "السماح بضرب من عدة خطوات",
+  allowMultiStepDiv: "السماح بالقسمة من عدة خطوات",
 };
 
 export const operationLabels: Record<string, string> = {
@@ -151,3 +159,5 @@ export const operationLabels: Record<string, string> = {
   Multiplication: "الضرب",
   Division: "القسمة",
 };
+
+export type TimeCategory = "fast" | "medium" | "slow";
