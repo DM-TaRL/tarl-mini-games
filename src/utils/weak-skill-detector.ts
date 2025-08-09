@@ -174,725 +174,739 @@ export function detectWeakSkills(
 ): WeakSkill[] {
   const weakSkills: WeakSkill[] = [];
 
-  for (const [gameType, result] of Object.entries(miniGameResults)) {
-    if (!result?.logs) continue;
+  for (const [gameType, attempts] of Object.entries(miniGameResults)) {
+    if (!attempts) continue;
 
-    switch (gameType) {
-      case "vertical_operations": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
+    for (const [attemptNumber, result] of Object.entries(attempts)) {
+      if (!result?.logs) continue;
 
-          const correct = entry.correctAnswer ?? 0;
-          const [aStr, opStr, bStr] = (entry.question || "").split(" ");
-          const a = Number(aStr),
-            b = Number(bStr);
-          const operation = parseOperation(opStr);
-          const skillSubtype = classifyVerticalOperationSkill(operation, a, b);
-
-          const skill: WeakSkill = {
-            gameType: gameType as GameType,
-            operation,
-            skillSubtype,
-            numDigits: Math.max(aStr.length, bStr.length),
-            format: "Vertical",
-            complexityLevel: classifyComplexity(correct),
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
+      switch (gameType) {
+        case "vertical_operations": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
             )
-          );
+              continue;
 
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
-          }
-        }
-        break;
-      }
-      case "find_compositions": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
+            const correct = entry.correctAnswer ?? 0;
+            const [aStr, opStr, bStr] = (entry.question || "").split(" ");
+            const a = Number(aStr),
+              b = Number(bStr);
+            const operation = parseOperation(opStr);
+            const skillSubtype = classifyVerticalOperationSkill(
+              operation,
+              a,
+              b
+            );
 
-          const operation = entry.operation;
-          const target = entry.target || 0;
-          const complexityLevel = classifyComplexity(target);
-          const numDigits = target.toString().length;
+            const skill: WeakSkill = {
+              gameType: gameType as GameType,
+              operation,
+              skillSubtype,
+              numDigits: Math.max(aStr.length, bStr.length),
+              format: "Vertical",
+              complexityLevel: classifyComplexity(correct),
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
 
-          const skill: WeakSkill = {
-            gameType,
-            operation,
-            numDigits,
-            format: "Horizontal",
-            questionType: "Composition",
-            complexityLevel,
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            mistakeType: entry.errorType as MistakeType,
-            correctCount: entry.correctCount ?? 0,
-            count: 1,
-          };
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
 
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(([key, val]) => s[key] === val)
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push({ ...skill, count: 1 });
-          }
-        }
-        break;
-      }
-      case "choose_answer": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
-
-          const correctOption =
-            entry.options.find((opt) => opt.correct)?.text || "";
-          const chosenOption = entry.selected || "";
-
-          const correctOperations = extractOperations(correctOption);
-          const chosenOperations = extractOperations(chosenOption);
-          const questionNumbers = extractNumbers(correctOption);
-          const hasMismatch = isOperationMismatch(
-            correctOperations,
-            chosenOperations
-          );
-          const mistakeType: MistakeType = hasMismatch
-            ? "MisidentifiedOperation"
-            : entry.isCorrect
-            ? "SlowButCorrect"
-            : "ComputationError";
-
-          const skill: WeakSkill = {
-            gameType,
-            format: "Horizontal",
-            questionType:
-              correctOperations.length > 1
-                ? "MultiStepProblem"
-                : "OneStepProblem",
-            operationsExpected: correctOperations,
-            operationsUsed: chosenOperations,
-            mistakeType,
-            isNested: correctOperations.length > 1,
-            numDigits: Math.max(
-              ...questionNumbers.map((n) => n.toString().length)
-            ),
-            complexityLevel: classifyComplexity(
-              questionNumbers.reduce((a, b) => a + b, 0)
-            ),
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
-            )
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
-          }
-        }
-        break;
-      }
-      case "compare_numbers": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
-
-          const { left, right, correctSign, selectedSign } = entry;
-
-          const skill: WeakSkill = {
-            gameType,
-            format: "Horizontal",
-            questionType: "Comparison",
-            comparisonType: determineComparisonType(left, right),
-            mistakeType: determineComparisonMistake(correctSign, selectedSign),
-            numDigits: Math.max(
-              left.toString().length,
-              right.toString().length
-            ),
-            complexityLevel: classifyComplexity(left + right),
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
-            )
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
-          }
-        }
-        break;
-      }
-      case "order_numbers": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
-
-          const {
-            numbers = [],
-            correctOrder = [],
-            selectedOrder = [],
-            direction,
-          } = entry;
-
-          const mistakeType = classifyOrderingMistake(
-            correctOrder,
-            selectedOrder,
-            direction
-          );
-          const numDigits = Math.max(
-            ...numbers.map((n) => n.toString().length)
-          );
-
-          const skill: WeakSkill = {
-            gameType,
-            format: "Visual",
-            questionType: "Ordering",
-            orderDirection: direction, // "asc" or "desc"
-            mistakeType,
-            numDigits,
-            sequenceLength: numbers.length,
-            complexityLevel: classifyComplexity(
-              numbers.reduce((a, b) => a + b, 0)
-            ),
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
-            )
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
-          }
-        }
-        break;
-      }
-      case "decompose_number": {
-        for (const entry of result.logs) {
-          if (
-            entry.isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          )
-            continue;
-
-          const number: number =
-            typeof entry.number === "number" ? entry.number : 0;
-          const expected: number[] = Array.isArray(entry.expected)
-            ? entry.expected
-            : [];
-          const given: number[] = Array.isArray(entry.given) ? entry.given : [];
-
-          const mistakeType: MistakeType = classifyDecompositionMistake(
-            expected,
-            given
-          );
-          const numDigits: number = number.toString().length;
-          const expectedPlaces: string[] = expected.map(getPlaceValueLabel);
-          const givenPlaces: string[] = given.map(getPlaceValueLabel);
-
-          const missingPlaces: string[] = expectedPlaces.filter(
-            (pv: string) => !givenPlaces.includes(pv)
-          );
-          const extraPlaces: string[] = givenPlaces.filter(
-            (pv: string) => !expectedPlaces.includes(pv)
-          );
-
-          const skill: WeakSkill = {
-            gameType,
-            format: "Visual",
-            questionType: "Decomposition",
-            mistakeType,
-            numDigits,
-            expectedParts: expected.length,
-            givenParts: given.length,
-            complexityLevel: classifyComplexity(number),
-            missingPlaceValues: missingPlaces,
-            misplacedValues: extraPlaces,
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
-            )
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
-          }
-        }
-        break;
-      }
-      case "find_previous_next_number": {
-        const errors = {
-          previous: [] as SequenceError[],
-          next: [] as SequenceError[],
-          transitions: [] as SequenceError[],
-          slowCorrects: [] as SlowResponse[],
-          rangeBuckets: new Map<string, RangeBucket>(),
-          incorrectNumbers: [] as number[],
-        };
-
-        for (const entry of result.logs) {
-          const question =
-            typeof entry.question === "string"
-              ? parseInt(entry.question, 10)
-              : entry.question || 0;
-
-          // Skip if question is not a valid number
-          if (isNaN(question)) continue;
-          const { isCorrect, expected = [], given = [], timeSpentMs } = entry;
-
-          // Track range distribution
-          const rangeLabel = getRangeLabel(question, 10);
-          const currentRange = errors.rangeBuckets.get(rangeLabel) || {
-            rangeLabel,
-            count: 0,
-            questions: [],
-          };
-          currentRange.count++;
-          currentRange.questions.push(question);
-          errors.rangeBuckets.set(rangeLabel, currentRange);
-
-          // Track slow but correct responses
-          if (isCorrect) {
-            if (categorizeTime(timeSpentMs, gameType) === "slow") {
-              errors.slowCorrects.push({ question, timeSpentMs });
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
             }
-            continue;
           }
-
-          errors.incorrectNumbers.push(question);
-          const [prevExpected, nextExpected] = expected as [number, number];
-          const [prevGiven, nextGiven] = given as [number, number];
-
-          // Classify previous number errors
-          if (prevGiven !== prevExpected) {
-            const errorType = classifySequenceError(
-              question,
-              prevGiven,
-              prevExpected,
-              "previous"
-            );
-            errors.previous.push({
-              question,
-              given: prevGiven,
-              expected: prevExpected,
-              errorType,
-            });
-          }
-
-          // Classify next number errors
-          if (nextGiven !== nextExpected) {
-            const errorType = classifySequenceError(
-              question,
-              nextGiven,
-              nextExpected,
-              "next"
-            );
-            errors.next.push({
-              question,
-              given: nextGiven,
-              expected: nextExpected,
-              errorType,
-            });
-          }
-
-          // Detect transition errors
-          if (isTensTransitionError(question, prevExpected, nextExpected)) {
-            errors.transitions.push({
-              question,
-              given: -1, // Not applicable for transition errors
-              expected: -1,
-              errorType: "TensTransition",
-            });
-          }
+          break;
         }
+        case "find_compositions": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            )
+              continue;
 
-        // Generate weak skills from collected data
-        generateWeakSkillsFromErrors(weakSkills, gameType, errors);
+            const operation = entry.operation;
+            const target = entry.target || 0;
+            const complexityLevel = classifyComplexity(target);
+            const numDigits = target.toString().length;
 
-        break;
-      }
-      case "tap_matching_pairs": {
-        const slowResponses = [];
-        const mistakePairs = [];
-
-        for (const entry of result.logs) {
-          const { isCorrect, timeSpentMs, pair = [] } = entry;
-
-          const pairSorted = [...pair].sort(); // Normalize order
-
-          if (
-            isCorrect &&
-            categorizeTime(entry.timeSpentMs, gameType) !== "slow"
-          ) {
-            slowResponses.push({
-              pair: pairSorted,
-              timeSpentMs,
-            });
-          }
-
-          if (!isCorrect) {
-            mistakePairs.push(pairSorted);
-          }
-        }
-
-        pushIfAny(weakSkills, {
-          gameType,
-          mistakeType: "SlowButCorrect",
-          questionType: "MatchingPair",
-          avgTimeMs:
-            slowResponses.reduce((sum, e) => sum + e.timeSpentMs, 0) /
-            (slowResponses.length || 1),
-          examples: slowResponses.map((e) => e.pair),
-        });
-
-        const pairCounts = countPairOccurrences(mistakePairs);
-        for (const [pairKey, count] of Object.entries(pairCounts)) {
-          if (count >= 2) {
-            weakSkills.push({
+            const skill: WeakSkill = {
               gameType,
-              mistakeType: "RepeatedMistakePair",
-              questionType: "MatchingPair",
-              problematicPair: JSON.parse(pairKey),
-              count,
-            });
+              operation,
+              numDigits,
+              format: "Horizontal",
+              questionType: "Composition",
+              complexityLevel,
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              mistakeType: entry.errorType as MistakeType,
+              correctCount: entry.correctCount ?? 0,
+              count: 1,
+            };
+
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(([key, val]) => s[key] === val)
+            );
+
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push({ ...skill, count: 1 });
+            }
           }
+          break;
         }
+        case "choose_answer": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            )
+              continue;
 
-        break;
-      }
-      case "write_number_in_letters": {
-        const slowResponses: SlowResponse[] = [];
-        const mistakesByDigit: NumberWritingMistake[] = [];
+            const correctOption =
+              entry.options.find((opt) => opt.correct)?.text || "";
+            const chosenOption = entry.selected || "";
 
-        for (const entry of result.logs) {
-          // Safely convert number to numeric value
-          const number =
-            typeof entry.number === "string"
-              ? parseInt(entry.number, 10)
-              : entry.number || 0;
+            const correctOperations = extractOperations(correctOption);
+            const chosenOperations = extractOperations(chosenOption);
+            const questionNumbers = extractNumbers(correctOption);
+            const hasMismatch = isOperationMismatch(
+              correctOperations,
+              chosenOperations
+            );
+            const mistakeType: MistakeType = hasMismatch
+              ? "MisidentifiedOperation"
+              : entry.isCorrect
+              ? "SlowButCorrect"
+              : "ComputationError";
 
-          // Skip invalid numbers
-          if (isNaN(number)) continue;
+            const skill: WeakSkill = {
+              gameType,
+              format: "Horizontal",
+              questionType:
+                correctOperations.length > 1
+                  ? "MultiStepProblem"
+                  : "OneStepProblem",
+              operationsExpected: correctOperations,
+              operationsUsed: chosenOperations,
+              mistakeType,
+              isNested: correctOperations.length > 1,
+              numDigits: Math.max(
+                ...questionNumbers.map((n) => n.toString().length)
+              ),
+              complexityLevel: classifyComplexity(
+                questionNumbers.reduce((a, b) => a + b, 0)
+              ),
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
 
-          // Ensure expected and given are arrays of strings
-          const expected = Array.isArray(entry.expected)
-            ? entry.expected.map((v) => String(v))
-            : [];
-          const given = Array.isArray(entry.given)
-            ? entry.given.map((v) => String(v))
-            : [];
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
 
-          const numDigits = number.toString().length;
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
+            }
+          }
+          break;
+        }
+        case "compare_numbers": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            )
+              continue;
 
-          if (entry.isCorrect) {
-            if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
-              slowResponses.push({
-                question: number,
-                timeSpentMs: entry.timeSpentMs,
-                numDigits,
+            const { left, right, correctSign, selectedSign } = entry;
+
+            const skill: WeakSkill = {
+              gameType,
+              format: "Horizontal",
+              questionType: "Comparison",
+              comparisonType: determineComparisonType(left, right),
+              mistakeType: determineComparisonMistake(
+                correctSign,
+                selectedSign
+              ),
+              numDigits: Math.max(
+                left.toString().length,
+                right.toString().length
+              ),
+              complexityLevel: classifyComplexity(left + right),
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
+
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
+
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
+            }
+          }
+          break;
+        }
+        case "order_numbers": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            )
+              continue;
+
+            const {
+              numbers = [],
+              correctOrder = [],
+              selectedOrder = [],
+              direction,
+            } = entry;
+
+            const mistakeType = classifyOrderingMistake(
+              correctOrder,
+              selectedOrder,
+              direction
+            );
+            const numDigits = Math.max(
+              ...numbers.map((n) => n.toString().length)
+            );
+
+            const skill: WeakSkill = {
+              gameType,
+              format: "Visual",
+              questionType: "Ordering",
+              orderDirection: direction, // "asc" or "desc"
+              mistakeType,
+              numDigits,
+              sequenceLength: numbers.length,
+              complexityLevel: classifyComplexity(
+                numbers.reduce((a, b) => a + b, 0)
+              ),
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
+
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
+
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
+            }
+          }
+          break;
+        }
+        case "decompose_number": {
+          for (const entry of result.logs) {
+            if (
+              entry.isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            )
+              continue;
+
+            const number: number =
+              typeof entry.number === "number" ? entry.number : 0;
+            const expected: number[] = Array.isArray(entry.expected)
+              ? entry.expected
+              : [];
+            const given: number[] = Array.isArray(entry.given)
+              ? entry.given
+              : [];
+
+            const mistakeType: MistakeType = classifyDecompositionMistake(
+              expected,
+              given
+            );
+            const numDigits: number = number.toString().length;
+            const expectedPlaces: string[] = expected.map(getPlaceValueLabel);
+            const givenPlaces: string[] = given.map(getPlaceValueLabel);
+
+            const missingPlaces: string[] = expectedPlaces.filter(
+              (pv: string) => !givenPlaces.includes(pv)
+            );
+            const extraPlaces: string[] = givenPlaces.filter(
+              (pv: string) => !expectedPlaces.includes(pv)
+            );
+
+            const skill: WeakSkill = {
+              gameType,
+              format: "Visual",
+              questionType: "Decomposition",
+              mistakeType,
+              numDigits,
+              expectedParts: expected.length,
+              givenParts: given.length,
+              complexityLevel: classifyComplexity(number),
+              missingPlaceValues: missingPlaces,
+              misplacedValues: extraPlaces,
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
+
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
+
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
+            }
+          }
+          break;
+        }
+        case "find_previous_next_number": {
+          const errors = {
+            previous: [] as SequenceError[],
+            next: [] as SequenceError[],
+            transitions: [] as SequenceError[],
+            slowCorrects: [] as SlowResponse[],
+            rangeBuckets: new Map<string, RangeBucket>(),
+            incorrectNumbers: [] as number[],
+          };
+
+          for (const entry of result.logs) {
+            const question =
+              typeof entry.question === "string"
+                ? parseInt(entry.question, 10)
+                : entry.question || 0;
+
+            // Skip if question is not a valid number
+            if (isNaN(question)) continue;
+            const { isCorrect, expected = [], given = [], timeSpentMs } = entry;
+
+            // Track range distribution
+            const rangeLabel = getRangeLabel(question, 10);
+            const currentRange = errors.rangeBuckets.get(rangeLabel) || {
+              rangeLabel,
+              count: 0,
+              questions: [],
+            };
+            currentRange.count++;
+            currentRange.questions.push(question);
+            errors.rangeBuckets.set(rangeLabel, currentRange);
+
+            // Track slow but correct responses
+            if (isCorrect) {
+              if (categorizeTime(timeSpentMs, gameType) === "slow") {
+                errors.slowCorrects.push({ question, timeSpentMs });
+              }
+              continue;
+            }
+
+            errors.incorrectNumbers.push(question);
+            const [prevExpected, nextExpected] = expected as [number, number];
+            const [prevGiven, nextGiven] = given as [number, number];
+
+            // Classify previous number errors
+            if (prevGiven !== prevExpected) {
+              const errorType = classifySequenceError(
+                question,
+                prevGiven,
+                prevExpected,
+                "previous"
+              );
+              errors.previous.push({
+                question,
+                given: prevGiven,
+                expected: prevExpected,
+                errorType,
               });
             }
-            continue;
+
+            // Classify next number errors
+            if (nextGiven !== nextExpected) {
+              const errorType = classifySequenceError(
+                question,
+                nextGiven,
+                nextExpected,
+                "next"
+              );
+              errors.next.push({
+                question,
+                given: nextGiven,
+                expected: nextExpected,
+                errorType,
+              });
+            }
+
+            // Detect transition errors
+            if (isTensTransitionError(question, prevExpected, nextExpected)) {
+              errors.transitions.push({
+                question,
+                given: -1, // Not applicable for transition errors
+                expected: -1,
+                errorType: "TensTransition",
+              });
+            }
           }
 
-          mistakesByDigit.push({
-            number,
-            expected,
-            given,
-            numDigits,
-          });
-        }
+          // Generate weak skills from collected data
+          generateWeakSkillsFromErrors(weakSkills, gameType, errors);
 
-        // Add slow responses if any
-        if (slowResponses.length > 0) {
+          break;
+        }
+        case "tap_matching_pairs": {
+          const slowResponses = [];
+          const mistakePairs = [];
+
+          for (const entry of result.logs) {
+            const { isCorrect, timeSpentMs, pair = [] } = entry;
+
+            const pairSorted = [...pair].sort(); // Normalize order
+
+            if (
+              isCorrect &&
+              categorizeTime(entry.timeSpentMs, gameType) !== "slow"
+            ) {
+              slowResponses.push({
+                pair: pairSorted,
+                timeSpentMs,
+              });
+            }
+
+            if (!isCorrect) {
+              mistakePairs.push(pairSorted);
+            }
+          }
+
           pushIfAny(weakSkills, {
             gameType,
-            questionType: "NumberToWord",
             mistakeType: "SlowButCorrect",
+            questionType: "MatchingPair",
             avgTimeMs:
               slowResponses.reduce((sum, e) => sum + e.timeSpentMs, 0) /
-              slowResponses.length,
-            numDigits: Math.max(...slowResponses.map((e) => e.numDigits)),
-            examples: slowResponses.map((e) => e.question),
-            count: slowResponses.length,
+              (slowResponses.length || 1),
+            examples: slowResponses.map((e) => e.pair),
           });
-        }
 
-        // Group and process mistakes
-        const groupedMistakes = groupMistakesByNumber(mistakesByDigit);
-        for (const [numberStr, examples] of Object.entries(groupedMistakes)) {
-          if (examples.length >= 2) {
-            const number = parseInt(numberStr, 10);
-            const mostCommonDigitLength = Math.max(
-              ...examples.map((e) => e.numDigits)
-            );
-
-            weakSkills.push({
-              gameType,
-              questionType: "NumberToWord",
-              mistakeType: "RepeatedWritingMistake",
-              number,
-              numDigits: mostCommonDigitLength,
-              wrongVariants: examples.map((e) => e.given),
-              expected: examples[0]?.expected || [],
-              count: examples.length,
-            });
-          }
-        }
-
-        break;
-      }
-      case "identify_place_value": {
-        const digitMistakes: DigitMistake[] = [];
-        const slowCorrects: SlowResponse[] = [];
-
-        for (const entry of result.logs) {
-          // Safely convert number to numeric value
-          const number =
-            typeof entry.number === "string"
-              ? parseInt(entry.number, 10)
-              : entry.number || 0;
-
-          // Skip invalid numbers
-          if (isNaN(number)) continue;
-
-          // Ensure expected and given are treated as record types
-          const expected =
-            typeof entry.expected === "object" && entry.expected !== null
-              ? (entry.expected as Record<string, unknown>)
-              : {};
-          const given =
-            typeof entry.given === "object" && entry.given !== null
-              ? (entry.given as Record<string, unknown>)
-              : {};
-
-          const numDigits = number.toString().length;
-
-          if (entry.isCorrect) {
-            if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
-              slowCorrects.push({
-                question: number,
-                timeSpentMs: entry.timeSpentMs,
-                numDigits,
+          const pairCounts = countPairOccurrences(mistakePairs);
+          for (const [pairKey, count] of Object.entries(pairCounts)) {
+            if (count >= 2) {
+              weakSkills.push({
+                gameType,
+                mistakeType: "RepeatedMistakePair",
+                questionType: "MatchingPair",
+                problematicPair: JSON.parse(pairKey),
+                count,
               });
             }
-            continue;
           }
 
-          // Process digit mistakes
-          for (const posKey of Object.keys(expected)) {
-            const expectedDigit = Number(expected[posKey]);
-            const givenDigit = Number(given[posKey]);
+          break;
+        }
+        case "write_number_in_letters": {
+          const slowResponses: SlowResponse[] = [];
+          const mistakesByDigit: NumberWritingMistake[] = [];
 
-            if (!isNaN(expectedDigit) && !isNaN(givenDigit)) {
-              if (expectedDigit !== givenDigit) {
-                digitMistakes.push({
-                  position: posKey,
-                  expectedDigit,
-                  givenDigit,
-                  number,
-                  placeLabel: getPlaceValueLabelFromPosition(number, posKey),
+          for (const entry of result.logs) {
+            // Safely convert number to numeric value
+            const number =
+              typeof entry.number === "string"
+                ? parseInt(entry.number, 10)
+                : entry.number || 0;
+
+            // Skip invalid numbers
+            if (isNaN(number)) continue;
+
+            // Ensure expected and given are arrays of strings
+            const expected = Array.isArray(entry.expected)
+              ? entry.expected.map((v) => String(v))
+              : [];
+            const given = Array.isArray(entry.given)
+              ? entry.given.map((v) => String(v))
+              : [];
+
+            const numDigits = number.toString().length;
+
+            if (entry.isCorrect) {
+              if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
+                slowResponses.push({
+                  question: number,
+                  timeSpentMs: entry.timeSpentMs,
+                  numDigits,
                 });
+              }
+              continue;
+            }
+
+            mistakesByDigit.push({
+              number,
+              expected,
+              given,
+              numDigits,
+            });
+          }
+
+          // Add slow responses if any
+          if (slowResponses.length > 0) {
+            pushIfAny(weakSkills, {
+              gameType,
+              questionType: "NumberToWord",
+              mistakeType: "SlowButCorrect",
+              avgTimeMs:
+                slowResponses.reduce((sum, e) => sum + e.timeSpentMs, 0) /
+                slowResponses.length,
+              numDigits: Math.max(...slowResponses.map((e) => e.numDigits)),
+              examples: slowResponses.map((e) => e.question),
+              count: slowResponses.length,
+            });
+          }
+
+          // Group and process mistakes
+          const groupedMistakes = groupMistakesByNumber(mistakesByDigit);
+          for (const [numberStr, examples] of Object.entries(groupedMistakes)) {
+            if (examples.length >= 2) {
+              const number = parseInt(numberStr, 10);
+              const mostCommonDigitLength = Math.max(
+                ...examples.map((e) => e.numDigits)
+              );
+
+              weakSkills.push({
+                gameType,
+                questionType: "NumberToWord",
+                mistakeType: "RepeatedWritingMistake",
+                number,
+                numDigits: mostCommonDigitLength,
+                wrongVariants: examples.map((e) => e.given),
+                expected: examples[0]?.expected || [],
+                count: examples.length,
+              });
+            }
+          }
+
+          break;
+        }
+        case "identify_place_value": {
+          const digitMistakes: DigitMistake[] = [];
+          const slowCorrects: SlowResponse[] = [];
+
+          for (const entry of result.logs) {
+            // Safely convert number to numeric value
+            const number =
+              typeof entry.number === "string"
+                ? parseInt(entry.number, 10)
+                : entry.number || 0;
+
+            // Skip invalid numbers
+            if (isNaN(number)) continue;
+
+            // Ensure expected and given are treated as record types
+            const expected =
+              typeof entry.expected === "object" && entry.expected !== null
+                ? (entry.expected as Record<string, unknown>)
+                : {};
+            const given =
+              typeof entry.given === "object" && entry.given !== null
+                ? (entry.given as Record<string, unknown>)
+                : {};
+
+            const numDigits = number.toString().length;
+
+            if (entry.isCorrect) {
+              if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
+                slowCorrects.push({
+                  question: number,
+                  timeSpentMs: entry.timeSpentMs,
+                  numDigits,
+                });
+              }
+              continue;
+            }
+
+            // Process digit mistakes
+            for (const posKey of Object.keys(expected)) {
+              const expectedDigit = Number(expected[posKey]);
+              const givenDigit = Number(given[posKey]);
+
+              if (!isNaN(expectedDigit) && !isNaN(givenDigit)) {
+                if (expectedDigit !== givenDigit) {
+                  digitMistakes.push({
+                    position: posKey,
+                    expectedDigit,
+                    givenDigit,
+                    number,
+                    placeLabel: getPlaceValueLabelFromPosition(number, posKey),
+                  });
+                }
               }
             }
           }
-        }
 
-        // Add slow responses if any
-        if (slowCorrects.length > 0) {
-          pushIfAny(weakSkills, {
-            gameType,
-            mistakeType: "SlowButCorrect",
-            questionType: "PlaceValueIdentification",
-            avgTimeMs:
-              slowCorrects.reduce((sum, e) => sum + e.timeSpentMs, 0) /
-              slowCorrects.length,
-            numDigits: Math.max(...slowCorrects.map((e) => e.numDigits)),
-            examples: slowCorrects.map((e) => e.question),
-            count: slowCorrects.length,
-          });
-        }
-
-        // Group and process digit mistakes
-        const groupedByDigit: Record<string, DigitMistake[]> = {};
-        for (const mistake of digitMistakes) {
-          const key = `${mistake.position}-${mistake.expectedDigit}`;
-          if (!groupedByDigit[key]) {
-            groupedByDigit[key] = [];
-          }
-          groupedByDigit[key].push(mistake);
-        }
-
-        for (const [key, examples] of Object.entries(groupedByDigit)) {
-          if (examples.length >= 2) {
-            const [posKey, expectedDigit] = key.split("-");
-            weakSkills.push({
+          // Add slow responses if any
+          if (slowCorrects.length > 0) {
+            pushIfAny(weakSkills, {
               gameType,
-              mistakeType: "PlaceValueMisidentification",
+              mistakeType: "SlowButCorrect",
               questionType: "PlaceValueIdentification",
-              expectedDigit: Number(expectedDigit),
-              count: examples.length,
-              commonMistakes: examples.map((e) => e.givenDigit),
-              examples: examples.map((e) => e.number),
+              avgTimeMs:
+                slowCorrects.reduce((sum, e) => sum + e.timeSpentMs, 0) /
+                slowCorrects.length,
+              numDigits: Math.max(...slowCorrects.map((e) => e.numDigits)),
+              examples: slowCorrects.map((e) => e.question),
+              count: slowCorrects.length,
             });
           }
-        }
 
-        break;
-      }
-      case "what_number_do_you_hear": {
-        const slowCorrects: AudioResponse[] = [];
-        const wrongAnswersByDigitLength: Record<string, WrongAnswer[]> = {};
+          // Group and process digit mistakes
+          const groupedByDigit: Record<string, DigitMistake[]> = {};
+          for (const mistake of digitMistakes) {
+            const key = `${mistake.position}-${mistake.expectedDigit}`;
+            if (!groupedByDigit[key]) {
+              groupedByDigit[key] = [];
+            }
+            groupedByDigit[key].push(mistake);
+          }
 
-        for (const entry of result.logs) {
-          // Safely convert question to number
-          const question =
-            typeof entry.question === "string"
-              ? parseInt(entry.question, 10)
-              : entry.question || 0;
-
-          // Skip invalid numbers
-          if (isNaN(question)) continue;
-
-          const selected =
-            typeof entry.selected === "string" ? entry.selected : "";
-
-          if (entry.isCorrect) {
-            if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
-              slowCorrects.push({
-                question,
-                selected,
-                timeSpentMs: entry.timeSpentMs,
+          for (const [key, examples] of Object.entries(groupedByDigit)) {
+            if (examples.length >= 2) {
+              const [posKey, expectedDigit] = key.split("-");
+              weakSkills.push({
+                gameType,
+                mistakeType: "PlaceValueMisidentification",
+                questionType: "PlaceValueIdentification",
+                expectedDigit: Number(expectedDigit),
+                count: examples.length,
+                commonMistakes: examples.map((e) => e.givenDigit),
+                examples: examples.map((e) => e.number),
               });
             }
-            continue;
           }
 
-          // Process wrong answers
-          const digitLength = question.toString().length;
-          const key = `${digitLength}-digit`;
+          break;
+        }
+        case "what_number_do_you_hear": {
+          const slowCorrects: AudioResponse[] = [];
+          const wrongAnswersByDigitLength: Record<string, WrongAnswer[]> = {};
 
-          if (!wrongAnswersByDigitLength[key]) {
-            wrongAnswersByDigitLength[key] = [];
+          for (const entry of result.logs) {
+            // Safely convert question to number
+            const question =
+              typeof entry.question === "string"
+                ? parseInt(entry.question, 10)
+                : entry.question || 0;
+
+            // Skip invalid numbers
+            if (isNaN(question)) continue;
+
+            const selected =
+              typeof entry.selected === "string" ? entry.selected : "";
+
+            if (entry.isCorrect) {
+              if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
+                slowCorrects.push({
+                  question,
+                  selected,
+                  timeSpentMs: entry.timeSpentMs,
+                });
+              }
+              continue;
+            }
+
+            // Process wrong answers
+            const digitLength = question.toString().length;
+            const key = `${digitLength}-digit`;
+
+            if (!wrongAnswersByDigitLength[key]) {
+              wrongAnswersByDigitLength[key] = [];
+            }
+
+            wrongAnswersByDigitLength[key].push({
+              question,
+              selected,
+              mistakeType: "WrongNumberHeard",
+            });
           }
 
-          wrongAnswersByDigitLength[key].push({
-            question,
-            selected,
-            mistakeType: "WrongNumberHeard",
-          });
-        }
-
-        // Add slow responses if any
-        if (slowCorrects.length > 0) {
-          pushIfAny(weakSkills, {
-            gameType,
-            questionType: "NumberRecognitionByAudio",
-            mistakeType: "SlowButCorrect",
-            avgTimeMs:
-              slowCorrects.reduce((sum, e) => sum + e.timeSpentMs, 0) /
-              slowCorrects.length,
-            examples: slowCorrects.map((e) => e.question),
-            count: slowCorrects.length,
-          });
-        }
-
-        // Process wrong answers by digit length
-        for (const [digitKey, entries] of Object.entries(
-          wrongAnswersByDigitLength
-        )) {
-          weakSkills.push({
-            gameType,
-            questionType: "NumberRecognitionByAudio",
-            mistakeType: "DigitLengthMistake",
-            digitLength: digitKey,
-            count: entries.length,
-            examples: entries.map((e) => e.question),
-            mistakeTypes: Array.from(
-              new Set(entries.map((e) => e.mistakeType))
-            ),
-          });
-        }
-        break;
-      }
-      default: {
-        // fallback for other games
-        for (const entry of result.logs) {
-          if (entry.isCorrect) continue;
-
-          const correct = entry.correctAnswer?.toString?.() || "";
-          const numDigits = correct.length || 1;
-
-          const skill: WeakSkill = {
-            gameType,
-            operation: inferOperation(entry),
-            numDigits,
-            format: inferFormat(gameType),
-            questionType: inferQuestionType(gameType),
-            weaknessType: inferWeaknessTypeOnCorrect(entry),
-            count: 1,
-          };
-
-          const existing = weakSkills.find((s) =>
-            Object.entries(skill).every(
-              ([key, val]) => s[key as keyof WeakSkill] === val
-            )
-          );
-
-          if (existing) {
-            existing.count += 1;
-          } else {
-            weakSkills.push(skill);
+          // Add slow responses if any
+          if (slowCorrects.length > 0) {
+            pushIfAny(weakSkills, {
+              gameType,
+              questionType: "NumberRecognitionByAudio",
+              mistakeType: "SlowButCorrect",
+              avgTimeMs:
+                slowCorrects.reduce((sum, e) => sum + e.timeSpentMs, 0) /
+                slowCorrects.length,
+              examples: slowCorrects.map((e) => e.question),
+              count: slowCorrects.length,
+            });
           }
+
+          // Process wrong answers by digit length
+          for (const [digitKey, entries] of Object.entries(
+            wrongAnswersByDigitLength
+          )) {
+            weakSkills.push({
+              gameType,
+              questionType: "NumberRecognitionByAudio",
+              mistakeType: "DigitLengthMistake",
+              digitLength: digitKey,
+              count: entries.length,
+              examples: entries.map((e) => e.question),
+              mistakeTypes: Array.from(
+                new Set(entries.map((e) => e.mistakeType))
+              ),
+            });
+          }
+          break;
         }
-        break;
+        case "multi_step_problem":
+        case "read_number_aloud": {
+          // fallback for other games
+          for (const entry of result.logs) {
+            if (entry.isCorrect) continue;
+
+            const correct = entry.correctAnswer?.toString?.() || "";
+            const numDigits = correct.length || 1;
+
+            const skill: WeakSkill = {
+              gameType,
+              operation: inferOperation(entry),
+              numDigits,
+              format: inferFormat(gameType),
+              questionType: inferQuestionType(gameType),
+              weaknessType: inferWeaknessTypeOnCorrect(entry),
+              count: 1,
+            };
+
+            const existing = weakSkills.find((s) =>
+              Object.entries(skill).every(
+                ([key, val]) => s[key as keyof WeakSkill] === val
+              )
+            );
+
+            if (existing) {
+              existing.count += 1;
+            } else {
+              weakSkills.push(skill);
+            }
+          }
+          break;
+        }
       }
     }
   }

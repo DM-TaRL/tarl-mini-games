@@ -41,6 +41,8 @@ export function categorizeTime(ms: number, gameType: GameType): TimeCategory {
     tap_matching_pairs: { fast: 3000, medium: 6000 },
     find_previous_next_number: { fast: 6000, medium: 10000 },
     choose_answer: { fast: 4000, medium: 10000 },
+    multi_step_problem: { fast: 1500000, medium: 3000000 },
+    read_number_aloud: { fast: 4000, medium: 10000 },
   };
 
   const thresholds = gameThresholds[gameType] || defaultThresholds;

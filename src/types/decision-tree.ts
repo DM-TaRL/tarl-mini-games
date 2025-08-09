@@ -1,6 +1,32 @@
 import { GameType } from "./mini-game-types";
 import raw from "./../config/default-test-config.json";
 
+export const FORGIVENESS_RULES = {
+  defaultMaxMistakes: 3,
+  overridePerGame: {
+    vertical_operations: 3,
+    choose_answer: 3,
+    identify_place_value: 4,
+    what_number_do_you_hear: 4,
+    find_previous_next_number: 3,
+    write_number_in_letters: 3,
+    tap_matching_pairs: 3,
+  },
+};
+
+export const MAX_ATTEMPTS = {
+  defaultMaxAttempts: 2,
+  overridePerGame: {
+    vertical_operations: 3,
+    choose_answer: 2,
+    identify_place_value: 2,
+    what_number_do_you_hear: 2,
+    find_previous_next_number: 2,
+    write_number_in_letters: 2,
+    tap_matching_pairs: 2,
+  },
+};
+
 export interface DecisionChild {
   /** “true” or “false” */
   condition: "true" | "false";
@@ -52,13 +78,46 @@ export class DecisionTreeRunner {
     const node = this.nodesById[nodeId];
     if (!node) throw new Error(`Unknown node "${nodeId}"`);
 
-    // find the child matching this result
+    // Get the maximum allowed attempts for this game type
+    const maxAttempts =
+      FORGIVENESS_RULES.overridePerGame[
+        nodeId as keyof typeof MAX_ATTEMPTS.overridePerGame
+      ] ?? MAX_ATTEMPTS.defaultMaxAttempts;
+
+    // Check if player exceeded maximum allowed mistakes
+    if (!success && state.attempts >= maxAttempts) {
+      return null; // End the test if max mistakes reached
+    }
+
+    // If failed but still has attempts left, return same node to repeat
+    if (!success && state.attempts < maxAttempts) {
+      return nodeId;
+    }
+
+    // Only look for next node if succeeded or if we want to proceed despite failure
     const match = node.children.find((c) => c.condition === String(success));
     if (!match) return null; // no branch → end
-    // bail out after 2 failures
-    if (!success && state.attempts >= 2) return null;
 
     return match.nodeId;
+  }
+
+  recordAttempt(nodeId: string) {
+    const state = this.nodeStates[nodeId];
+    if (!state) {
+      throw new Error(`Unknown node "${nodeId}"`);
+    }
+    state.attempts++;
+    state.lastResult = null; // Reset last result since this is a new attempt
+  }
+
+  isLastAttempt(nodeId: string): boolean {
+    const state = this.nodeStates[nodeId];
+    const maxMistakes =
+      FORGIVENESS_RULES.overridePerGame[
+        nodeId as keyof typeof FORGIVENESS_RULES.overridePerGame
+      ] ?? FORGIVENESS_RULES.defaultMaxMistakes;
+
+    return state.attempts >= maxMistakes - 1;
   }
 
   /** First element in `tree` is the root */

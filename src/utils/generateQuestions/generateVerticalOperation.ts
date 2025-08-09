@@ -57,14 +57,17 @@ export function generateVerticalOperation(
       b = Math.min(9, b); // single-digit b to avoid carry
     }
 
-    if (operation === "Subtraction" && !allowBorrow) {
-      // Ensure a and b have no borrow (e.g., all digits in a >= b)
-      while (!digitsSafeSubtract(a, b)) {
-        a = getRandomInt(min, max);
-        b = getRandomInt(min, a); // ensure a >= b
-      }
-      //  ensure positive result
+    if (operation === "Subtraction") {
+      // Make sure a >= b to avoid negative results
       if (b > a) [a, b] = [b, a];
+
+      // Additional check for no borrow if required
+      if (!allowBorrow) {
+        while (!digitsSafeSubtract(a, b)) {
+          a = getRandomInt(min, max);
+          b = getRandomInt(min, a); // ensure a >= b
+        }
+      }
     }
 
     if (operation === "Multiplication" && !allowMultiStepMul) {

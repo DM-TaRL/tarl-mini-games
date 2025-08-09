@@ -113,8 +113,7 @@ export type GameType =
   | "decompose_number"
   | "write_number_in_letters"
   | "identify_place_value"
-  | "read_number_aloud"
-  | string;
+  | "read_number_aloud";
 /**
  * The common params shape for any mini‐game
  */
