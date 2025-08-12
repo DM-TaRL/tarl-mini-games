@@ -1,0 +1,349 @@
+{
+  "questions": [
+    {
+      "text": {
+        "ar": "تملك سلوى 30 درهما ومنحها أبوها 20 درهما. كم أصبح لدى سلوى من درهم؟",
+        "fr": "Salwa possède 30 dirhams et son père lui a donné 20 dirhams. Combien de dirhams Salwa possède-t-elle actuellement ?",
+        "en": "Salwa owns 30 dirhams and her father gave her 20 dirhams. How many dirhams does Salwa now have?"
+      },
+      "numbersInOptions": [30, 20, 50],
+      "operationsInOptions": ["Addition", "Subtraction"],
+      "options": [
+        { "text": "30 + 20", "correct": true },
+        { "text": "30 - 20", "correct": false },
+        { "text": "20 + 30", "correct": true },
+        { "text": "50 - 20", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "اشترت فاطمة 3 تفاحات و4 برتقالات. كم فاكهة اشترت فاطمة؟",
+        "fr": "Fatima a acheté 3 pommes et 4 oranges. Combien de fruits a-t-elle achetés ?",
+        "en": "Fatima bought 3 apples and 4 oranges. How many fruits did she buy?"
+      },
+      "numbersInOptions": [3, 4, 7],
+      "operationsInOptions": ["Addition", "Subtraction", "Multiplication"],
+      "options": [
+        { "text": "3 + 4", "correct": true },
+        { "text": "4 - 3", "correct": false },
+        { "text": "3 × 4", "correct": false },
+        { "text": "7 - 3", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "كانت عندك 10 تفاحات، أكلت 3. كم بقي؟",
+        "fr": "Tu avais 10 pommes, tu en as mangé 3. Combien en reste-t-il ?",
+        "en": "You had 10 apples and ate 3. How many are left?"
+      },
+      "numbersInOptions": [10, 3, 7],
+      "operationsInOptions": ["Addition", "Subtraction"],
+      "options": [
+        { "text": "10 - 3", "correct": true },
+        { "text": "10 + 3", "correct": false },
+        { "text": "7 + 3", "correct": false },
+        { "text": "3 - 10", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في حديقة هناك 45 شجرة، زرعوا 12 شجرة أخرى. كم عدد الأشجار في الحديقة الآن؟",
+        "fr": "Il y a 45 arbres dans le jardin, et 12 autres ont été plantés. Combien d'arbres y a-t-il maintenant dans le jardin ?",
+        "en": "There are 45 trees in the garden, and 12 more trees were planted. How many trees are there now in the garden?"
+      },
+      "numbersInOptions": [45, 12, 57],
+      "operationsInOptions": ["Addition", "Subtraction", "Multiplication"],
+      "options": [
+        { "text": "45 + 12", "correct": true },
+        { "text": "45 - 12", "correct": false },
+        { "text": "12 × 45", "correct": false },
+        { "text": "57 - 12", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "لدى أحمد 120 درهما، وأعطى 50 درهما لصديقه. كم تبقى لديه؟",
+        "fr": "Ahmed a 120 dirhams, et il a donné 50 dirhams à son ami. Combien lui reste-t-il ?",
+        "en": "Ahmed has 120 dirhams, and he gave 50 dirhams to his friend. How much does he have left?"
+      },
+      "numbersInOptions": [120, 50, 70],
+      "operationsInOptions": ["Addition", "Subtraction", "Multiplication"],
+      "options": [
+        { "text": "120 - 50", "correct": true },
+        { "text": "120 + 50", "correct": false },
+        { "text": "50 × 120", "correct": false },
+        { "text": "70 + 50", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أبنى 6 منازل في حي جديد، وفي كل منزل 8 نوافذ. كم عدد النوافذ في الحي؟",
+        "fr": "Je construis 6 maisons dans un nouveau quartier, et chaque maison a 8 fenêtres. Combien de fenêtres y a-t-il dans le quartier ?",
+        "en": "I am building 6 houses in a new neighborhood, and each house has 8 windows. How many windows are there in total in the neighborhood?"
+      },
+      "numbersInOptions": [6, 8, 48],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "6 × 8", "correct": true },
+        { "text": "6 + 8", "correct": false },
+        { "text": "48 - 8", "correct": false },
+        { "text": "8 - 6", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "ذهب أحمد إلى السوق واشترى 2 كيلو من التفاح بسعر 15 درهمًا للكيلو. كم دفع أحمد في المجمل؟",
+        "fr": "Ahmed est allé au marché et a acheté 2 kilos de pommes à 15 dirhams le kilo. Combien Ahmed a-t-il payé en tout ?",
+        "en": "Ahmed went to the market and bought 2 kilos of apples at 15 dirhams per kilo. How much did Ahmed pay in total?"
+      },
+      "numbersInOptions": [2, 15, 30],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "2 × 15", "correct": true },
+        { "text": "2 + 15", "correct": false },
+        { "text": "30 - 2", "correct": false },
+        { "text": "15 - 2", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مستودع هناك 15 صندوقًا، وكل صندوق يحتوي على 35 قطعة. كم عدد القطع في المستودع؟",
+        "fr": "Dans un entrepôt, il y a 15 boîtes, et chaque boîte contient 35 pièces. Combien y a-t-il de pièces dans l'entrepôt ?",
+        "en": "In a warehouse, there are 15 boxes, and each box contains 35 pieces. How many pieces are there in total in the warehouse?"
+      },
+      "numbersInOptions": [15, 35, 525],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "15 × 35", "correct": true },
+        { "text": "15 + 35", "correct": false },
+        { "text": "35 - 15", "correct": false },
+        { "text": "525 ÷ 15", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أشترت مريم 3 كتب، كل كتاب يكلف 40 درهما. كم دفعت مريم في المجمل؟",
+        "fr": "Mariam a acheté 3 livres, chaque livre coûte 40 dirhams. Combien Mariam a-t-elle payé au total ?",
+        "en": "Mariam bought 3 books, each costing 40 dirhams. How much did Mariam pay in total?"
+      },
+      "numbersInOptions": [3, 40, 120],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "3 × 40", "correct": true },
+        { "text": "3 + 40", "correct": false },
+        { "text": "120 - 40", "correct": false },
+        { "text": "40 - 3", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في إحدى المزارع هناك 8 حقول. في كل حقل 10 أشجار. كم عدد الأشجار في جميع الحقول؟",
+        "fr": "Dans une ferme, il y a 8 champs. Dans chaque champ, il y a 10 arbres. Combien d'arbres y a-t-il dans tous les champs ?",
+        "en": "In a farm, there are 8 fields. Each field has 10 trees. How many trees are there in total in all the fields?"
+      },
+      "numbersInOptions": [8, 10, 80],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "8 × 10", "correct": true },
+        { "text": "8 + 10", "correct": false },
+        { "text": "80 ÷ 10", "correct": false },
+        { "text": "10 - 8", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "إذا كان لديك 100 درهم وأعطيت صديقك 25 درهما، كم تبقى لديك؟",
+        "fr": "Si tu as 100 dirhams et que tu donnes 25 dirhams à ton ami, combien te reste-t-il ?",
+        "en": "If you have 100 dirhams and you give your friend 25 dirhams, how much do you have left?"
+      },
+      "numbersInOptions": [100, 25, 75],
+      "operationsInOptions": ["Subtraction", "Addition", "Multiplication"],
+      "options": [
+        { "text": "100 - 25", "correct": true },
+        { "text": "100 + 25", "correct": false },
+        { "text": "25 × 4", "correct": false },
+        { "text": "75 + 25", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في أحد المخابز يوجد 15 صندوقًا من الخبز. في كل صندوق 20 رغيفًا. كم رغيفًا في المجموع؟",
+        "fr": "Il y a 15 caisses de pain dans une boulangerie. Chaque caisse contient 20 pains. Combien de pains y a-t-il en tout ?",
+        "en": "In a bakery, there are 15 boxes of bread. Each box contains 20 loaves of bread. How many loaves of bread are there in total?"
+      },
+      "numbersInOptions": [15, 20, 300],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "15 × 20", "correct": true },
+        { "text": "20 + 15", "correct": false },
+        { "text": "300 ÷ 15", "correct": false },
+        { "text": "20 - 15", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "إذا كان لديك 250 درهمًا واشتريت 3 كتب، كل كتاب يكلف 50 درهمًا. كم يتبقى لديك؟",
+        "fr": "Si tu as 250 dirhams et que tu achètes 3 livres à 50 dirhams chacun, combien te reste-t-il ?",
+        "en": "If you have 250 dirhams and you buy 3 books, each costing 50 dirhams, how much do you have left?"
+      },
+      "numbersInOptions": [250, 50, 150, 100],
+      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "options": [
+        { "text": "250 - (3 × 50)", "correct": true },
+        { "text": "250 - 50", "correct": false },
+        { "text": "3 × 50", "correct": false },
+        { "text": "250 + 50", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أشترى أحمد 12 تذكرة سينما، سعر التذكرة الواحدة 50 درهما. كم دفع أحمد في المجمل؟",
+        "fr": "Ahmed a acheté 12 billets de cinéma, chaque billet coûte 50 dirhams. Combien Ahmed a-t-il payé au total ?",
+        "en": "Ahmed bought 12 cinema tickets, each costing 50 dirhams. How much did Ahmed pay in total?"
+      },
+      "numbersInOptions": [12, 50, 600],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "12 × 50", "correct": true },
+        { "text": "12 + 50", "correct": false },
+        { "text": "600 ÷ 12", "correct": false },
+        { "text": "50 - 12", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مزرعة هناك 20 دجاجة. إذا وضعت 5 دجاجات أخرى. كم دجاجة في المجموع؟",
+        "fr": "Dans une ferme, il y a 20 poules. Si on ajoute 5 poules supplémentaires, combien de poules y a-t-il en tout ?",
+        "en": "In a farm, there are 20 chickens. If 5 more chickens are added, how many chickens are there in total?"
+      },
+      "numbersInOptions": [20, 5, 25],
+      "operationsInOptions": ["Addition", "Multiplication", "Subtraction"],
+      "options": [
+        { "text": "20 + 5", "correct": true },
+        { "text": "25 - 5", "correct": false },
+        { "text": "5 × 20", "correct": false },
+        { "text": "20 - 5", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "كان لديك 250 درهما وأنت بحاجة إلى شراء 5 كتب، كل كتاب يكلف 60 درهما. هل لديك ما يكفي من المال؟",
+        "fr": "Tu as 250 dirhams et tu dois acheter 5 livres à 60 dirhams chacun. As-tu assez d'argent ?",
+        "en": "You have 250 dirhams and need to buy 5 books, each costing 60 dirhams. Do you have enough money?"
+      },
+      "numbersInOptions": [250, 60, 300, 5],
+      "operationsInOptions": ["Multiplication", "Subtraction", "Comparison"],
+      "options": [
+        { "text": "5 × 60 = 300 > 250", "correct": true },
+        { "text": "250 - (5 × 60)", "correct": false },
+        { "text": "250 + 60", "correct": false },
+        { "text": "60 × 5 = 250", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أحمد لديه 150 درهمًا. اشترى 3 كتب، كل كتاب يكلف 40 درهمًا. كم تبقى معه؟",
+        "fr": "Ahmed a 150 dirhams. Il a acheté 3 livres, chaque livre coûte 40 dirhams. Combien lui reste-t-il ?",
+        "en": "Ahmed has 150 dirhams. He bought 3 books, each costing 40 dirhams. How much does he have left?"
+      },
+      "numbersInOptions": [150, 40, 120, 30],
+      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "options": [
+        { "text": "150 - (3 × 40)", "correct": true },
+        { "text": "150 - 40", "correct": false },
+        { "text": "3 × 40", "correct": false },
+        { "text": "120 + 30", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "إذا كانت لديك 500 درهمًا وأعطيت 200 درهمًا لصديقك، كم يتبقى لديك؟",
+        "fr": "Si tu as 500 dirhams et que tu donnes 200 dirhams à ton ami, combien te reste-t-il ?",
+        "en": "If you have 500 dirhams and give 200 dirhams to your friend, how much do you have left?"
+      },
+      "numbersInOptions": [500, 200, 300, 700],
+      "operationsInOptions": ["Subtraction", "Addition", "Multiplication"],
+      "options": [
+        { "text": "500 - 200", "correct": true },
+        { "text": "200 + 300", "correct": false },
+        { "text": "500 × 200", "correct": false },
+        { "text": "500 - 300", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أشترى علي 5 كتب، كل كتاب يكلف 70 درهمًا. كم دفع علي في المجمل؟",
+        "fr": "Ali a acheté 5 livres, chaque livre coûte 70 dirhams. Combien Ali a-t-il payé au total ?",
+        "en": "Ali bought 5 books, each costing 70 dirhams. How much did Ali pay in total?"
+      },
+      "numbersInOptions": [5, 70, 350, 75],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "5 × 70", "correct": true },
+        { "text": "70 + 5", "correct": false },
+        { "text": "350 ÷ 5", "correct": false },
+        { "text": "70 × 5", "correct": true }
+      ]
+    },
+    {
+      "text": {
+        "ar": "إذا كنت قد وفرت 300 درهمًا، واشتريت 2 أحذية ب 80 درهمًا لكل منهما. كم تبقى معك من المال؟",
+        "fr": "Si tu as économisé 300 dirhams et acheté 2 paires de chaussures à 80 dirhams chacune, combien te reste-t-il ?",
+        "en": "If you saved 300 dirhams and bought 2 pairs of shoes at 80 dirhams each, how much money do you have left?"
+      },
+      "numbersInOptions": [300, 80, 160, 140],
+      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "options": [
+        { "text": "300 - (2 × 80)", "correct": true },
+        { "text": "300 - 80", "correct": false },
+        { "text": "2 × 80", "correct": false },
+        { "text": "160 + 80", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "لدى فاطمة 80 درهمًا. إذا اشترت 4 كتب، كل كتاب يكلف 20 درهمًا، كم تبقى معها؟",
+        "fr": "Fatima a 80 dirhams. Si elle achète 4 livres à 20 dirhams chacun, combien lui reste-t-il ?",
+        "en": "Fatima has 80 dirhams. If she buys 4 books, each costing 20 dirhams, how much does she have left?"
+      },
+      "numbersInOptions": [80, 20, 80, 0],
+      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "options": [
+        { "text": "80 - (4 × 20)", "correct": true },
+        { "text": "80 + 20", "correct": false },
+        { "text": "4 × 20", "correct": false },
+        { "text": "20 × 4", "correct": false }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في فصل الصيف، اشترت سارة 15 زجاجة عصير، إذا كانت الزجاجة تكلف 30 درهمًا، كم دفعت سارة في المجمل؟",
+        "fr": "En été, Sarah a acheté 15 bouteilles de jus, chaque bouteille coûtant 30 dirhams. Combien Sarah a-t-elle payé au total ?",
+        "en": "In the summer, Sarah bought 15 bottles of juice, each costing 30 dirhams. How much did Sarah pay in total?"
+      },
+      "numbersInOptions": [15, 30, 450, 45],
+      "operationsInOptions": ["Multiplication", "Addition", "Subtraction"],
+      "options": [
+        { "text": "15 × 30", "correct": true },
+        { "text": "30 + 15", "correct": false },
+        { "text": "450 ÷ 15", "correct": false },
+        { "text": "30 × 15", "correct": true }
+      ]
+    },
+    {
+      "text": {
+        "ar": "كانت لديك 500 درهمًا، اشتريت 3 هدايا بتكلفة 120 درهمًا لكل هدية. كم تبقى لديك؟",
+        "fr": "Tu avais 500 dirhams, tu as acheté 3 cadeaux à 120 dirhams chacun. Combien te reste-t-il ?",
+        "en": "You had 500 dirhams and bought 3 gifts, each costing 120 dirhams. How much do you have left?"
+      },
+      "numbersInOptions": [500, 120, 360, 140],
+      "operationsInOptions": ["Subtraction", "Multiplication", "Addition"],
+      "options": [
+        { "text": "500 - (3 × 120)", "correct": true },
+        { "text": "500 - 120", "correct": false },
+        { "text": "3 × 120", "correct": false },
+        { "text": "360 + 140", "correct": false }
+      ]
+    }
+  ]
+}

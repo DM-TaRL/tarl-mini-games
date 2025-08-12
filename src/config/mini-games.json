@@ -1,0 +1,625 @@
+{
+  "miniGames": {
+    "find_compositions": {
+      "id": "find_compositions",
+      "title": {
+        "ar": "ابحث عن التركيبات",
+        "fr": "Trouve les compositions",
+        "en": "Find Compositions"
+      },
+      "description": {
+        "ar": "ابحث عن كل التركيبات الممكنة للنتيجة المطلوبة",
+        "fr": "Trouve toutes les compositions possibles pour le résultat cible",
+        "en": "Find all possible compositions for the target result"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 5 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "minNumCompositions": 2,
+            "maxNumberRange": 2,
+            "operation": "Addition",
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "2": {
+            "minNumCompositions": 2,
+            "maxNumberRange": 2,
+            "operation": "Addition",
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "3": {
+            "minNumCompositions": 3,
+            "maxNumberRange": 2,
+            "operation": "Subtraction",
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
+            "minNumCompositions": 2,
+            "maxNumberRange": 3,
+            "operation": "Multiplication",
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "5": {
+            "minNumCompositions": 3,
+            "maxNumberRange": 3,
+            "operation": "Division",
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Addition", "Subtraction", "Multiplication", "Division"]
+      }
+    },
+    "vertical_operations": {
+      "id": "vertical_operations",
+      "title": {
+        "ar": "العمليات العمودية",
+        "fr": "Opérations verticales",
+        "en": "Vertical Operations"
+      },
+      "description": {
+        "ar": "حل العمليات العمودية",
+        "fr": "Résous les opérations verticales",
+        "en": "Solve vertical operations"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 3, "max": 6 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numOperations": 1,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "requiredCorrectAnswersMinimumPercent": 50,
+            "allowCarry": true,
+            "allowBorrow": false,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false
+          },
+          "3": {
+            "numOperations": 1,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "requiredCorrectAnswersMinimumPercent": 50,
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false
+          },
+          "4": {
+            "numOperations": 3,
+            "maxNumberRange": 3,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "requiredCorrectAnswersMinimumPercent": 75,
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": true,
+            "allowMultiStepDiv": false
+          },
+          "5": {
+            "numOperations": 4,
+            "maxNumberRange": 4,
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "requiredCorrectAnswersMinimumPercent": 75,
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": true,
+            "allowMultiStepDiv": true
+          },
+          "6": {
+            "numOperations": 5,
+            "maxNumberRange": 5,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication",
+              "Division"
+            ],
+            "requiredCorrectAnswersMinimumPercent": 75,
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": true,
+            "allowMultiStepDiv": true
+          }
+        },
+        "skills": [
+          "Vertical Operation Accuracy",
+          "Addition",
+          "Subtraction",
+          "Multiplication",
+          "Division"
+        ]
+      }
+    },
+    "choose_answer": {
+      "id": "choose_answer",
+      "title": {
+        "ar": "اختر الجواب الصحيح",
+        "fr": "Choisis la bonne réponse",
+        "en": "Choose the Right Answer"
+      },
+      "description": {
+        "ar": "اختر الجواب الصحيح من بين الخيارات",
+        "fr": "Choisis la bonne réponse parmi les options",
+        "en": "Select the correct answer from the options"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 5 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numOptions": 3,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition"],
+            "numQuestions": 1,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "2": {
+            "numOptions": 3,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition"],
+            "numQuestions": 2,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "3": {
+            "numOptions": 3,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "numQuestions": 3,
+            "requiredCorrectAnswersMinimumPercent": 60
+          },
+          "4": {
+            "numOptions": 4,
+            "maxNumberRange": 3,
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "numQuestions": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "5": {
+            "numOptions": 4,
+            "maxNumberRange": 4,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication",
+              "Division"
+            ],
+            "numQuestions": 6,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": [
+          "One-Step Problem Solving",
+          "Operation Identification from Context"
+        ]
+      }
+    },
+    "multi_step_problem": {
+      "id": "multi_step_problem",
+      "title": {
+        "ar": "حل مسألة متعددة الخطوات",
+        "fr": "Résous un problème à plusieurs étapes",
+        "en": "Solve a Multi-Step Word Problem"
+      },
+      "description": {
+        "ar": "حل مسائل تحتوي على عدة عمليات",
+        "fr": "Résous des problèmes à plusieurs opérations",
+        "en": "Solve multi-step problems with multiple operations"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 5, "max": 6 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 4,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "5": {
+            "numQuestions": 2,
+            "maxNumberRange": 4,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "6": {
+            "numQuestions": 3,
+            "maxNumberRange": 6,
+            "numSteps": 2,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication",
+              "Division"
+            ],
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": [
+          "Multi-Step Problem Solving",
+          "Operation Identification from Context",
+          "Addition",
+          "Subtraction",
+          "Multiplication",
+          "Division"
+        ]
+      }
+    },
+    "find_previous_next_number": {
+      "id": "find_previous_next_number",
+      "title": {
+        "ar": "ابحث عن الرقم السابق واللاحق",
+        "fr": "Trouve le nombre précédent et suivant",
+        "en": "Find the Previous and Next Number"
+      },
+      "description": {
+        "ar": "حدد الرقم السابق واللاحق في السلسلة",
+        "fr": "Identifie le nombre précédent et suivant dans la séquence",
+        "en": "Identify the previous and next number in the sequence"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 3 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 3,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 3,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Previous and Next Number Identification"]
+      }
+    },
+    "tap_matching_pairs": {
+      "id": "tap_matching_pairs",
+      "title": {
+        "ar": "اضغط على الأزواج المتطابقة",
+        "fr": "Tape les paires correspondantes",
+        "en": "Tap the Matching Pairs"
+      },
+      "description": {
+        "ar": "طابق الأرقام مع كتابتها بالكلمات",
+        "fr": "Associe les nombres avec leur écriture en lettres",
+        "en": "Match numbers with their corresponding words"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 1, "max": 3 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numPairs": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "1": {
+            "numPairs": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "2": {
+            "numPairs": 3,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numPairs": 5,
+            "maxNumberRange": 6,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Matching Numbers with Written Form"]
+      }
+    },
+    "order_numbers": {
+      "id": "order_numbers",
+      "title": {
+        "ar": "رتب الأرقام",
+        "fr": "Ordonne les nombres",
+        "en": "Order the Numbers"
+      },
+      "description": {
+        "ar": "رتب الأرقام تصاعدياً أو تنازلياً",
+        "fr": "Range les nombres dans l’ordre croissant ou décroissant",
+        "en": "Arrange the numbers in ascending or descending order"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 4 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "maxNumbersInSequence": 3,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "2": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "maxNumbersInSequence": 3,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "3": {
+            "numQuestions": 3,
+            "maxNumberRange": 4,
+            "maxNumbersInSequence": 5,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
+            "numQuestions": 5,
+            "maxNumberRange": 6,
+            "maxNumbersInSequence": 7,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Numbers Ordering"]
+      }
+    },
+    "compare_numbers": {
+      "id": "compare_numbers",
+      "title": {
+        "ar": "قارن الأرقام",
+        "fr": "Compare les nombres",
+        "en": "Compare Numbers"
+      },
+      "description": {
+        "ar": "ضع علامة المقارنة الصحيحة بين الأرقام",
+        "fr": "Place les signes de comparaison entre les nombres",
+        "en": "Place comparison signs between numbers"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 3 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 3,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 3,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Numbers Comparison"]
+      }
+    },
+    "what_number_do_you_hear": {
+      "id": "what_number_do_you_hear",
+      "title": {
+        "ar": "ما الرقم الذي تسمعه؟",
+        "fr": "Quel nombre entends-tu ?",
+        "en": "What Number Do You Hear?"
+      },
+      "description": {
+        "ar": "تعرف على الأرقام من خلال الاستماع إليها",
+        "fr": "Identifie les nombres en les écoutant",
+        "en": "Identify numbers by listening to them"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 1, "max": 2 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 6,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "1": {
+            "numQuestions": 6,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 4,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Number Audio Recognition"],
+        "numbersAudioLinks": {
+          "0": { "ar": "", "fr": "", "en": "" },
+          "1": { "ar": "", "fr": "", "en": "" },
+          "2": { "ar": "", "fr": "", "en": "" },
+          "3": { "ar": "", "fr": "", "en": "" },
+          "4": { "ar": "", "fr": "", "en": "" },
+          "5": { "ar": "", "fr": "", "en": "" },
+          "6": { "ar": "", "fr": "", "en": "" },
+          "7": { "ar": "", "fr": "", "en": "" }
+        }
+      }
+    },
+    "decompose_number": {
+      "id": "decompose_number",
+      "title": {
+        "ar": "فكك الرقم التالي",
+        "fr": "Décompose le nombre suivant",
+        "en": "Decompose the Following Number"
+      },
+      "description": {
+        "ar": "فكك الرقم إلى مكوناته حسب القيمة المكانية",
+        "fr": "Décompose un nombre en ses composantes de valeur de position",
+        "en": "Decompose a number into its place value components"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 2, "max": 4 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 2,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 4,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
+            "numQuestions": 4,
+            "maxNumberRange": 6,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Number Decomposition"]
+      }
+    },
+    "write_number_in_letters": {
+      "id": "write_number_in_letters",
+      "title": {
+        "ar": "اكتب الرقم التالي بالحروف",
+        "fr": "Écris le nombre suivant en lettres",
+        "en": "Write the Following Number in Letters"
+      },
+      "description": {
+        "ar": "اكتب الرقم بالكلمات",
+        "fr": "Écris le nombre en toutes lettres",
+        "en": "Write the number in words"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 1, "max": 3 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "1": {
+            "numQuestions": 2,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 3,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 4,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Numbers to Words"]
+      }
+    },
+    "identify_place_value": {
+      "id": "identify_place_value",
+      "title": {
+        "ar": "حدد الوحدات والعشرات والمئات والآلاف",
+        "fr": "Identifie les unités, dizaines, centaines et milliers",
+        "en": "Identify the Units, Tens, Hundreds, and Thousands"
+      },
+      "description": {
+        "ar": "حدد القيمة المكانية لكل رقم",
+        "fr": "Identifie la valeur de position de chaque chiffre",
+        "en": "Identify the place value of each digit in a number"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 3, "max": 6 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 10,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 10,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
+            "numQuestions": 10,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "5": {
+            "numQuestions": 8,
+            "maxNumberRange": 6,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "6": {
+            "numQuestions": 8,
+            "maxNumberRange": 7,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Place Value Identification"]
+      }
+    },
+    "read_number_aloud": {
+      "id": "read_number_aloud",
+      "title": {
+        "ar": "اقرأ الرقم التالي بصوت عالٍ",
+        "fr": "Lis le numéro suivant à voix haute",
+        "en": "Read the Number Aloud"
+      },
+      "description": {
+        "ar": "اقرأ الرقم التالي بصوت عالٍ",
+        "fr": "Lisez le numéro suivant à voix haute",
+        "en": "Read the following number aloud"
+      },
+      "version": "1.0",
+      "suggestedGradeRange": { "min": 1, "max": 4 },
+      "defaultConfig": {
+        "gradeConfig": {
+          "default": {
+            "numQuestions": 6,
+            "maxNumberRange": 1,
+            "displayTime": -1,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "1": {
+            "numQuestions": 6,
+            "maxNumberRange": 1,
+            "displayTime": -1,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "2": {
+            "numQuestions": 8,
+            "maxNumberRange": 2,
+            "displayTime": 30,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 10,
+            "maxNumberRange": 3,
+            "displayTime": 25,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
+            "numQuestions": 10,
+            "maxNumberRange": 4,
+            "displayTime": 20,
+            "requiredCorrectAnswersMinimumPercent": 75
+          }
+        },
+        "skills": ["Number Recognition"]
+      }
+    }
+  }
+}
