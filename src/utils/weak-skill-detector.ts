@@ -113,6 +113,9 @@ interface GameLogEntry {
   selectedOrder?: number[];
   direction?: "asc" | "desc";
   number?: number;
+  transcript?: string; // STT text
+  parsed?: number; // numeric parse of transcript
+  answerTimeCategory?: "fast" | "medium" | "slow";
   // Add other properties based on your actual data structure
 }
 
@@ -874,8 +877,163 @@ export function detectWeakSkills(
           }
           break;
         }
-        case "multi_step_problem":
         case "read_number_aloud": {
+          const lang = (result as any)?.language ?? "unknown";
+          const logs = Array.isArray(result.logs) ? result.logs : [];
+          const total = logs.length;
+          if (!total) break;
+
+          // Counters
+          const empty = logs.filter(
+            (l) => !String(l.transcript ?? "").trim()
+          ).length;
+          const wrong = logs.filter((l) => l.isCorrect === false).length;
+          const wrongWithSpeech = logs.filter(
+            (l) => l.isCorrect === false && String(l.transcript ?? "").trim()
+          ).length;
+          const fast = logs.filter(
+            (l) => categorizeTime(l.timeSpentMs, gameType) === "fast"
+          ).length;
+
+          const emptyRate = empty / total;
+          const wrongWithSpeechRate = wrongWithSpeech / total;
+          const fastRate = fast / total;
+
+          // 1) Audio / STT issue (do not penalize math skill)
+          if (emptyRate >= 0.5) {
+            pushOrInc(weakSkills, {
+              gameType: gameType as GameType,
+              questionType: "ReadingNumbersAloud",
+              format: "Audio",
+              skillSubtype: "stt_or_microphone_issue",
+              weaknessType: undefined,
+              count: empty,
+            });
+            // If almost all are empty, stop here.
+            if (emptyRate >= 0.8) break;
+          }
+
+          // 2) Impulsive / rushed (fast + wrong)
+          if (fastRate >= 0.5 && wrong >= Math.ceil(total * 0.5)) {
+            pushOrInc(weakSkills, {
+              gameType: gameType as GameType,
+              questionType: "ReadingNumbersAloud",
+              format: "Audio",
+              skillSubtype: "impulsive_or_rushed_response",
+              weaknessType: "WrongAnswer",
+              count: wrong,
+            });
+          }
+
+          // 3) Number-reading difficulty (has speech but wrong)
+          if (wrongWithSpeechRate >= 0.3) {
+            pushOrInc(weakSkills, {
+              gameType: gameType as GameType,
+              questionType: "ReadingNumbersAloud",
+              format: "Audio",
+              skillSubtype: `reading_numbers_${lang}`, // ar|fr|en if present
+              weaknessType: "WrongAnswer",
+              count: wrongWithSpeech,
+            });
+          }
+
+          // 4) Fine-grained: use parsed numbers to detect patterns
+          const withParsed = logs.filter((l) => {
+            const q =
+              typeof l.question === "number" ? l.question : Number(l.question);
+            return !isNaN(q) && typeof l.parsed === "number";
+          });
+
+          if (withParsed.length) {
+            let tensConfusions = 0;
+            let largeNumberConfusions = 0;
+            let nearMisses = 0;
+
+            for (const l of withParsed) {
+              if (l.isCorrect) continue;
+              const target =
+                typeof l.question === "number"
+                  ? l.question
+                  : Number(l.question);
+              const heard = Number(l.parsed);
+              if (!isFinite(target) || !isFinite(heard)) continue;
+
+              const diff = Math.abs(heard - target);
+              const mag = Math.max(
+                1,
+                Math.pow(10, String(Math.abs(target)).length - 1)
+              );
+              const rel = diff / mag;
+
+              // tens vs units (same unit digit; wrong decade)
+              if (
+                heard % 10 === target % 10 &&
+                Math.floor(heard / 10) !== Math.floor(target / 10)
+              ) {
+                tensConfusions++;
+                continue;
+              }
+
+              // large-number chunking: off by thousands/hundreds
+              const digits = (n: number) => String(Math.abs(n)).length;
+              if (
+                digits(target) >= 4 &&
+                (digits(heard) !== digits(target) || rel >= 0.5)
+              ) {
+                largeNumberConfusions++;
+                continue;
+              }
+
+              // near-miss (likely minor pronunciation/parse)
+              if (rel <= 0.1) nearMisses++;
+            }
+
+            const tn = withParsed.length;
+            if (tensConfusions / tn >= 0.2) {
+              pushOrInc(weakSkills, {
+                gameType: gameType as GameType,
+                questionType: "ReadingNumbersAloud",
+                format: "Audio",
+                skillSubtype: `two_digit_number_names_${lang}`,
+                weaknessType: "WrongAnswer",
+                count: tensConfusions,
+              });
+              if (lang === "fr") {
+                pushOrInc(weakSkills, {
+                  gameType: gameType as GameType,
+                  questionType: "ReadingNumbersAloud",
+                  format: "Audio",
+                  skillSubtype: "fr_quatre_vingt_family_risk",
+                  weaknessType: "WrongAnswer",
+                  count: tensConfusions,
+                });
+              }
+            }
+            if (largeNumberConfusions / tn >= 0.2) {
+              pushOrInc(weakSkills, {
+                gameType: gameType as GameType,
+                questionType: "ReadingNumbersAloud",
+                format: "Audio",
+                skillSubtype: `large_number_chunking_${lang}`,
+                weaknessType: "WrongAnswer",
+                count: largeNumberConfusions,
+              });
+            }
+            if (nearMisses / tn >= 0.2) {
+              pushOrInc(weakSkills, {
+                gameType: gameType as GameType,
+                questionType: "ReadingNumbersAloud",
+                format: "Audio",
+                skillSubtype: `pronunciation_or_parser_minor_${lang}`,
+                weaknessType: "WrongAnswer",
+                count: nearMisses,
+              });
+            }
+          }
+
+          break;
+        }
+        case "multi_step_problem": {
           // fallback for other games
           for (const entry of result.logs) {
             if (entry.isCorrect) continue;
@@ -1325,4 +1483,16 @@ function groupBy<T extends Record<string, any>, K extends keyof T>(
     acc[groupKey].push(item);
     return acc;
   }, {} as Record<string, T[]>);
+}
+
+function pushOrInc(weakSkills: WeakSkill[], skill: WeakSkill) {
+  const existing = weakSkills.find(
+    (s) =>
+      s.gameType === skill.gameType &&
+      s.questionType === skill.questionType &&
+      s.skillSubtype === skill.skillSubtype &&
+      s.mistakeType === skill.mistakeType
+  );
+  if (existing) existing.count += skill.count;
+  else weakSkills.push(skill);
 }
