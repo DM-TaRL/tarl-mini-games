@@ -14,8 +14,10 @@ export * from "./utils/generateQuestions/generateFindPreviousNextNumber";
 export * from "./utils/generateQuestions/generateDecomposeNumber";
 export * from "./utils/generateQuestions/generateIdentifyPlaceValue";
 export * from "./utils/generateQuestions/generateWriteNumberInLetters";
+export * from "./utils/generateQuestions/generateReadNumberAloud";
 export * from "./utils/fuzzy-evaluator";
 export * from "./utils/weak-skill-detector";
+export * from "./utils/features-aggregator";
 
 export * from "./utils/utils";
 

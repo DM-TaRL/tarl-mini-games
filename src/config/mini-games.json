@@ -22,6 +22,12 @@
             "operation": "Addition",
             "requiredCorrectAnswersMinimumPercent": 50
           },
+          "1": {
+            "minNumCompositions": 2,
+            "maxNumberRange": 1,
+            "operation": "Addition",
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
           "2": {
             "minNumCompositions": 2,
             "maxNumberRange": 2,
@@ -73,17 +79,27 @@
       "defaultConfig": {
         "gradeConfig": {
           "default": {
-            "numOperations": 1,
+            "numOperations": 2,
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition", "Subtraction"],
+            "operationsAllowed": ["Addition"],
             "requiredCorrectAnswersMinimumPercent": 50,
-            "allowCarry": true,
+            "allowCarry": false,
+            "allowBorrow": false,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false
+          },
+          "1": {
+            "numOperations": 2,
+            "maxNumberRange": 2,
+            "operationsAllowed": ["Addition"],
+            "requiredCorrectAnswersMinimumPercent": 50,
+            "allowCarry": false,
             "allowBorrow": false,
             "allowMultiStepMul": false,
             "allowMultiStepDiv": false
           },
           "2": {
-            "numOperations": 1,
+            "numOperations": 2,
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition"],
             "requiredCorrectAnswersMinimumPercent": 50,
@@ -105,7 +121,7 @@
           "4": {
             "numOperations": 3,
             "maxNumberRange": 3,
-            "operationsAllowed": ["Addition", "Subtraction"],
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
             "requiredCorrectAnswersMinimumPercent": 75,
             "allowCarry": true,
             "allowBorrow": true,
@@ -124,7 +140,7 @@
           },
           "6": {
             "numOperations": 4,
-            "maxNumberRange": 5,
+            "maxNumberRange": 4,
             "operationsAllowed": [
               "Addition",
               "Subtraction",
@@ -167,7 +183,14 @@
             "numOptions": 3,
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition"],
-            "numQuestions": 1,
+            "numQuestions": 2,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "1": {
+            "numOptions": 2,
+            "maxNumberRange": 1,
+            "operationsAllowed": ["Addition"],
+            "numQuestions": 2,
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "2": {
@@ -239,21 +262,73 @@
       "defaultConfig": {
         "gradeConfig": {
           "default": {
+            "numQuestions": 3,
+            "maxNumberRange": 4,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "1": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition"],
+            "allowCarry": false,
+            "allowBorrow": false,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "2": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "allowCarry": true,
+            "allowBorrow": false,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "3": {
+            "numQuestions": 2,
+            "maxNumberRange": 3,
+            "numSteps": 2,
+            "operationsAllowed": ["Addition", "Subtraction"],
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
             "numQuestions": 2,
             "maxNumberRange": 4,
             "numSteps": 2,
             "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "5": {
-            "numQuestions": 2,
+            "numQuestions": 3,
             "maxNumberRange": 4,
             "numSteps": 2,
             "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": true,
+            "allowMultiStepDiv": false,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "6": {
-            "numQuestions": 3,
+            "numQuestions": 4,
             "maxNumberRange": 4,
             "numSteps": 2,
             "operationsAllowed": [
@@ -262,6 +337,10 @@
               "Multiplication",
               "Division"
             ],
+            "allowCarry": true,
+            "allowBorrow": true,
+            "allowMultiStepMul": true,
+            "allowMultiStepDiv": true,
             "requiredCorrectAnswersMinimumPercent": 75
           }
         },
@@ -293,8 +372,13 @@
         "gradeConfig": {
           "default": {
             "numQuestions": 3,
-            "maxNumberRange": 2,
+            "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "1": {
+            "numQuestions": 4,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 50
           },
           "2": {
             "numQuestions": 4,
@@ -333,18 +417,18 @@
           },
           "1": {
             "numPairs": 4,
-            "maxNumberRange": 2,
-            "requiredCorrectAnswersMinimumPercent": 50
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 70
           },
           "2": {
-            "numPairs": 4,
+            "numPairs": 6,
             "maxNumberRange": 2,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "3": {
-            "numPairs": 6,
+            "numPairs": 8,
             "maxNumberRange": 3,
-            "requiredCorrectAnswersMinimumPercent": 75
+            "requiredCorrectAnswersMinimumPercent": 85
           }
         },
         "skills": ["Matching Numbers with Written Form"]
@@ -369,18 +453,24 @@
           "default": {
             "numQuestions": 2,
             "maxNumberRange": 2,
-            "maxNumbersInSequence": 3,
+            "maxNumbersInSequence": 5,
+            "requiredCorrectAnswersMinimumPercent": 50
+          },
+          "1": {
+            "numQuestions": 2,
+            "maxNumberRange": 1,
+            "maxNumbersInSequence": 4,
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "2": {
             "numQuestions": 2,
-            "maxNumberRange": 3,
+            "maxNumberRange": 2,
             "maxNumbersInSequence": 4,
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "3": {
             "numQuestions": 3,
-            "maxNumberRange": 4,
+            "maxNumberRange": 3,
             "maxNumbersInSequence": 5,
             "requiredCorrectAnswersMinimumPercent": 75
           },
@@ -427,15 +517,20 @@
             "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 75
           },
+          "1": {
+            "numQuestions": 3,
+            "maxNumberRange": 1,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
           "2": {
             "numQuestions": 3,
             "maxNumberRange": 2,
-            "requiredCorrectAnswersMinimumPercent": 75
+            "requiredCorrectAnswersMinimumPercent": 80
           },
           "3": {
             "numQuestions": 3,
             "maxNumberRange": 3,
-            "requiredCorrectAnswersMinimumPercent": 75
+            "requiredCorrectAnswersMinimumPercent": 85
           }
         },
         "skills": ["Numbers Comparison"]
@@ -468,9 +563,9 @@
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "2": {
-            "numQuestions": 4,
+            "numQuestions": 8,
             "maxNumberRange": 2,
-            "requiredCorrectAnswersMinimumPercent": 75
+            "requiredCorrectAnswersMinimumPercent": 80
           }
         },
         "skills": ["Number Audio Recognition"],
@@ -509,17 +604,17 @@
           },
           "2": {
             "numQuestions": 2,
-            "maxNumberRange": 3,
+            "maxNumberRange": 2,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "3": {
             "numQuestions": 4,
-            "maxNumberRange": 4,
+            "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "4": {
             "numQuestions": 4,
-            "maxNumberRange": 6,
+            "maxNumberRange": 4,
             "requiredCorrectAnswersMinimumPercent": 75
           }
         },
@@ -544,7 +639,7 @@
         "gradeConfig": {
           "default": {
             "numQuestions": 2,
-            "maxNumberRange": 4,
+            "maxNumberRange": 6,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "1": {
@@ -558,6 +653,11 @@
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "3": {
+            "numQuestions": 4,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "4": {
             "numQuestions": 4,
             "maxNumberRange": 4,
             "requiredCorrectAnswersMinimumPercent": 75
@@ -584,7 +684,7 @@
         "gradeConfig": {
           "default": {
             "numQuestions": 2,
-            "maxNumberRange": 3,
+            "maxNumberRange": 2,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "3": {
@@ -640,7 +740,7 @@
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "2": {
-            "numQuestions": 6,
+            "numQuestions": 8,
             "maxNumberRange": 2,
             "displayTime": 30,
             "requiredCorrectAnswersMinimumPercent": 75

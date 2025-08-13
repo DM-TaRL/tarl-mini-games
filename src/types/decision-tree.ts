@@ -1,5 +1,4 @@
 import { GameType } from "./mini-game-types";
-import raw from "./../config/default-test-config.json";
 
 export const FORGIVENESS_RULES = {
   defaultMaxMistakes: 3,
