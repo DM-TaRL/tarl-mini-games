@@ -906,7 +906,7 @@ export function detectWeakSkills(
               questionType: "ReadingNumbersAloud",
               format: "Audio",
               skillSubtype: "stt_or_microphone_issue",
-              weaknessType: undefined,
+              weaknessType: null,
               count: empty,
             });
             // If almost all are empty, stop here.
