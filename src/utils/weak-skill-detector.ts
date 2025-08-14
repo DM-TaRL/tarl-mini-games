@@ -1034,35 +1034,119 @@ export function detectWeakSkills(
           break;
         }
         case "multi_step_problem": {
-          // fallback for other games
+          type Op = Operation | string;
+          const slowCorrects: { timeSpentMs: number }[] = [];
+          const opSelectMistakes: Record<Op, number> = {};
+          const compMistakes: Record<Op, Record<number, number>> = {}; // op -> numDigits -> count
+          let laterStepMistakes = 0;
+          let totalMistakes = 0;
+
           for (const entry of result.logs) {
-            if (entry.isCorrect) continue;
+            const opExpected = (entry as any).operationExpected as Op;
+            const opChosen = (entry as any).operationChosen as Op;
+            const opCorrect = Boolean((entry as any).opCorrect);
 
-            const correct = entry.correctAnswer?.toString?.() || "";
-            const numDigits = correct.length || 1;
+            const a = Number((entry as any).operand1 ?? 0);
+            const b = Number((entry as any).operand2 ?? 0);
+            const correctAns = Number((entry as any).correctAnswer ?? 0);
+            const userAns = Number((entry as any).userAnswer ?? NaN);
 
-            const skill: WeakSkill = {
-              gameType,
-              operation: inferOperation(entry),
-              numDigits,
-              format: inferFormat(gameType),
-              questionType: inferQuestionType(gameType),
-              weaknessType: inferWeaknessTypeOnCorrect(entry),
-              count: 1,
-            };
-
-            const existing = weakSkills.find((s) =>
-              Object.entries(skill).every(
-                ([key, val]) => s[key as keyof WeakSkill] === val
-              )
+            const numDigits = Math.max(
+              String(Math.abs(a)).length,
+              String(Math.abs(b)).length,
+              String(Math.abs(correctAns)).length
             );
 
-            if (existing) {
-              existing.count += 1;
-            } else {
-              weakSkills.push(skill);
+            // Slow-but-correct
+            if (entry.isCorrect) {
+              if (categorizeTime(entry.timeSpentMs, gameType) === "slow") {
+                slowCorrects.push({ timeSpentMs: entry.timeSpentMs });
+              }
+              continue;
+            }
+
+            // From here: incorrect step
+            totalMistakes += 1;
+            if ((entry as any).stepIndex > 0) laterStepMistakes += 1;
+
+            // 1) Misidentified operation
+            if (!opCorrect) {
+              opSelectMistakes[opExpected] =
+                (opSelectMistakes[opExpected] || 0) + 1;
+              continue;
+            }
+
+            // 2) Computation error (op was right, answer wrong)
+            if (opCorrect && userAns !== correctAns) {
+              if (!compMistakes[opExpected]) compMistakes[opExpected] = {};
+              compMistakes[opExpected][numDigits] =
+                (compMistakes[opExpected][numDigits] || 0) + 1;
             }
           }
+
+          // Emit SlowButCorrect (if any)
+          if (slowCorrects.length > 0) {
+            weakSkills.push({
+              gameType,
+              questionType: "MultiStepProblem",
+              format: "Vertical",
+              isNested: true,
+              mistakeType: "SlowButCorrect",
+              avgTimeMs:
+                slowCorrects.reduce((s, r) => s + r.timeSpentMs, 0) /
+                slowCorrects.length,
+              count: slowCorrects.length,
+            });
+          }
+
+          // Emit MisidentifiedOperation per expected op
+          for (const [op, count] of Object.entries(opSelectMistakes)) {
+            weakSkills.push({
+              gameType,
+              operation: op as Operation,
+              questionType: "MultiStepProblem",
+              format: "Vertical",
+              isNested: true,
+              mistakeType: "MisidentifiedOperation",
+              count,
+            });
+          }
+
+          // Emit ComputationError per op × digit-length bucket
+          for (const [op, byDigits] of Object.entries(compMistakes)) {
+            for (const [digitsStr, count] of Object.entries(byDigits)) {
+              const digits = Number(digitsStr);
+              // Use a rough magnitude proxy for complexity
+              const magProxy = Math.pow(10, Math.max(1, digits)) - 1;
+
+              weakSkills.push({
+                gameType,
+                operation: op as Operation,
+                questionType: "MultiStepProblem",
+                format: "Vertical",
+                isNested: true,
+                mistakeType: "ComputationError",
+                numDigits: digits,
+                complexityLevel: classifyComplexity(magProxy),
+                count,
+              });
+            }
+          }
+
+          // Later-step dropoff signal (if errors are mostly after step 1)
+          if (totalMistakes >= 3 && laterStepMistakes / totalMistakes >= 0.6) {
+            weakSkills.push({
+              gameType,
+              questionType: "MultiStepProblem",
+              format: "Vertical",
+              isNested: true,
+              skillSubtype: "LaterStepDropoff",
+              description:
+                "Most errors occur on later steps in multi-step problems.",
+              count: laterStepMistakes,
+            });
+          }
+
           break;
         }
       }

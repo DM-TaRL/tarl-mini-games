@@ -10,6 +10,7 @@ export const FORGIVENESS_RULES = {
     find_previous_next_number: 3,
     write_number_in_letters: 3,
     tap_matching_pairs: 3,
+    multi_step_problem: 3,
   },
 };
 
@@ -22,7 +23,8 @@ export const MAX_ATTEMPTS = {
     what_number_do_you_hear: 2,
     find_previous_next_number: 2,
     write_number_in_letters: 2,
-    tap_matching_pairs: 2,
+    tap_matching_pairs: 3,
+    multi_step_problem: 2,
   },
 };
 
