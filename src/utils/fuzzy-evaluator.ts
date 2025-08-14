@@ -1,7 +1,5 @@
-import { WeakSkill } from "./weak-skill-detector";
-
-export type FuzzySkillScores = {
-  arithmetic_fluidity: number; // e.g. 0.3 means weak
+export type Axes = {
+  arithmetic_fluidity: number; // 0..100 (higher = better)
   number_sense: number;
   sequential_thinking: number;
   comparison_skill: number;
@@ -9,125 +7,142 @@ export type FuzzySkillScores = {
   audio_recognition: number;
 };
 
-/**
- * Compute normalized fuzzy skill scores from extracted weakSkills.
- */
-export function computeFuzzyScores(
-  weakSkills: WeakSkill[] = []
-): FuzzySkillScores {
-  const score = (penalty: number, max = 5): number =>
-    Math.max(0, 1 - penalty / max);
+export type Coverage = Partial<Record<keyof Axes, number>>; // 0..1
 
-  const arithmeticMistakes = weakSkills.filter(
-    (s) =>
-      s.questionType === "Arithmetic" ||
-      ["Addition", "Subtraction", "Multiplication", "Division"].includes(
-        s.operation || ""
-      )
-  ).length;
-
-  const numberSenseMistakes = weakSkills.filter(
-    (s) =>
-      ["PlaceValueIdentification", "Decomposition"].includes(
-        s.questionType || ""
-      ) || (s.mistakeType || "").includes("PlaceValue")
-  ).length;
-
-  const sequentialThinkingMistakes = weakSkills.filter(
-    (s) =>
-      ["PreviousNumber", "NextNumber", "Ordering"].includes(
-        s.questionType || ""
-      ) ||
-      ["MissingNext", "MissingPrevious", "TensTransitionMistake"].includes(
-        s.mistakeType || ""
-      )
-  ).length;
-
-  const comparisonMistakes = weakSkills.filter(
-    (s) => s.questionType === "Comparison"
-  ).length;
-
-  const visualMatchingMistakes = weakSkills.filter(
-    (s) => s.questionType === "MatchingPair"
-  ).length;
-
-  const audioRecognitionMistakes = weakSkills.filter(
-    (s) => s.questionType === "NumberRecognitionByAudio"
-  ).length;
-
+function tri(x: number, a: number, b: number, c: number) {
+  if (x <= a || x >= c) return 0;
+  if (x === b) return 1;
+  return x < b ? (x - a) / (b - a) : (c - x) / (c - b);
+}
+function fuzzify(x: number) {
+  // we can later calibrate these breakpoints to data.
   return {
-    arithmetic_fluidity: score(arithmeticMistakes),
-    number_sense: score(numberSenseMistakes),
-    sequential_thinking: score(sequentialThinkingMistakes),
-    comparison_skill: score(comparisonMistakes),
-    visual_matching: score(visualMatchingMistakes),
-    audio_recognition: score(audioRecognitionMistakes),
+    low: tri(x, 0, 25, 50),
+    medium: tri(x, 40, 55, 70),
+    high: tri(x, 65, 80, 100),
   };
 }
 
-type FuzzyLevel = "low" | "medium" | "high";
-
-function toFuzzyLevel(score: number): FuzzyLevel {
-  if (score <= 0.33) return "low";
-  if (score <= 0.66) return "medium";
-  return "high";
+function gradeMF(lbl: "G1" | "G2" | "G3" | "G4" | "G5" | "G6", x: number) {
+  const c = { G1: 1, G2: 2, G3: 3, G4: 4, G5: 5, G6: 6 }[lbl];
+  return tri(x, c - 0.7, c, c + 0.7);
 }
 
-function inferGradeLevel(skills: FuzzySkillScores): number {
-  const {
-    arithmetic_fluidity,
-    number_sense,
-    sequential_thinking,
-    comparison_skill,
-    visual_matching,
-    audio_recognition,
-  } = skills;
+// Masks: do not punish when evidence is missing
+// neutral baseline = 0.5 (neither helps nor hurts)
+const NEUTRAL = 0.5;
+const pos = (mu: number, cov?: number) => (cov && cov > 0 ? mu : NEUTRAL);
+const neg = (mu: number, cov?: number) => (cov && cov > 0 ? mu : 0); // still don't accuse without evidence
 
-  // Weighted average with fuzzy logic
-  const score =
-    0.25 * arithmetic_fluidity +
-    0.2 * number_sense +
-    0.15 * sequential_thinking +
-    0.15 * comparison_skill +
-    0.15 * visual_matching +
-    0.1 * audio_recognition;
+export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
+  const F = Object.fromEntries(
+    Object.entries(axes).map(([k, v]) => [k, fuzzify(v)])
+  ) as Record<keyof Axes, { low: number; medium: number; high: number }>;
 
-  if (score <= 0.2) return 1; // severe difficulty
-  if (score <= 0.35) return 2;
-  if (score <= 0.5) return 3;
-  if (score <= 0.65) return 4;
-  if (score <= 0.7) return 5;
-  return 6;
-}
+  const C = coverage || {};
 
-type RemediationTier = "light" | "moderate" | "intense";
-
-function inferRemediationTier(skills: FuzzySkillScores): RemediationTier {
-  const averageScore = Object.values(skills).reduce((a, b) => a + b, 0) / 6;
-
-  if (averageScore < 0.4) return "intense";
-  if (averageScore < 0.7) return "moderate";
-  return "light";
-}
-
-function getPeerGroupSignature(skills: FuzzySkillScores): string {
-  const levels = Object.entries(skills).map(
-    ([key, val]) => `${key}:${toFuzzyLevel(val)}`
-  );
-  return levels.join("|"); // unique fuzzy signature
-}
-
-export function evaluateFuzzyStudentProfile(skills: FuzzySkillScores) {
-  const level = inferGradeLevel(skills);
-  const tier = inferRemediationTier(skills);
-  const peerGroup = getPeerGroupSignature(skills);
-
-  return {
-    inferredGrade: level,
-    remediationTier: tier,
-    peerGroupSignature: peerGroup,
-    fuzzyLevels: Object.fromEntries(
-      Object.entries(skills).map(([k, v]) => [k, toFuzzyLevel(v)])
+  // -------- Rule base (G1..G6) with masking --------
+  const rG1 = Math.max(
+    Math.min(
+      neg(F.arithmetic_fluidity.low, C.arithmetic_fluidity),
+      neg(F.number_sense.low, C.number_sense)
     ),
+    Math.min(
+      neg(F.number_sense.low, C.number_sense),
+      neg(F.sequential_thinking.low, C.sequential_thinking)
+    )
+  );
+  const rG2 = Math.min(
+    pos(F.arithmetic_fluidity.medium, C.arithmetic_fluidity),
+    neg(F.number_sense.low, C.number_sense)
+  );
+
+  const rG3 = Math.min(
+    pos(F.arithmetic_fluidity.medium, C.arithmetic_fluidity),
+    pos(F.number_sense.medium, C.number_sense)
+  );
+  const rG4 = Math.min(
+    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.number_sense.medium, C.number_sense),
+    Math.max(
+      pos(F.sequential_thinking.medium, C.sequential_thinking),
+      pos(F.comparison_skill.medium, C.comparison_skill)
+    )
+  );
+  const rG5 = Math.min(
+    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.number_sense.high, C.number_sense),
+    Math.max(
+      pos(F.sequential_thinking.medium, C.sequential_thinking),
+      pos(F.comparison_skill.high, C.comparison_skill)
+    )
+  );
+  const rG6 = Math.min(
+    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.number_sense.high, C.number_sense),
+    pos(F.sequential_thinking.high, C.sequential_thinking),
+    Math.max(
+      pos(F.comparison_skill.high, C.comparison_skill),
+      pos(F.visual_matching.high, C.visual_matching),
+      pos(F.audio_recognition.high, C.audio_recognition)
+    )
+  );
+
+  function aggregated(x: number) {
+    return Math.max(
+      Math.min(rG1, gradeMF("G1", x)),
+      Math.min(rG2, gradeMF("G2", x)),
+      Math.min(rG3, gradeMF("G3", x)),
+      Math.min(rG4, gradeMF("G4", x)),
+      Math.min(rG5, gradeMF("G5", x)),
+      Math.min(rG6, gradeMF("G6", x))
+    );
+  }
+
+  let num = 0,
+    den = 0;
+  for (let x = 1; x <= 6; x += 0.01) {
+    const mu = aggregated(x);
+    num += mu * x;
+    den += mu;
+  }
+  const inferredGrade = den ? +(num / den).toFixed(2) : 1.0;
+
+  const confidence = computeFuzzyConfidence(coverage);
+
+  return {
+    inferredGrade,
+    memberships: F,
+    coverage: C,
+    ruleFiring: { rG1, rG2, rG3, rG4, rG5, rG6 },
+    confidence,
   };
+}
+
+// --- confidence helper (0..1) ---
+// Emphasize core math (AF+NS), but still reflect overall coverage of the 6 axes.
+export function computeFuzzyConfidence(
+  coverage: Partial<
+    Record<
+      | "arithmetic_fluidity"
+      | "number_sense"
+      | "sequential_thinking"
+      | "comparison_skill"
+      | "visual_matching"
+      | "audio_recognition",
+      number
+    >
+  >
+): number {
+  const get = (k: string) => coverage[k as keyof typeof coverage] ?? 0;
+  const core = (get("arithmetic_fluidity") + get("number_sense")) / 2;
+  const mean =
+    (get("arithmetic_fluidity") +
+      get("number_sense") +
+      get("sequential_thinking") +
+      get("comparison_skill") +
+      get("visual_matching") +
+      get("audio_recognition")) /
+    6;
+  return +(0.6 * core + 0.4 * mean).toFixed(2); // stronger weight on core
 }

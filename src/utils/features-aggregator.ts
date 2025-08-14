@@ -1,116 +1,152 @@
-type Log = {
-  isCorrect?: boolean;
-  timeSpentMs?: number;
-  error_type?: string | null;
-  // ...plus per-game fields (question, selected, etc.)
+type Attempt = {
+  logs?: any[];
+  scorePercent?: number;
+  success?: boolean;
 };
 
-type Skill =
-  | "number_sense"
-  | "arith_fluency"
-  | "place_value"
-  | "comparison"
-  | "sequential_thinking"
-  | "audio_recognition";
+type MiniGamesResults = Record<string, Attempt[]>;
 
-type SkillFeatures = {
-  accuracy: number; // 0..1
-  zLatency: number; // z-score vs task norm (0 if no norm yet)
-  stability: number; // 1 - CV(latency of correct)
-  errSeverity: number; // 0..1 (weighted by archetypes)
-};
+const AXES = [
+  "arithmetic_fluidity",
+  "number_sense",
+  "sequential_thinking",
+  "comparison_skill",
+  "visual_matching",
+  "audio_recognition",
+] as const;
+type Axis = (typeof AXES)[number];
 
-const ERROR_WEIGHTS: Record<string, number> = {
-  place_value: 0.9,
-  operation_swap: 0.8,
-  sign_error: 0.7,
-  reversal: 0.6,
-  unknown: 0.4,
-};
-
-function zscore(latencies: number[]): number {
-  if (!latencies.length) return 0;
-  const m = latencies.reduce((a, b) => a + b, 0) / latencies.length;
-  const v =
-    latencies.reduce((a, b) => a + (b - m) * (b - m), 0) /
-    (latencies.length || 1);
-  const sd = Math.sqrt(v) || 1;
-  // return mean z for the session; replace with per-task norm if available
-  return (m - 0) / sd;
+function latest(arr?: Attempt[] | null): Attempt | null {
+  if (!arr) return null;
+  const valid = arr.filter(Boolean);
+  return valid.length ? valid[valid.length - 1] : null;
 }
 
-function stabilityOf(correctLatencies: number[]): number {
-  if (correctLatencies.length < 2) return 1;
-  const m =
-    correctLatencies.reduce((a, b) => a + b, 0) / correctLatencies.length;
-  const sd = Math.sqrt(
-    correctLatencies.reduce((a, b) => a + (b - m) * (b - m), 0) /
-      (correctLatencies.length || 1)
-  );
-  const cv = m ? sd / m : 1;
-  return Math.max(0, Math.min(1, 1 - cv)); // 1 - CV
+function errRate(a: Attempt | null): number {
+  if (!a) return 1;
+  const s = typeof a.scorePercent === "number" ? a.scorePercent : 0;
+  return Math.max(0, Math.min(1, 1 - s / 100));
 }
 
-// Map mini-games → skills (aligns to §2.2)
-const GAME_SKILL: Record<string, Skill> = {
-  choose_answer: "number_sense",
-  vertical_operations: "arith_fluency",
-  identify_place_value: "place_value",
-  compare_numbers: "comparison",
-  order_numbers: "sequential_thinking",
-  tap_matching_pairs: "number_sense",
-  find_previous_next_number: "sequential_thinking",
-  decompose_number: "place_value",
-  find_compositions: "arith_fluency",
-  multi_step_problem: "sequential_thinking",
-  read_number_aloud: "audio_recognition",
+function slowRate(a: Attempt | null): number {
+  const logs = (a?.logs || []).filter(Boolean);
+  if (!logs.length) return 0;
+  const slow = logs.filter((l) => l.answerTimeCategory === "slow").length;
+  return slow / logs.length;
+}
+
+// 0..100 perf from error+speed (weights tunable per axis/game if needed)
+function perfFromAttempt(a: Attempt | null, wErr = 0.7, wSlow = 0.3): number {
+  const v = 1 - (errRate(a) * wErr + slowRate(a) * wSlow); // 0..1
+  return Math.max(0, Math.min(100, Math.round(v * 100)));
+}
+
+// ---- Game → Axis contribution matrix (sums to 1 per game) ----
+// Rationale (matches skills declared in mini-games.json):
+// - vertical_operations → arithmetic_fluidity (precision/fluency) :contentReference[oaicite:1]{index=1}
+// - choose_answer → arithmetic_fluidity + number_sense + sequential_thinking (reading ops in context) :contentReference[oaicite:2]{index=2}
+/*  find_compositions → arithmetic_fluidity + number_sense (composition logic)
+    multi_step_problem → arithmetic_fluidity + sequential_thinking
+    find_previous_next_number, order_numbers → sequential_thinking
+    compare_numbers → comparison_skill
+    tap_matching_pairs → visual_matching
+    identify_place_value, decompose_number, write_number_in_letters → number_sense
+    what_number_do_you_hear, read_number_aloud → audio_recognition */
+const MAP: Record<string, Partial<Record<Axis, number>>> = {
+  vertical_operations: { arithmetic_fluidity: 1.0 },
+  choose_answer: {
+    arithmetic_fluidity: 0.6,
+    number_sense: 0.2,
+    sequential_thinking: 0.2,
+  },
+  find_compositions: { arithmetic_fluidity: 0.6, number_sense: 0.4 },
+  multi_step_problem: { arithmetic_fluidity: 0.5, sequential_thinking: 0.5 },
+
+  find_previous_next_number: { sequential_thinking: 1.0 },
+  order_numbers: { sequential_thinking: 1.0 },
+
+  compare_numbers: { comparison_skill: 1.0 },
+
+  tap_matching_pairs: { visual_matching: 1.0 },
+
+  identify_place_value: { number_sense: 1.0 },
+  decompose_number: { number_sense: 1.0 },
+  write_number_in_letters: { number_sense: 1.0 },
+
+  what_number_do_you_hear: { audio_recognition: 1.0 },
+  read_number_aloud: { audio_recognition: 1.0 },
 };
 
-export function aggregateFeaturesBySkill(
-  allLogs: Record<string, Log[]>
-): Record<Skill, SkillFeatures> {
-  const perSkill: Partial<Record<Skill, SkillFeatures>> = {};
-  for (const [game, logs] of Object.entries(allLogs)) {
-    const skill = GAME_SKILL[game];
-    if (!skill || !logs?.length) continue;
+// Optional: per-axis/per-game tuning for speed weight
+const SPEED_WEIGHT_BY_GAME: Record<string, number> = {
+  // e.g., counting speed more on fluency tasks:
+  vertical_operations: 0.35,
+  choose_answer: 0.3,
+  multi_step_problem: 0.3,
+};
 
-    // Observational-only: read_number_aloud excluded from accuracy/err
-    const obsOnly = game === "read_number_aloud";
+export function buildFuzzyInputsFromResults(
+  miniGames: MiniGamesResults,
+  includedGameTypes?: string[]
+) {
+  // If teacher passed a subset, filter to it; otherwise use whatever shows up in results.
+  const consideredGames = (
+    includedGameTypes && includedGameTypes.length
+      ? includedGameTypes
+      : Object.keys(miniGames)
+  ).filter((g) => MAP[g]); // keep only mapped games
 
-    const lat = logs.map((l) => l.timeSpentMs ?? 0).filter((x) => x > 0);
-    const correctLat = logs
-      .filter((l) => l.isCorrect)
-      .map((l) => l.timeSpentMs ?? 0)
-      .filter((x) => x > 0);
-    const acc = obsOnly
-      ? 0
-      : logs.filter((l) => l.isCorrect).length / logs.length;
-    const stab = stabilityOf(correctLat);
-    const z = zscore(lat);
-    const errSev = obsOnly
-      ? 0
-      : logs.reduce(
-          (w, l) =>
-            w +
-            (l.isCorrect ? 0 : ERROR_WEIGHTS[l.error_type ?? "unknown"] ?? 0.4),
-          0
-        ) / Math.max(1, logs.length);
-
-    const f: SkillFeatures = {
-      accuracy: acc,
-      zLatency: z,
-      stability: stab,
-      errSeverity: errSev,
-    };
-    perSkill[skill] = perSkill[skill]
-      ? {
-          // merge if multiple games map to the same skill
-          accuracy: (perSkill[skill]!.accuracy + f.accuracy) / 2,
-          zLatency: (perSkill[skill]!.zLatency + f.zLatency) / 2,
-          stability: (perSkill[skill]!.stability + f.stability) / 2,
-          errSeverity: (perSkill[skill]!.errSeverity + f.errSeverity) / 2,
-        }
-      : f;
+  // Per-game performance (defined only if attempted)
+  const perGamePerf: Record<string, number | undefined> = {};
+  for (const gameType of consideredGames) {
+    const a = latest(miniGames[gameType] || null);
+    const wSlow = SPEED_WEIGHT_BY_GAME[gameType] ?? 0.3;
+    perGamePerf[gameType] = perfFromAttempt(a, 0.7, wSlow); // may be undefined
   }
-  return perSkill as Record<Skill, SkillFeatures>;
+
+  // For each axis, compute:
+  // - denom = sum of mapping weights for considered games
+  // - num = weighted sum of perf for games that have a defined perf
+  // - coverage = (sum of weights with defined perf) / denom
+  // - axis value = num / (sum of weights with defined perf), else undefined
+  const axes: Partial<Record<Axis, number>> = {};
+  const coverage: Record<Axis, number> = {
+    arithmetic_fluidity: 0,
+    number_sense: 0,
+    sequential_thinking: 0,
+    comparison_skill: 0,
+    visual_matching: 0,
+    audio_recognition: 0,
+  };
+
+  for (const axis of AXES) {
+    let denom = 0,
+      have = 0,
+      num = 0;
+    for (const g of consideredGames) {
+      const w = MAP[g]?.[axis] ?? 0;
+      if (!w) continue;
+      denom += w;
+      const p = perGamePerf[g];
+      if (typeof p === "number") {
+        have += w;
+        num += p * w;
+      }
+    }
+    coverage[axis] = denom ? +(have / denom).toFixed(3) : 0; // 0..1
+    axes[axis] = have ? Math.round(num / have) : undefined; // undefined = unknown
+  }
+
+  // Return both axis values and coverage
+  return {
+    axes: {
+      arithmetic_fluidity: axes.arithmetic_fluidity ?? 50,
+      number_sense: axes.number_sense ?? 50,
+      sequential_thinking: axes.sequential_thinking ?? 50,
+      comparison_skill: axes.comparison_skill ?? 50,
+      visual_matching: axes.visual_matching ?? 50,
+      audio_recognition: axes.audio_recognition ?? 50,
+    },
+    coverage,
+  };
 }
