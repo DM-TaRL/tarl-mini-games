@@ -7,7 +7,7 @@ type Attempt = {
 type MiniGamesResults = Record<string, Attempt[]>;
 
 const AXES = [
-  "arithmetic_fluidity",
+  "arithmetic_fluency",
   "number_sense",
   "sequential_thinking",
   "comparison_skill",
@@ -43,24 +43,24 @@ function perfFromAttempt(a: Attempt | null, wErr = 0.7, wSlow = 0.3): number {
 
 // ---- Game → Axis contribution matrix (sums to 1 per game) ----
 // Rationale (matches skills declared in mini-games.json):
-// - vertical_operations → arithmetic_fluidity (precision/fluency) :contentReference[oaicite:1]{index=1}
-// - choose_answer → arithmetic_fluidity + number_sense + sequential_thinking (reading ops in context) :contentReference[oaicite:2]{index=2}
-/*  find_compositions → arithmetic_fluidity + number_sense (composition logic)
-    multi_step_problem → arithmetic_fluidity + sequential_thinking
+// - vertical_operations → arithmetic_fluency (precision/fluency) :contentReference[oaicite:1]{index=1}
+// - choose_answer → arithmetic_fluency + number_sense + sequential_thinking (reading ops in context) :contentReference[oaicite:2]{index=2}
+/*  find_compositions → arithmetic_fluency + number_sense (composition logic)
+    multi_step_problem → arithmetic_fluency + sequential_thinking
     find_previous_next_number, order_numbers → sequential_thinking
     compare_numbers → comparison_skill
     tap_matching_pairs → visual_matching
     identify_place_value, decompose_number, write_number_in_letters → number_sense
     what_number_do_you_hear, read_number_aloud → audio_recognition */
 const MAP: Record<string, Partial<Record<Axis, number>>> = {
-  vertical_operations: { arithmetic_fluidity: 1.0 },
+  vertical_operations: { arithmetic_fluency: 1.0 },
   choose_answer: {
-    arithmetic_fluidity: 0.6,
+    arithmetic_fluency: 0.6,
     number_sense: 0.2,
     sequential_thinking: 0.2,
   },
-  find_compositions: { arithmetic_fluidity: 0.6, number_sense: 0.4 },
-  multi_step_problem: { arithmetic_fluidity: 0.5, sequential_thinking: 0.5 },
+  find_compositions: { arithmetic_fluency: 0.6, number_sense: 0.4 },
+  multi_step_problem: { arithmetic_fluency: 0.5, sequential_thinking: 0.5 },
 
   find_previous_next_number: { sequential_thinking: 1.0 },
   order_numbers: { sequential_thinking: 1.0 },
@@ -111,7 +111,7 @@ export function buildFuzzyInputsFromResults(
   // - axis value = num / (sum of weights with defined perf), else undefined
   const axes: Partial<Record<Axis, number>> = {};
   const coverage: Record<Axis, number> = {
-    arithmetic_fluidity: 0,
+    arithmetic_fluency: 0,
     number_sense: 0,
     sequential_thinking: 0,
     comparison_skill: 0,
@@ -140,7 +140,7 @@ export function buildFuzzyInputsFromResults(
   // Return both axis values and coverage
   return {
     axes: {
-      arithmetic_fluidity: axes.arithmetic_fluidity ?? 50,
+      arithmetic_fluency: axes.arithmetic_fluency ?? 50,
       number_sense: axes.number_sense ?? 50,
       sequential_thinking: axes.sequential_thinking ?? 50,
       comparison_skill: axes.comparison_skill ?? 50,

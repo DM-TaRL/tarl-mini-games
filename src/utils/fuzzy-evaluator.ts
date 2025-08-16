@@ -1,5 +1,5 @@
 export type Axes = {
-  arithmetic_fluidity: number; // 0..100 (higher = better)
+  arithmetic_fluency: number; // 0..100 (higher = better)
   number_sense: number;
   sequential_thinking: number;
   comparison_skill: number;
@@ -44,7 +44,7 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
   // -------- Rule base (G1..G6) with masking --------
   const rG1 = Math.max(
     Math.min(
-      neg(F.arithmetic_fluidity.low, C.arithmetic_fluidity),
+      neg(F.arithmetic_fluency.low, C.arithmetic_fluency),
       neg(F.number_sense.low, C.number_sense)
     ),
     Math.min(
@@ -53,16 +53,16 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
     )
   );
   const rG2 = Math.min(
-    pos(F.arithmetic_fluidity.medium, C.arithmetic_fluidity),
+    pos(F.arithmetic_fluency.medium, C.arithmetic_fluency),
     neg(F.number_sense.low, C.number_sense)
   );
 
   const rG3 = Math.min(
-    pos(F.arithmetic_fluidity.medium, C.arithmetic_fluidity),
+    pos(F.arithmetic_fluency.medium, C.arithmetic_fluency),
     pos(F.number_sense.medium, C.number_sense)
   );
   const rG4 = Math.min(
-    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.arithmetic_fluency.high, C.arithmetic_fluency),
     pos(F.number_sense.medium, C.number_sense),
     Math.max(
       pos(F.sequential_thinking.medium, C.sequential_thinking),
@@ -70,7 +70,7 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
     )
   );
   const rG5 = Math.min(
-    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.arithmetic_fluency.high, C.arithmetic_fluency),
     pos(F.number_sense.high, C.number_sense),
     Math.max(
       pos(F.sequential_thinking.medium, C.sequential_thinking),
@@ -78,7 +78,7 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
     )
   );
   const rG6 = Math.min(
-    pos(F.arithmetic_fluidity.high, C.arithmetic_fluidity),
+    pos(F.arithmetic_fluency.high, C.arithmetic_fluency),
     pos(F.number_sense.high, C.number_sense),
     pos(F.sequential_thinking.high, C.sequential_thinking),
     Math.max(
@@ -124,7 +124,7 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
 export function computeFuzzyConfidence(
   coverage: Partial<
     Record<
-      | "arithmetic_fluidity"
+      | "arithmetic_fluency"
       | "number_sense"
       | "sequential_thinking"
       | "comparison_skill"
@@ -135,9 +135,9 @@ export function computeFuzzyConfidence(
   >
 ): number {
   const get = (k: string) => coverage[k as keyof typeof coverage] ?? 0;
-  const core = (get("arithmetic_fluidity") + get("number_sense")) / 2;
+  const core = (get("arithmetic_fluency") + get("number_sense")) / 2;
   const mean =
-    (get("arithmetic_fluidity") +
+    (get("arithmetic_fluency") +
       get("number_sense") +
       get("sequential_thinking") +
       get("comparison_skill") +
