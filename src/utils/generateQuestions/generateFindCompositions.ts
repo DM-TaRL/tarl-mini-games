@@ -27,124 +27,75 @@ export function generateFindCompositions(
   config: FindCompositionsConfig
 ): FindCompositionsQuestion[] {
   const { minNumCompositions, maxNumberRange, operation } = config;
-  const questions: FindCompositionsQuestion[] = [];
-  const maxAttempts = 50;
-  let attempts = 0;
-  const seenTargets = new Set<number>();
 
-  // Calculate the actual numeric range based on digit count
+  const questions: FindCompositionsQuestion[] = [];
+  const maxAttempts = 60; // a few more tries so we rarely need to relax
+  const numQuestions = 1;
+
+  // Target range by digit count (same as you had)
   const maxValue = Math.pow(10, maxNumberRange) - 1;
   const minValue = Math.pow(10, maxNumberRange - 1);
 
-  const numQuestions = 1;
+  // keep attempting until we produce one feasible round
+  let attempts = 0;
+  let bestSoFar: { target: number; comps: [number, number][] } | null = null;
+
   while (questions.length < numQuestions && attempts < maxAttempts) {
     attempts++;
-    const compositions: [number, number][] = [];
-    let target: number;
 
-    // Operation-specific generation that respects digit count
-    switch (operation) {
-      case "Addition":
-        // Generate pairs where both numbers have <= maxNumberRange digits
-        target = getRandomInt(minValue, maxValue);
-        for (let a = 1; a < target; a++) {
-          const b = target - a;
-          if (
-            a.toString().length <= maxNumberRange &&
-            b.toString().length <= maxNumberRange
-          ) {
-            compositions.push([a, b]);
-          }
-        }
-        break;
+    // Pick a target uniformly in the digit range
+    const target =
+      minValue <= maxValue ? getRandomInt(minValue, maxValue) : maxValue;
 
-      case "Subtraction":
-        // Generate pairs where result is positive and respects digit count
-        target = getRandomInt(minValue, maxValue);
-        for (let a = target; a <= maxValue; a++) {
-          const b = a - target;
-          if (b.toString().length <= maxNumberRange) {
-            compositions.push([a, b]);
-          }
-        }
-        break;
+    const possibleCount = countCompositions(operation, target, maxNumberRange);
 
-      case "Multiplication":
-        // Find factors respecting digit count
-        target = getRandomInt(minValue, maxValue);
-        for (let a = 1; a <= Math.sqrt(target); a++) {
-          if (target % a === 0) {
-            const b = target / a;
-            if (
-              a.toString().length <= maxNumberRange &&
-              b.toString().length <= maxNumberRange
-            ) {
-              compositions.push([a, b]);
-              if (a !== b) {
-                compositions.push([b, a]);
-              }
-            }
-          }
-        }
-        break;
-
-      case "Division":
-        for (let b = 1; b <= maxValue; b++) {
-          for (let a = b; a <= maxValue; a++) {
-            if (a % b === 0) {
-              const t = a / b;
-              if (
-                t >= minValue &&
-                t <= maxValue &&
-                a.toString().length <= maxNumberRange &&
-                b.toString().length <= maxNumberRange
-              ) {
-                compositions.push([a, b]);
-              }
-            }
-          }
-        }
-
-        if (compositions.length >= minNumCompositions) {
-          // Collect all valid integer targets
-          const validTargets = Array.from(
-            new Set(
-              compositions
-                .map(([a, b]) => a / b)
-                .filter((t) => Number.isInteger(t))
-            )
-          ).filter((t) => !seenTargets.has(t));
-
-          if (validTargets.length === 0) continue;
-
-          // Pick a random integer target
-          target =
-            validTargets[Math.floor(Math.random() * validTargets.length)];
-          seenTargets.add(target);
-
-          questions.push({
-            target,
-            operation,
-            compositions: shuffleArray(
-              compositions.filter(([x, y]) => x / y === target)
-            ).slice(0, minNumCompositions),
-            correctAnswerCount: minNumCompositions,
-          });
-        }
-        continue;
+    // Track the best target we've seen so far (largest number of compositions)
+    if (!bestSoFar || possibleCount > bestSoFar.comps.length) {
+      bestSoFar = {
+        target,
+        comps: buildCompositionsForTarget(operation, target, maxNumberRange),
+      };
     }
 
-    if (seenTargets.has(target)) continue;
-    seenTargets.add(target);
+    const all = buildCompositionsForTarget(operation, target, maxNumberRange);
 
-    if (compositions.length >= minNumCompositions) {
+    if (possibleCount >= minNumCompositions) {
+      const picked = shuffleArray(all).slice(0, minNumCompositions);
       questions.push({
         target,
         operation,
-        compositions: shuffleArray(compositions).slice(0, minNumCompositions),
+        compositions: picked,
         correctAnswerCount: minNumCompositions,
       });
+      break;
+    } else if (possibleCount >= 2) {
+      // not enough for 3, but at least 2 are possible -> require 2
+      const picked = shuffleArray(all).slice(0, 2);
+      questions.push({
+        target,
+        operation,
+        compositions: picked,
+        correctAnswerCount: 2,
+      });
+      break;
     }
+  }
+
+  // If still nothing feasible, gracefully reduce the requirement to what's possible
+  if (questions.length === 0) {
+    const fallback = bestSoFar ?? {
+      target: minValue,
+      comps: buildCompositionsForTarget(operation, minValue, maxNumberRange),
+    };
+    const feasible = Math.max(1, fallback.comps.length);
+    const required = feasible >= 2 ? 2 : feasible >= 1 ? 1 : 0;
+
+    questions.push({
+      target: fallback.target,
+      operation,
+      compositions: shuffleArray(fallback.comps).slice(0, required),
+      correctAnswerCount: Math.max(1, required),
+    });
   }
 
   return questions;
@@ -188,5 +139,144 @@ export function getMaxCompositions(
       return maxNumberRange === 1 ? 2 : 5;
     default:
       return 5;
+  }
+}
+
+function buildCompositionsForTarget(
+  op: Operation,
+  target: number,
+  maxNumberRange: number
+): [number, number][] {
+  const out: [number, number][] = [];
+  const maxVal = Math.pow(10, maxNumberRange) - 1;
+  const limit = operandDigitLimit(op, target, maxNumberRange); // NEW
+
+  switch (op) {
+    case "Addition": {
+      for (let a = 1; a < target; a++) {
+        const b = target - a;
+        if (b < 1) continue;
+        if (String(a).length <= limit && String(b).length <= limit) {
+          out.push([a, b]); // ordered
+        }
+      }
+      return out;
+    }
+
+    case "Subtraction": {
+      for (let a = target; a <= maxVal; a++) {
+        const b = a - target; // >=0
+        if (String(b).length <= limit) {
+          out.push([a, b]); // ordered
+        }
+      }
+      return out;
+    }
+
+    case "Multiplication": {
+      if (target <= 0) return out;
+      const lim = Math.floor(Math.sqrt(target));
+      for (let a = 1; a <= lim; a++) {
+        if (target % a) continue;
+        const b = target / a;
+        if (String(a).length <= limit && String(b).length <= limit) {
+          out.push([a, b]);
+          if (a !== b) out.push([b, a]); // ordered both ways
+        }
+      }
+      return out;
+    }
+
+    case "Division": {
+      const maxValB = Math.pow(10, maxNumberRange) - 1;
+      for (let b = 1; b <= maxValB; b++) {
+        const a = target * b;
+        if (!Number.isInteger(a) || a < 0) continue;
+        if (String(a).length <= limit && String(b).length <= limit) {
+          out.push([a, b]); // ordered
+        }
+      }
+      return out;
+    }
+  }
+}
+
+function operandDigitLimit(
+  op: Operation,
+  target: number,
+  maxNumberRange: number
+): number {
+  const tlen = Math.max(1, String(Math.abs(target)).length);
+  switch (op) {
+    case "Addition":
+    case "Subtraction":
+      return tlen;
+    case "Multiplication":
+      return Math.ceil(tlen / 2);
+    case "Division":
+      // keep simple; you can refine later to match your divisor/dividend UI
+      return Math.ceil(tlen / 2);
+    default:
+      return maxNumberRange;
+  }
+}
+
+// Count how many compositions exist for (operation, target)
+// under your digit-count constraint (maxNumberRange digits per operand).
+// IMPORTANT: Addition & Multiplication are treated as ORDERED here,
+// to match our original generator which pushes [a,b] and [b,a].
+function countCompositions(
+  op: Operation,
+  target: number,
+  maxNumberRange: number
+): number {
+  const maxVal = Math.pow(10, maxNumberRange) - 1;
+  const limit = operandDigitLimit(op, target, maxNumberRange); // NEW
+
+  switch (op) {
+    case "Addition": {
+      let c = 0;
+      for (let a = 1; a < target; a++) {
+        const b = target - a;
+        if (b < 1) continue;
+        if (String(a).length <= limit && String(b).length <= limit) c++;
+      }
+      return c;
+    }
+
+    case "Subtraction": {
+      let c = 0;
+      for (let a = target; a <= maxVal; a++) {
+        const b = a - target;
+        if (String(b).length <= limit) c++;
+      }
+      return c;
+    }
+
+    case "Multiplication": {
+      if (target <= 0) return 0;
+      let c = 0;
+      const lim = Math.floor(Math.sqrt(target));
+      for (let a = 1; a <= lim; a++) {
+        if (target % a) continue;
+        const b = target / a;
+        if (String(a).length <= limit && String(b).length <= limit) {
+          c += a === b ? 1 : 2; // ordered
+        }
+      }
+      return c;
+    }
+
+    case "Division": {
+      if (target < 0) return 0;
+      let c = 0;
+      const maxValB = Math.pow(10, maxNumberRange) - 1;
+      for (let b = 1; b <= maxValB; b++) {
+        const a = target * b;
+        if (!Number.isInteger(a) || a < 0) continue;
+        if (String(a).length <= limit && String(b).length <= limit) c++;
+      }
+      return c;
+    }
   }
 }
