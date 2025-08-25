@@ -1,3 +1,9 @@
+import {
+  computeGameDifficulty,
+  getFuzzyMembershipByAxisDifficulty,
+} from "./fuzzy-utils";
+import { MAP } from "./features-aggregator";
+
 export type Axes = {
   arithmetic_fluency: number; // 0..100 (higher = better)
   number_sense: number;
@@ -14,18 +20,54 @@ function tri(x: number, a: number, b: number, c: number) {
   if (x === b) return 1;
   return x < b ? (x - a) / (b - a) : (c - x) / (c - b);
 }
-function fuzzify(x: number) {
-  // we can later calibrate these breakpoints to data.
-  return {
-    low: tri(x, 0, 25, 50),
-    medium: tri(x, 40, 55, 70),
-    high: tri(x, 65, 80, 100),
+
+function makeFuzzifier(useDynamic: boolean, testConfig?: any[]) {
+  const triangleMap: Record<
+    string,
+    {
+      low: [number, number, number];
+      medium: [number, number, number];
+      high: [number, number, number];
+    }
+  > = {};
+  for (const axis of [
+    "arithmetic_fluency",
+    "number_sense",
+    "sequential_thinking",
+    "comparison_skill",
+    "visual_matching",
+    "audio_recognition",
+  ]) {
+    if (useDynamic && testConfig) {
+      const relevant = testConfig.filter((game) => MAP[game.gameType]?.[axis]);
+      const avgDifficulty = relevant.length
+        ? relevant.reduce(
+            (sum, g) => sum + computeGameDifficulty(g.gameType, g.config),
+            0
+          ) / relevant.length
+        : 50;
+      triangleMap[axis] = getFuzzyMembershipByAxisDifficulty(avgDifficulty);
+    } else {
+      triangleMap[axis] = {
+        low: [0, 0, 50],
+        medium: [40, 55, 70],
+        high: [65, 80, 100],
+      };
+    }
+  }
+  return function fuzzify(x: number, axis: string) {
+    const t = triangleMap[axis];
+    return {
+      low: tri(x, ...t.low),
+      medium: tri(x, ...t.medium),
+      high: tri(x, ...t.high),
+    };
   };
 }
 
 function gradeMF(lbl: "G1" | "G2" | "G3" | "G4" | "G5" | "G6", x: number) {
   const c = { G1: 1, G2: 2, G3: 3, G4: 4, G5: 5, G6: 6 }[lbl];
-  return tri(x, c - 0.7, c, c + 0.7);
+  return tri(x, c - 1.0, c, c + 1.0);
 }
 
 // Masks: do not punish when evidence is missing
@@ -34,9 +76,15 @@ const NEUTRAL = 0.5;
 const pos = (mu: number, cov?: number) => (cov && cov > 0 ? mu : NEUTRAL);
 const neg = (mu: number, cov?: number) => (cov && cov > 0 ? mu : 0); // still don't accuse without evidence
 
-export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
+export function inferFuzzyGrade(
+  axes: Axes,
+  coverage?: Coverage,
+  testConfig?: any[],
+  useDynamic = false
+) {
+  const fuzzify = makeFuzzifier(useDynamic, testConfig);
   const F = Object.fromEntries(
-    Object.entries(axes).map(([k, v]) => [k, fuzzify(v)])
+    Object.entries(axes).map(([k, v]) => [k, fuzzify(v, k)])
   ) as Record<keyof Axes, { low: number; medium: number; high: number }>;
 
   const C = coverage || {};
@@ -122,17 +170,7 @@ export function inferFuzzyGrade(axes: Axes, coverage?: Coverage) {
 // --- confidence helper (0..1) ---
 // Emphasize core math (AF+NS), but still reflect overall coverage of the 6 axes.
 export function computeFuzzyConfidence(
-  coverage: Partial<
-    Record<
-      | "arithmetic_fluency"
-      | "number_sense"
-      | "sequential_thinking"
-      | "comparison_skill"
-      | "visual_matching"
-      | "audio_recognition",
-      number
-    >
-  >
+  coverage: Partial<Record<keyof Axes, number>>
 ): number {
   const get = (k: string) => coverage[k as keyof typeof coverage] ?? 0;
   const core = (get("arithmetic_fluency") + get("number_sense")) / 2;
@@ -144,5 +182,5 @@ export function computeFuzzyConfidence(
       get("visual_matching") +
       get("audio_recognition")) /
     6;
-  return +(0.6 * core + 0.4 * mean).toFixed(2); // stronger weight on core
+  return +(0.6 * core + 0.4 * mean).toFixed(2);
 }

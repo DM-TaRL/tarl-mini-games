@@ -87,7 +87,8 @@ const SPEED_WEIGHT_BY_GAME: Record<string, number> = {
 
 export function buildFuzzyInputsFromResults(
   miniGames: MiniGamesResults,
-  includedGameTypes?: string[]
+  includedGameTypes?: string[],
+  missedAxes?: Partial<Record<Axis, boolean>>
 ) {
   // If teacher passed a subset, filter to it; otherwise use whatever shows up in results.
   const consideredGames = (
@@ -134,7 +135,14 @@ export function buildFuzzyInputsFromResults(
       }
     }
     coverage[axis] = denom ? +(have / denom).toFixed(3) : 0; // 0..1
-    axes[axis] = have ? Math.round(num / have) : undefined; // undefined = unknown
+    // axes[axis] = have ? Math.round(num / have) : undefined; // undefined = unknown
+    if (have) {
+      axes[axis] = Math.round(num / have);
+    } else if (missedAxes[axis]) {
+      axes[axis] = 30; // Penalize missing axes (30 instead of fallback 50)
+    } else {
+      axes[axis] = 50; // Unknown but not penalized
+    }
   }
 
   // Return both axis values and coverage
@@ -149,4 +157,22 @@ export function buildFuzzyInputsFromResults(
     },
     coverage,
   };
+}
+
+export { MAP };
+
+export function getMissedAxesFromIncompleteGames(
+  allGames: string[],
+  completedGames: string[]
+): Partial<Record<Axis, boolean>> {
+  const missedAxes: Partial<Record<Axis, boolean>> = {};
+  const missed = allGames.filter((g) => !completedGames.includes(g));
+  for (const game of missed) {
+    const axes = MAP[game];
+    if (!axes) continue;
+    for (const axis of Object.keys(axes) as Axis[]) {
+      missedAxes[axis] = true;
+    }
+  }
+  return missedAxes;
 }
