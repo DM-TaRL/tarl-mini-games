@@ -74,7 +74,7 @@ const MAP: Record<string, Partial<Record<Axis, number>>> = {
   write_number_in_letters: { number_sense: 1.0 },
 
   what_number_do_you_hear: { audio_recognition: 1.0 },
-  read_number_aloud: { audio_recognition: 1.0 },
+  read_number_aloud: { number_sense: 1.0 },
 };
 
 // Optional: per-axis/per-game tuning for speed weight

@@ -85,9 +85,9 @@ export class DecisionTreeRunner {
         nodeId as keyof typeof MAX_ATTEMPTS.overridePerGame
       ] ?? MAX_ATTEMPTS.defaultMaxAttempts;
 
-    // Check if player exceeded maximum allowed mistakes
+    // Check if player exceeded maximum allowed attempts
     if (!success && state.attempts >= maxAttempts) {
-      return null; // End the test if max mistakes reached
+      return null; // End the test if max attempts reached
     }
 
     // If failed but still has attempts left, return same node to repeat

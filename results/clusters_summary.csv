@@ -1,0 +1,5 @@
+cluster,center_gradeNorm,center_confidence,center_coverage,size,dominantBand,meanGradeLabel
+0,0.444,0.563,0.591,165438,Developing,G3
+1,0.444,0.735,0.708,167807,Developing,G3
+2,0.821,0.565,0.592,335067,Proficient,G5
+3,0.821,0.737,0.709,331688,Proficient,G5
