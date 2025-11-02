@@ -1,0 +1,2 @@
+mean_abs_grade_diff,var_grade_static,var_grade_dynamic,slope_conf_cov_static,slope_conf_cov_dynamic,spearman_rho,var_band_G3_static,var_band_G3_dynamic,var_band_G4_static,var_band_G4_dynamic,var_band_G5_static,var_band_G5_dynamic,var_band_G6_static,var_band_G6_dynamic,static_path,dynamic_path
+0.864,2.606,1.775,0.996,0.996,0.475,0.0045,0.0118,0.0027,0.0131,0.0033,0.005,,,static/results.csv,dynamic/results.csv
