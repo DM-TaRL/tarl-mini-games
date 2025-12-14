@@ -1,3 +1,4 @@
+import { MiniGameInstance } from "../utils/order-miniGames";
 import { GameType } from "./mini-game-types";
 
 export const FORGIVENESS_RULES = {
@@ -159,6 +160,29 @@ export function buildDefaultDecisionTree(
       gameType: mg.gameType as GameType,
       configKey: "gradeConfig",
       children,
+    };
+  });
+}
+
+export function buildDecisionTreeFromSequence(
+  instances: MiniGameInstance[]
+): DecisionNode[] {
+  if (!instances.length) return [];
+
+  return instances.map((inst, i) => {
+    const isLast = i === instances.length - 1;
+    const nextId = isLast ? null : instances[i + 1].gameType;
+
+    return {
+      nodeId: inst.gameType,
+      gameType: inst.gameType,
+      configKey: "gradeConfig",
+      children: isLast
+        ? []
+        : [
+            { condition: "true", nodeId: nextId! }, // pass → next
+            { condition: "false", nodeId: inst.gameType }, // fail → retry same
+          ],
     };
   });
 }
