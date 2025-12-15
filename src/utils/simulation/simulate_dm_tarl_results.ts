@@ -35,7 +35,8 @@ type Axes = {
   visual_matching: number;
   audio_recognition: number;
 };
-const AXIS_KEYS: (keyof Axes)[] = [
+
+export const AXIS_KEYS: (keyof Axes)[] = [
   "arithmetic_fluency",
   "number_sense",
   "sequential_thinking",

@@ -156,7 +156,6 @@ This compiles to `/dist`, ready for consumption in your web projects.
 ## 📚 License
 
 Internal usage for **Mathoria / DM-TaRL** only
-© 2025 Najlae Abarghache — All rights reserved.
 
 ---
 
