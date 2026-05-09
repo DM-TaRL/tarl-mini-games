@@ -21,14 +21,14 @@ function shuffle<T>(array: T[]): T[] {
 
 export function generateTapMatchingPairs(
   config: TapMatchingPairsConfig,
-  language: Language = "ar"
+  language: Language = "ar",
 ): TapMatchingPairsQuestionSet {
   const { numPairs, maxNumberRange } = config;
 
-  // 1. Filter valid number-word pairs within range
-  const validPairs = allPairs.pairs.filter(
-    (pair) => pair.number <= maxNumberRange
-  );
+  //  maxNumberRange is digit count: 1→9, 2→99, 3→999, 4→9999, 5→99999
+  const maxValue = Math.pow(10, maxNumberRange) - 1;
+
+  const validPairs = allPairs.pairs.filter((pair) => pair.number <= maxValue);
 
   if (validPairs.length < numPairs) {
     throw new Error(`Not enough valid pairs in range 0-${maxNumberRange}`);
