@@ -30,19 +30,19 @@ export function categorizeTime(ms: number, gameType: GameType): TimeCategory {
   };
 
   const gameThresholds: Record<GameType, Thresholds> = {
-    find_compositions: { fast: 50000, medium: 100000 },
-    vertical_operations: { fast: 1000000, medium: 5000000 },
-    compare_numbers: { fast: 2000, medium: 5000 },
-    what_number_do_you_hear: { fast: 2000, medium: 5000 },
-    write_number_in_letters: { fast: 10000, medium: 50000 },
-    decompose_number: { fast: 10000, medium: 50000 },
-    identify_place_value: { fast: 10000, medium: 50000 },
-    order_numbers: { fast: 10000, medium: 50000 },
-    tap_matching_pairs: { fast: 3000, medium: 6000 },
-    find_previous_next_number: { fast: 6000, medium: 10000 },
-    choose_answer: { fast: 4000, medium: 10000 },
-    multi_step_problem: { fast: 1500000, medium: 3000000 },
-    read_number_aloud: { fast: 4000, medium: 10000 },
+    find_compositions: { fast: 120000, medium: 250000 },
+    vertical_operations: { fast: 450000, medium: 900000 },
+    compare_numbers: { fast: 10000, medium: 20000 },
+    what_number_do_you_hear: { fast: 10000, medium: 20000 },
+    read_number_aloud: { fast: 10000, medium: 20000 },
+    write_number_in_letters: { fast: 150000, medium: 300000 },
+    decompose_number: { fast: 150000, medium: 300000 },
+    identify_place_value: { fast: 150000, medium: 300000 },
+    order_numbers: { fast: 150000, medium: 300000 },
+    tap_matching_pairs: { fast: 60000, medium: 120000 },
+    find_previous_next_number: { fast: 60000, medium: 120000 },
+    choose_answer: { fast: 10000, medium: 20000 },
+    multi_step_problem: { fast: 750000, medium: 1500000 },
   };
 
   const thresholds = gameThresholds[gameType] || defaultThresholds;

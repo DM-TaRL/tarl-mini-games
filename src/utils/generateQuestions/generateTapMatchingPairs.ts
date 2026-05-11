@@ -24,16 +24,11 @@ export function generateTapMatchingPairs(
   language: Language = "ar",
 ): TapMatchingPairsQuestionSet {
   const { numPairs, maxNumberRange } = config;
-  const maxDigits = maxNumberRange; // reinterpret
 
-  const numericMax = Math.pow(10, maxDigits) - 1;
-  // optional: avoid 0 / keep at least 1 digit
-  const numericMin = maxDigits === 1 ? 0 : Math.pow(10, maxDigits - 1);
+  //  maxNumberRange is digit count: 1→9, 2→99, 3→999, 4→9999, 5→99999
+  const maxValue = Math.pow(10, maxNumberRange) - 1;
 
-  // 1. Filter valid number-word pairs within range
-  const validPairs = allPairs.pairs.filter(
-    (pair) => pair.number >= numericMin && pair.number <= numericMax,
-  );
+  const validPairs = allPairs.pairs.filter((pair) => pair.number <= maxValue);
 
   if (validPairs.length < numPairs) {
     throw new Error(`Not enough valid pairs in range 0-${maxNumberRange}`);
