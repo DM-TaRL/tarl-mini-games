@@ -53,5 +53,177 @@
     "fr": "/assets/audio/fr/10.mp3",
     "ar": "/assets/audio/ar/10.mp3",
     "en": "/assets/audio/en/10.mp3"
+  },
+
+  "13": {
+    "fr": "/assets/audio/fr/13.mp3",
+    "ar": "/assets/audio/ar/13.mp3",
+    "en": "/assets/audio/en/13.mp3"
+  },
+  "19": {
+    "fr": "/assets/audio/fr/19.mp3",
+    "ar": "/assets/audio/ar/19.mp3",
+    "en": "/assets/audio/en/19.mp3"
+  },
+  "22": {
+    "fr": "/assets/audio/fr/22.mp3",
+    "ar": "/assets/audio/ar/22.mp3",
+    "en": "/assets/audio/en/22.mp3"
+  },
+  "31": {
+    "fr": "/assets/audio/fr/31.mp3",
+    "ar": "/assets/audio/ar/31.mp3",
+    "en": "/assets/audio/en/31.mp3"
+  },
+  "46": {
+    "fr": "/assets/audio/fr/46.mp3",
+    "ar": "/assets/audio/ar/46.mp3",
+    "en": "/assets/audio/en/46.mp3"
+  },
+  "63": {
+    "fr": "/assets/audio/fr/63.mp3",
+    "ar": "/assets/audio/ar/63.mp3",
+    "en": "/assets/audio/en/63.mp3"
+  },
+  "74": {
+    "fr": "/assets/audio/fr/74.mp3",
+    "ar": "/assets/audio/ar/74.mp3",
+    "en": "/assets/audio/en/74.mp3"
+  },
+  "88": {
+    "fr": "/assets/audio/fr/88.mp3",
+    "ar": "/assets/audio/ar/88.mp3",
+    "en": "/assets/audio/en/88.mp3"
+  },
+
+  "117": {
+    "fr": "/assets/audio/fr/117.mp3",
+    "ar": "/assets/audio/ar/117.mp3",
+    "en": "/assets/audio/en/117.mp3"
+  },
+  "204": {
+    "fr": "/assets/audio/fr/204.mp3",
+    "ar": "/assets/audio/ar/204.mp3",
+    "en": "/assets/audio/en/204.mp3"
+  },
+  "318": {
+    "fr": "/assets/audio/fr/318.mp3",
+    "ar": "/assets/audio/ar/318.mp3",
+    "en": "/assets/audio/en/318.mp3"
+  },
+  "427": {
+    "fr": "/assets/audio/fr/427.mp3",
+    "ar": "/assets/audio/ar/427.mp3",
+    "en": "/assets/audio/en/427.mp3"
+  },
+  "590": {
+    "fr": "/assets/audio/fr/590.mp3",
+    "ar": "/assets/audio/ar/590.mp3",
+    "en": "/assets/audio/en/590.mp3"
+  },
+  "681": {
+    "fr": "/assets/audio/fr/681.mp3",
+    "ar": "/assets/audio/ar/681.mp3",
+    "en": "/assets/audio/en/681.mp3"
+  },
+
+  "1204": {
+    "fr": "/assets/audio/fr/1204.mp3",
+    "ar": "/assets/audio/ar/1204.mp3",
+    "en": "/assets/audio/en/1204.mp3"
+  },
+  "3487": {
+    "fr": "/assets/audio/fr/3487.mp3",
+    "ar": "/assets/audio/ar/3487.mp3",
+    "en": "/assets/audio/en/3487.mp3"
+  },
+  "4096": {
+    "fr": "/assets/audio/fr/4096.mp3",
+    "ar": "/assets/audio/ar/4096.mp3",
+    "en": "/assets/audio/en/4096.mp3"
+  },
+  "5723": {
+    "fr": "/assets/audio/fr/5723.mp3",
+    "ar": "/assets/audio/ar/5723.mp3",
+    "en": "/assets/audio/en/5723.mp3"
+  },
+  "8619": {
+    "fr": "/assets/audio/fr/8619.mp3",
+    "ar": "/assets/audio/ar/8619.mp3",
+    "en": "/assets/audio/en/8619.mp3"
+  },
+
+  "10234": {
+    "fr": "/assets/audio/fr/10234.mp3",
+    "ar": "/assets/audio/ar/10234.mp3",
+    "en": "/assets/audio/en/10234.mp3"
+  },
+  "27591": {
+    "fr": "/assets/audio/fr/27591.mp3",
+    "ar": "/assets/audio/ar/27591.mp3",
+    "en": "/assets/audio/en/27591.mp3"
+  },
+  "40862": {
+    "fr": "/assets/audio/fr/40862.mp3",
+    "ar": "/assets/audio/ar/40862.mp3",
+    "en": "/assets/audio/en/40862.mp3"
+  },
+  "73904": {
+    "fr": "/assets/audio/fr/73904.mp3",
+    "ar": "/assets/audio/ar/73904.mp3",
+    "en": "/assets/audio/en/73904.mp3"
+  },
+
+  "100248": {
+    "fr": "/assets/audio/fr/100248.mp3",
+    "ar": "/assets/audio/ar/100248.mp3",
+    "en": "/assets/audio/en/100248.mp3"
+  },
+  "364901": {
+    "fr": "/assets/audio/fr/364901.mp3",
+    "ar": "/assets/audio/ar/364901.mp3",
+    "en": "/assets/audio/en/364901.mp3"
+  },
+  "582713": {
+    "fr": "/assets/audio/fr/582713.mp3",
+    "ar": "/assets/audio/ar/582713.mp3",
+    "en": "/assets/audio/en/582713.mp3"
+  },
+  "940216": {
+    "fr": "/assets/audio/fr/940216.mp3",
+    "ar": "/assets/audio/ar/940216.mp3",
+    "en": "/assets/audio/en/940216.mp3"
+  },
+
+  "1000023": {
+    "fr": "/assets/audio/fr/1000023.mp3",
+    "ar": "/assets/audio/ar/1000023.mp3",
+    "en": "/assets/audio/en/1000023.mp3"
+  },
+  "2748931": {
+    "fr": "/assets/audio/fr/2748931.mp3",
+    "ar": "/assets/audio/ar/2748931.mp3",
+    "en": "/assets/audio/en/2748931.mp3"
+  },
+  "5091846": {
+    "fr": "/assets/audio/fr/5091846.mp3",
+    "ar": "/assets/audio/ar/5091846.mp3",
+    "en": "/assets/audio/en/5091846.mp3"
+  },
+
+  "12000045": {
+    "fr": "/assets/audio/fr/12000045.mp3",
+    "ar": "/assets/audio/ar/12000045.mp3",
+    "en": "/assets/audio/en/12000045.mp3"
+  },
+  "38492017": {
+    "fr": "/assets/audio/fr/38492017.mp3",
+    "ar": "/assets/audio/ar/38492017.mp3",
+    "en": "/assets/audio/en/38492017.mp3"
+  },
+  "90753128": {
+    "fr": "/assets/audio/fr/90753128.mp3",
+    "ar": "/assets/audio/ar/90753128.mp3",
+    "en": "/assets/audio/en/90753128.mp3"
   }
 }

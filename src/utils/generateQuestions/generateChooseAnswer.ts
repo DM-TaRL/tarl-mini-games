@@ -1,32 +1,53 @@
 import data from "../../config/mini-games-configs/choice-questions.json";
 import { ChooseAnswerConfig, Operation } from "../../types/mini-game-types";
+import { generateQuestionsFromTemplates } from "../generateChoiceFromTemplates";
 import { shuffleArray } from "../utils";
+
+type LangText = { ar: string; fr: string; en: string };
+
+type ChoiceOption = { text: string; correct: boolean };
 
 // We will make the texts audio readable later (must do)
 interface ChooseAnswerQuestion {
   id: string;
-  text: {
-    en: string;
-    fr: string;
-    ar: string;
-  };
-  options: {
-    text: string;
-    correct: boolean;
-  }[];
+  text: LangText;
+  options: ChoiceOption[];
 }
 
+type ChoiceQuestionSource = {
+  text: LangText;
+  numbersInOptions: number[];
+  operationsInOptions: Operation[];
+  options: ChoiceOption[];
+};
+
 export function generateChooseAnswer(
-  config: ChooseAnswerConfig
+  config: ChooseAnswerConfig,
 ): ChooseAnswerQuestion[] {
   const { numOptions, maxNumberRange, operationsAllowed, numQuestions } =
     config;
 
-  const filtered = data.questions.filter((q) => {
+  const digits = (n: number): number =>
+    String(Math.abs(n)).replace(".", "").length;
+
+  // 1) Build a pool: JSON + generated
+  const generated: ChoiceQuestionSource[] = generateQuestionsFromTemplates({
+    maxDigits: maxNumberRange,
+    operationsAllowed,
+    numOptions,
+    count: Math.max(30, numQuestions * 5), // generate extra to avoid filtering starvation
+  });
+
+  const staticQs = data.questions as unknown as ChoiceQuestionSource[];
+
+  const pool: ChoiceQuestionSource[] = [...staticQs, ...generated];
+
+  // 2) Filter using YOUR same rules
+  const filtered = pool.filter((q: any) => {
     const matchesOperation =
       Array.isArray(q.operationsInOptions) &&
       q.operationsInOptions.some((op: Operation) =>
-        operationsAllowed.includes(op)
+        operationsAllowed.includes(op),
       );
 
     const enoughOptions =
@@ -35,26 +56,35 @@ export function generateChooseAnswer(
     const numbersWithinRange =
       Array.isArray(q.numbersInOptions) &&
       q.numbersInOptions.every(
-        (n: number) =>
-          typeof n === "number" && n.toString().length <= maxNumberRange
+        (n: unknown) =>
+          typeof n === "number" && digits(n as number) <= maxNumberRange,
       );
 
     return matchesOperation && enoughOptions && numbersWithinRange;
   });
 
-  const questions = shuffleArray(filtered)
+  // 3) Sample + normalize to exactly one correct option (robust)
+  const questions: ChooseAnswerQuestion[] = shuffleArray(filtered)
     .slice(0, numQuestions)
-    .map((q, index) => ({
-      id: `q${index + 1}`,
-      text: q.text,
-      options: shuffleArray([
-        q.options.find((opt) => opt.correct),
-        ...shuffleArray(q.options.filter((opt) => !opt.correct)).slice(
-          0,
-          numOptions - 1
-        ),
-      ]).filter(Boolean),
-    }));
+    .map((q, index) => {
+      const correctOptions = q.options.filter((opt) => opt.correct);
+      const correct = shuffleArray(correctOptions)[0]; // ChoiceOption | undefined
+
+      // Fallback safety (shouldn't happen if dataset is valid)
+      const wrongs = shuffleArray(
+        q.options.filter((opt) => !opt.correct),
+      ).slice(0, numOptions - 1);
+
+      const finalOptions: ChoiceOption[] = correct
+        ? shuffleArray([correct, ...wrongs])
+        : shuffleArray(q.options).slice(0, numOptions);
+
+      return {
+        id: `q${index + 1}`,
+        text: q.text,
+        options: finalOptions,
+      };
+    });
 
   return questions;
 }

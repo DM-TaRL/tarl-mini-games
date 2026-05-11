@@ -21,13 +21,18 @@ function shuffle<T>(array: T[]): T[] {
 
 export function generateTapMatchingPairs(
   config: TapMatchingPairsConfig,
-  language: Language = "ar"
+  language: Language = "ar",
 ): TapMatchingPairsQuestionSet {
   const { numPairs, maxNumberRange } = config;
+  const maxDigits = maxNumberRange; // reinterpret
+
+  const numericMax = Math.pow(10, maxDigits) - 1;
+  // optional: avoid 0 / keep at least 1 digit
+  const numericMin = maxDigits === 1 ? 0 : Math.pow(10, maxDigits - 1);
 
   // 1. Filter valid number-word pairs within range
   const validPairs = allPairs.pairs.filter(
-    (pair) => pair.number <= maxNumberRange
+    (pair) => pair.number >= numericMin && pair.number <= numericMax,
   );
 
   if (validPairs.length < numPairs) {

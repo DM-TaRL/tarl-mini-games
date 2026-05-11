@@ -17,7 +17,7 @@ const AXES = [
 type Axis = (typeof AXES)[number];
 
 function latest(arr?: Attempt[] | null): Attempt | null {
-  if (!arr) return null;
+  if (!arr || !Array.isArray(arr)) return null;
   const valid = arr.filter(Boolean);
   return valid.length ? valid[valid.length - 1] : null;
 }
@@ -88,8 +88,22 @@ const SPEED_WEIGHT_BY_GAME: Record<string, number> = {
 export function buildFuzzyInputsFromResults(
   miniGames: MiniGamesResults,
   includedGameTypes?: string[],
-  missedAxes?: Partial<Record<Axis, boolean>>
+  missedAxes?: Partial<Record<Axis, boolean>>,
 ) {
+  // 确保 miniGames 是对象
+  if (!miniGames || typeof miniGames !== "object") {
+    console.error("miniGames is not an object:", miniGames);
+    // 返回默认值
+    return {
+      axes: {
+        /* 默认轴值 */
+      },
+      coverage: {
+        /* 默认覆盖率 */
+      },
+    };
+  }
+
   // If teacher passed a subset, filter to it; otherwise use whatever shows up in results.
   const consideredGames = (
     includedGameTypes && includedGameTypes.length
@@ -163,7 +177,7 @@ export { MAP };
 
 export function getMissedAxesFromIncompleteGames(
   allGames: string[],
-  completedGames: string[]
+  completedGames: string[],
 ): Partial<Record<Axis, boolean>> {
   const missedAxes: Partial<Record<Axis, boolean>> = {};
   const missed = allGames.filter((g) => !completedGames.includes(g));

@@ -24,7 +24,7 @@ export function applyOperation(a: number, b: number, op: Operation): number {
 }
 
 export function generateFindCompositions(
-  config: FindCompositionsConfig
+  config: FindCompositionsConfig,
 ): FindCompositionsQuestion[] {
   const { minNumCompositions, maxNumberRange, operation } = config;
 
@@ -102,7 +102,7 @@ export function generateFindCompositions(
 }
 
 export function validateFindCompositionsParams(
-  config: FindCompositionsConfig
+  config: FindCompositionsConfig,
 ): { valid: boolean; reason?: string; key?: string } {
   const { operation, maxNumberRange, minNumCompositions } = config;
 
@@ -126,7 +126,7 @@ export function validateFindCompositionsParams(
 
 export function getMaxCompositions(
   operation: Operation,
-  maxNumberRange: number
+  maxNumberRange: number,
 ): number {
   switch (operation) {
     case "Addition":
@@ -145,30 +145,26 @@ export function getMaxCompositions(
 function buildCompositionsForTarget(
   op: Operation,
   target: number,
-  maxNumberRange: number
+  maxNumberRange: number,
 ): [number, number][] {
   const out: [number, number][] = [];
   const maxVal = Math.pow(10, maxNumberRange) - 1;
-  const limit = operandDigitLimit(op, target, maxNumberRange); // NEW
 
   switch (op) {
     case "Addition": {
       for (let a = 1; a < target; a++) {
         const b = target - a;
         if (b < 1) continue;
-        if (String(a).length <= limit && String(b).length <= limit) {
-          out.push([a, b]); // ordered
-        }
+        out.push([a, b]);
       }
       return out;
     }
 
     case "Subtraction": {
       for (let a = target; a <= maxVal; a++) {
-        const b = a - target; // >=0
-        if (String(b).length <= limit) {
-          out.push([a, b]); // ordered
-        }
+        const b = a - target; // +1 to avoid b=0 case
+        if (b < 1) continue;
+        out.push([a, b]);
       }
       return out;
     }
@@ -179,22 +175,20 @@ function buildCompositionsForTarget(
       for (let a = 1; a <= lim; a++) {
         if (target % a) continue;
         const b = target / a;
-        if (String(a).length <= limit && String(b).length <= limit) {
-          out.push([a, b]);
-          if (a !== b) out.push([b, a]); // ordered both ways
-        }
+        out.push([a, b]);
+        if (a !== b) out.push([b, a]);
       }
       return out;
     }
 
     case "Division": {
-      const maxValB = Math.pow(10, maxNumberRange) - 1;
-      for (let b = 1; b <= maxValB; b++) {
+      // a = target * b, choose b freely in range
+      const maxB = maxVal; // keep b within same digit-range as target's max config
+      for (let b = 2; b <= maxB; b++) {
+        // start at 2 to avoid trivial divide-by-1
         const a = target * b;
-        if (!Number.isInteger(a) || a < 0) continue;
-        if (String(a).length <= limit && String(b).length <= limit) {
-          out.push([a, b]); // ordered
-        }
+        if (!Number.isInteger(a)) continue;
+        out.push([a, b]);
       }
       return out;
     }
@@ -204,7 +198,7 @@ function buildCompositionsForTarget(
 function operandDigitLimit(
   op: Operation,
   target: number,
-  maxNumberRange: number
+  maxNumberRange: number,
 ): number {
   const tlen = Math.max(1, String(Math.abs(target)).length);
   switch (op) {
@@ -228,30 +222,16 @@ function operandDigitLimit(
 function countCompositions(
   op: Operation,
   target: number,
-  maxNumberRange: number
+  maxNumberRange: number,
 ): number {
   const maxVal = Math.pow(10, maxNumberRange) - 1;
-  const limit = operandDigitLimit(op, target, maxNumberRange); // NEW
 
   switch (op) {
-    case "Addition": {
-      let c = 0;
-      for (let a = 1; a < target; a++) {
-        const b = target - a;
-        if (b < 1) continue;
-        if (String(a).length <= limit && String(b).length <= limit) c++;
-      }
-      return c;
-    }
+    case "Addition":
+      return Math.max(0, target - 1); // (1..target-1)
 
-    case "Subtraction": {
-      let c = 0;
-      for (let a = target; a <= maxVal; a++) {
-        const b = a - target;
-        if (String(b).length <= limit) c++;
-      }
-      return c;
-    }
+    case "Subtraction":
+      return Math.max(0, maxVal - (target + 1) + 1); // from a=target+1..maxVal
 
     case "Multiplication": {
       if (target <= 0) return 0;
@@ -260,23 +240,14 @@ function countCompositions(
       for (let a = 1; a <= lim; a++) {
         if (target % a) continue;
         const b = target / a;
-        if (String(a).length <= limit && String(b).length <= limit) {
-          c += a === b ? 1 : 2; // ordered
-        }
+        c += a === b ? 1 : 2;
       }
       return c;
     }
 
     case "Division": {
-      if (target < 0) return 0;
-      let c = 0;
-      const maxValB = Math.pow(10, maxNumberRange) - 1;
-      for (let b = 1; b <= maxValB; b++) {
-        const a = target * b;
-        if (!Number.isInteger(a) || a < 0) continue;
-        if (String(a).length <= limit && String(b).length <= limit) c++;
-      }
-      return c;
+      // b in [2..maxVal]
+      return Math.max(0, maxVal - 1);
     }
   }
 }

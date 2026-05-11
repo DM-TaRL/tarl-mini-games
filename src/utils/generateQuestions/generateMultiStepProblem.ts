@@ -50,7 +50,7 @@ function normalizeProblems(language: "ar" | "fr" | "en"): MultiStepQuestion[] {
       correctAnswer: evalStep(
         s.operation,
         Number(s.operand1),
-        Number(s.operand2)
+        Number(s.operand2),
       ),
     }));
     return {
@@ -63,7 +63,7 @@ function normalizeProblems(language: "ar" | "fr" | "en"): MultiStepQuestion[] {
 
 export function generateMultiStepProblem(
   config: MultiStepProblemConfig,
-  language: "ar" | "fr" | "en"
+  language: "ar" | "fr" | "en",
 ): { questions: MultiStepQuestion[] } {
   const all = normalizeProblems(language);
 

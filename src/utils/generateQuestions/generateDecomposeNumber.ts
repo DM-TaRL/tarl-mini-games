@@ -10,9 +10,10 @@ export function generateDecomposeNumber(config: DecomposeNumberConfig): {
 } {
   const { numQuestions, maxNumberRange } = config;
 
-  // Define the range of numbers: e.g., if maxNumberRange = 2, max = 999
-  const max = Math.pow(10, maxNumberRange) - 1;
-  const min = Math.pow(10, maxNumberRange - 1);
+  // Define the range of numbers: e.g., if maxNumberRange = 2, max = 99
+  const digitsCount = Math.max(1, maxNumberRange);
+  const max = Math.pow(10, digitsCount) - 1;
+  const min = Math.pow(10, digitsCount - 1);
 
   const used = new Set<number>();
   const questions: DecomposeNumberQuestion[] = [];
