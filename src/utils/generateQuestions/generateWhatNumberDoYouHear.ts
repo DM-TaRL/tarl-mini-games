@@ -2,7 +2,9 @@ import {
   WhatNumberDoYouHearConfig,
   LanguageCode,
 } from "../../types/mini-game-types";
-import numberAudioLinks from "../../config/mini-games-configs/number-audio-links.json";
+import numberAudioLinksRaw from "../../config/mini-games-configs/number-audio-links.json";
+
+const numberAudioLinks = numberAudioLinksRaw as Record<string, Record<string, string>>;
 
 interface AudioQuestion {
   audioUrl: string;
@@ -35,8 +37,14 @@ export function generateWhatNumberDoYouHear(
   for (const correctNumber of usableCorrectAnswers) {
     const audioUrl = numberAudioLinks[correctNumber][language];
 
-    const optionsPool = availableNumbers.filter((n) => n !== correctNumber);
-    const shuffledOptions = optionsPool
+    const digitCount = String(correctNumber).length;
+    const rangeMin = digitCount === 1 ? 0 : Math.pow(10, digitCount - 1);
+    const rangeMax = Math.pow(10, digitCount) - 1;
+    const distractorPool: number[] = [];
+    for (let n = rangeMin; n <= rangeMax; n++) {
+      if (n !== correctNumber) distractorPool.push(n);
+    }
+    const shuffledOptions = distractorPool
       .sort(() => Math.random() - 0.5)
       .slice(0, 2);
     const finalOptions = [...shuffledOptions, correctNumber].sort(
