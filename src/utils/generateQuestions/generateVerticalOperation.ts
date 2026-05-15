@@ -28,7 +28,7 @@ function applyOperation(a: number, b: number, operation: Operation): number {
 }
 
 export function generateVerticalOperation(
-  config: VerticalOperationsConfig
+  config: VerticalOperationsConfig,
 ): VerticalOperationQuestion[] {
   const {
     numOperations,
@@ -75,13 +75,34 @@ export function generateVerticalOperation(
     }
 
     if (operation === "Division") {
-      b = Math.max(1, b); // no zero division
+      // divisor must be at least 2 — avoid ÷0 and the trivial ÷1 case
+      b = Math.max(2, getRandomInt(2, max));
+
       if (!allowMultiStepDiv) {
-        a = b * getRandomInt(1, Math.floor(max / b)); // exact division
+        // Simple exact division: pick a clean multiple
+        const maxQuotient = Math.floor(max / b);
+        if (maxQuotient < 2) continue; // can't make a valid question, retry
+        const quotient = getRandomInt(2, maxQuotient);
+        a = b * quotient;
       } else {
-        a = getRandomInt(min, max);
-        a = a - (a % b); // make divisible
+        // Multi-step: make a exactly divisible, but enforce quality rules
+        a = getRandomInt(b + 1, max); // a must be strictly greater than b
+        a = a - (a % b); // round down to nearest multiple
+        if (a < b + 1) continue; // still too small after rounding, retry
       }
+
+      // ── Quality guards (apply to both paths) ──────────────────────────
+      const quotient = Math.floor(a / b);
+
+      // Rule 1: a ÷ a is always 1 — useless question
+      if (a === b) continue;
+
+      // Rule 2: quotient of 1 means a < 2b — barely larger, trivial
+      if (quotient < 2) continue;
+
+      // Rule 3: divisor should not equal the answer (e.g. 12÷3=4, 4÷2=2 — ok;
+      //         but 4÷4=1 caught above; keep this for extra sanity)
+      if (b === quotient && quotient === 1) continue;
     }
 
     const correctAnswer = applyOperation(a, b, operation);
