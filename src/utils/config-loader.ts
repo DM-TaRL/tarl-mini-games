@@ -2,7 +2,10 @@
 import miniGamesJson from "../config/mini-games.json";
 import defaultTestConfigJson from "../config/default-test-config.json";
 import { CommonGameParams, GameType } from "../types/mini-game-types";
-import { DecisionNode } from "../types/decision-tree";
+import {
+  buildDefaultDecisionTreeForGrade,
+  DecisionNode,
+} from "../types/decision-tree";
 
 // pull out the miniGames map in a typed way
 const miniGames: Record<GameType, any> = (miniGamesJson as any).miniGames;
@@ -31,9 +34,16 @@ export function getGameDefaultConfig(type: GameType): any {
 }
 
 /**
- * Grab the JSON decisionTree array from our default-test-config.json
+ * Grab the default decision tree for a grade. Without a grade, this returns
+ * the legacy canonical tree from default-test-config.json.
  */
-export function getDefaultDecisionTree(): DecisionNode[] {
+export function getDefaultDecisionTree(
+  grade?: string | number | null,
+): DecisionNode[] {
+  if (grade != null) {
+    return buildDefaultDecisionTreeForGrade(grade);
+  }
+
   return (defaultTestConfigJson as any).decisionTree || [];
 }
 

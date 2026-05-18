@@ -1,7 +1,72 @@
 {
+  "gradeDecisionTreeSequences": {
+    "default": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "find_previous_next_number",
+      "write_number_in_letters",
+      "vertical_operations",
+      "multi_step_problem"
+    ],
+    "1": [
+      "read_number_aloud",
+      "tap_matching_pairs",
+      "what_number_do_you_hear",
+      "write_number_in_letters"
+    ],
+    "2": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "compare_numbers",
+      "identify_place_value",
+      "vertical_operations",
+      "choose_answer"
+    ],
+    "3": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "decompose_number",
+      "write_number_in_letters",
+      "vertical_operations",
+      "multi_step_problem"
+    ],
+    "4": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "find_previous_next_number",
+      "write_number_in_letters",
+      "vertical_operations",
+      "multi_step_problem"
+    ],
+    "5": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "order_numbers",
+      "write_number_in_letters",
+      "vertical_operations",
+      "multi_step_problem"
+    ],
+    "6": [
+      "read_number_aloud",
+      "what_number_do_you_hear",
+      "order_numbers",
+      "write_number_in_letters",
+      "vertical_operations",
+      "multi_step_problem"
+    ]
+  },
   "decisionTree": [
     {
       "nodeId": "root",
+      "gameType": "read_number_aloud",
+      "configKey": "gradeConfig",
+      "children": [
+        { "condition": "true", "nodeId": "tap_matching_pairs" },
+        { "condition": "false", "nodeId": "read_number_aloud" }
+      ]
+    },
+    {
+      "nodeId": "tap_matching_pairs",
       "gameType": "tap_matching_pairs",
       "configKey": "gradeConfig",
       "children": [
@@ -14,17 +79,8 @@
       "gameType": "what_number_do_you_hear",
       "configKey": "gradeConfig",
       "children": [
-        { "condition": "true", "nodeId": "read_number_aloud" },
-        { "condition": "false", "nodeId": "what_number_do_you_hear" }
-      ]
-    },
-    {
-      "nodeId": "read_number_aloud",
-      "gameType": "read_number_aloud",
-      "configKey": "gradeConfig",
-      "children": [
         { "condition": "true", "nodeId": "find_previous_next_number" },
-        { "condition": "false", "nodeId": "read_number_aloud" }
+        { "condition": "false", "nodeId": "what_number_do_you_hear" }
       ]
     },
     {

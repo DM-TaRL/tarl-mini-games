@@ -9,7 +9,7 @@ export type ReadNumberItem = {
 
 export function generateReadNumberAloudSet(
   config: ReadNumberAloudConfig,
-  language: "ar" | "fr"
+  language: "ar" | "fr",
 ): ReadNumberItem[] {
   const numQ = Math.max(1, Number(config?.numQuestions ?? 6));
 
