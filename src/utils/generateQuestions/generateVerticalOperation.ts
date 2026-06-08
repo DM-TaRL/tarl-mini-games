@@ -40,80 +40,108 @@ export function generateVerticalOperation(
     allowMultiStepDiv = true,
   } = config;
 
+  // Determine operation counts
+  let opCounts: Record<Operation, number> = {
+    Addition: 0,
+    Subtraction: 0,
+    Multiplication: 0,
+    Division: 0,
+  };
+
+  if (config.operationCounts) {
+    // NEW: Use per-operation counts
+    opCounts = config.operationCounts;
+  } else if (config.numOperations) {
+    // LEGACY: Distribute numOperations evenly
+    const perOp = Math.floor(config.numOperations / operationsAllowed.length);
+    const remainder = config.numOperations % operationsAllowed.length;
+    operationsAllowed.forEach((op, idx) => {
+      opCounts[op] = perOp + (idx < remainder ? 1 : 0);
+    });
+  }
+
   const questions: VerticalOperationQuestion[] = [];
 
-  while (questions.length < numOperations) {
-    const operation =
-      operationsAllowed[Math.floor(Math.random() * operationsAllowed.length)];
+  // Generate exactly N questions per operation
+  for (const operation of operationsAllowed) {
+    const targetCount = opCounts[operation] || 0;
 
-    const max = Math.pow(10, maxNumberRange) - 1;
-    const min = operation === "Division" ? 1 : 0;
+    for (let i = 0; i < targetCount; i++) {
+      const max = Math.pow(10, maxNumberRange) - 1;
+      const min = operation === "Division" ? 1 : 0;
 
-    let a = getRandomInt(min, max);
-    let b = getRandomInt(min, max);
+      let a = getRandomInt(min, max);
+      let b = getRandomInt(min, max);
 
-    if (operation === "Addition" && !allowCarry) {
-      a = a - (a % 10); // force no carry from units
-      b = Math.min(9, b); // single-digit b to avoid carry
-    }
+      // ── Operation-specific constraints ──
+      if (operation === "Addition" && !allowCarry) {
+        a = a - (a % 10); // force no carry from units
+        b = Math.min(9, b); // single-digit b to avoid carry
+      }
 
-    if (operation === "Subtraction") {
-      // Make sure a >= b to avoid negative results
-      if (b > a) [a, b] = [b, a];
+      if (operation === "Subtraction") {
+        // Make sure a >= b to avoid negative results
+        if (b > a) [a, b] = [b, a];
 
-      // Additional check for no borrow if required
-      if (!allowBorrow) {
-        while (!digitsSafeSubtract(a, b)) {
-          a = getRandomInt(min, max);
-          b = getRandomInt(min, a); // ensure a >= b
+        // Additional check for no borrow if required
+        if (!allowBorrow) {
+          while (!digitsSafeSubtract(a, b)) {
+            a = getRandomInt(min, max);
+            b = getRandomInt(min, a); // ensure a >= b
+          }
         }
       }
-    }
 
-    if (operation === "Multiplication" && !allowMultiStepMul) {
-      b = getRandomInt(1, 9); // single-digit multiplier only
-    }
-
-    if (operation === "Division") {
-      // divisor must be at least 2 — avoid ÷0 and the trivial ÷1 case
-      b = Math.max(2, getRandomInt(2, max));
-
-      if (!allowMultiStepDiv) {
-        // Simple exact division: pick a clean multiple
-        const maxQuotient = Math.floor(max / b);
-        if (maxQuotient < 2) continue; // can't make a valid question, retry
-        const quotient = getRandomInt(2, maxQuotient);
-        a = b * quotient;
-      } else {
-        // Multi-step: make a exactly divisible, but enforce quality rules
-        a = getRandomInt(b + 1, max); // a must be strictly greater than b
-        a = a - (a % b); // round down to nearest multiple
-        if (a < b + 1) continue; // still too small after rounding, retry
+      if (operation === "Multiplication" && !allowMultiStepMul) {
+        b = getRandomInt(1, 9); // single-digit multiplier only
       }
 
-      // ── Quality guards (apply to both paths) ──────────────────────────
-      const quotient = Math.floor(a / b);
+      if (operation === "Division") {
+        // divisor must be at least 2 — avoid ÷0 and the trivial ÷1 case
+        b = Math.max(2, getRandomInt(2, max));
 
-      // Rule 1: a ÷ a is always 1 — useless question
-      if (a === b) continue;
+        if (!allowMultiStepDiv) {
+          // Simple exact division: pick a clean multiple
+          const maxQuotient = Math.floor(max / b);
+          if (maxQuotient < 2) {
+            i--; // Retry this iteration
+            continue;
+          } // can't make a valid question, retry
+          const quotient = getRandomInt(2, maxQuotient);
+          a = b * quotient;
+        } else {
+          // Multi-step: make a exactly divisible, but enforce quality rules
+          a = getRandomInt(b + 1, max); // a must be strictly greater than b
+          a = a - (a % b); // round down to nearest multiple
+          if (a < b + 1) {
+            i--; // Retry
+            continue;
+          } // still too small after rounding, retry
+        }
 
-      // Rule 2: quotient of 1 means a < 2b — barely larger, trivial
-      if (quotient < 2) continue;
+        // ── Quality guards (apply to both paths) ──────────────────────────
+        const quotient = Math.floor(a / b);
 
-      // Rule 3: divisor should not equal the answer (e.g. 12÷3=4, 4÷2=2 — ok;
-      //         but 4÷4=1 caught above; keep this for extra sanity)
-      if (b === quotient && quotient === 1) continue;
+        // Rule 1: a ÷ a is always 1 — useless question
+        // Rule 2: quotient of 1 means a < 2b — barely larger, trivial
+        // Rule 3: divisor should not equal the answer (e.g. 12÷3=4, 4÷2=2 — ok;
+        //         but 4÷4=1 caught above; keep this for extra sanity)
+        if (a === b || quotient < 2 || (b === quotient && quotient === 1)) {
+          i--; // Retry
+          continue;
+        }
+      }
+
+      const correctAnswer = applyOperation(a, b, operation);
+
+      questions.push({
+        id: `q${questions.length + 1}`,
+        operand1: a,
+        operand2: b,
+        operation,
+        correctAnswer,
+      });
     }
-
-    const correctAnswer = applyOperation(a, b, operation);
-
-    questions.push({
-      id: `q${questions.length + 1}`,
-      operand1: a,
-      operand2: b,
-      operation,
-      correctAnswer,
-    });
   }
 
   return shuffleArray(questions);

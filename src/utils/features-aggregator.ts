@@ -85,6 +85,20 @@ const SPEED_WEIGHT_BY_GAME: Record<string, number> = {
   multi_step_problem: 0.3,
 };
 
+// Passive per-operation fluency — reads operationUsed logged per question in DragDropVerticalOperation.
+// No data for an operation → returns undefined (never penalizes).
+function computeOperationFluency(verticalOpsAttempts: Attempt[], operation: string): number | undefined {
+  if (!verticalOpsAttempts?.length) return undefined;
+  const latestAttempt = verticalOpsAttempts[verticalOpsAttempts.length - 1];
+  const opLogs = (latestAttempt?.logs || []).filter((l: any) => l?.operationUsed === operation);
+  if (!opLogs.length) return undefined;
+  const correct = opLogs.filter((l: any) => l.isCorrect).length;
+  const score = (correct / opLogs.length) * 100;
+  const slowCount = opLogs.filter((l: any) => l.answerTimeCategory === "slow").length;
+  const slowRate = slowCount / opLogs.length;
+  return Math.round(score * 0.7 + (1 - slowRate) * 30);
+}
+
 export function buildFuzzyInputsFromResults(
   miniGames: MiniGamesResults,
   includedGameTypes?: string[],
@@ -152,14 +166,22 @@ export function buildFuzzyInputsFromResults(
     // axes[axis] = have ? Math.round(num / have) : undefined; // undefined = unknown
     if (have) {
       axes[axis] = Math.round(num / have);
-    } else if (missedAxes[axis]) {
+    } else if (missedAxes?.[axis]) {
       axes[axis] = 30; // Penalize missing axes (30 instead of fallback 50)
     } else {
       axes[axis] = 50; // Unknown but not penalized
     }
   }
 
-  // Return both axis values and coverage
+  // Passive sub-axes: doesn't affect fuzzy rules or grade inference.
+  const verticalOps = miniGames.vertical_operations || [];
+  const subAxes = {
+    addition_fluency: computeOperationFluency(verticalOps, "Addition"),
+    subtraction_fluency: computeOperationFluency(verticalOps, "Subtraction"),
+    multiplication_fluency: computeOperationFluency(verticalOps, "Multiplication"),
+    division_fluency: computeOperationFluency(verticalOps, "Division"),
+  };
+
   return {
     axes: {
       arithmetic_fluency: axes.arithmetic_fluency ?? 50,
@@ -170,6 +192,7 @@ export function buildFuzzyInputsFromResults(
       audio_recognition: axes.audio_recognition ?? 50,
     },
     coverage,
+    subAxes,
   };
 }
 

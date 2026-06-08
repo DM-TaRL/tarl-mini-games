@@ -1,6 +1,5 @@
 {
-  "problems":
-  [
+  "problems": [
     {
       "text": {
         "ar": "يشتغل عامل في باخرة لصيد السمك. 10 ساعات في اليوم. وتؤدى له 12 درهما عن كل ساعة عمل. إذا علمت أنه يعمل 26 يوما في كل شهر. فما هي أجرته الشهرية؟",
@@ -14,32 +13,35 @@
     },
     {
       "text": {
-        "ar": "اشترى كريم كتابًا بـ 45 درهمًا، ثم اشترى قلما بـ 5 دراهم. كم أنفق كريم في المجمل؟",
-        "fr": "Karim a acheté un livre pour 45 dirhams et un stylo pour 5 dirhams. Combien a-t-il dépensé au total ?",
-        "en": "Karim bought a book for 45 dirhams and a pen for 5 dirhams. How much did he spend in total?"
+        "ar": "كريم لديه 70 درهمًا. اشترى كتابًا بـ45 درهمًا وقلمًا بـ5 دراهم. كم تبقى لديه بعد الشراء؟",
+        "fr": "Karim a 70 dirhams. Il a acheté un livre pour 45 dirhams et un stylo pour 5 dirhams. Combien lui reste-t-il après l'achat ?",
+        "en": "Karim has 70 dirhams. He bought a book for 45 dirhams and a pen for 5 dirhams. How much does he have left after the purchase?"
       },
       "operations": [
-        { "operation": "Addition", "operand1": 45, "operand2": 5 }
+        { "operation": "Addition", "operand1": 45, "operand2": 5 },
+        { "operation": "Subtraction", "operand1": 70, "operand2": 50 }
       ]
     },
     {
       "text": {
-        "ar": "في مزرعة يوجد 8 صفوف من الأشجار، في كل صف 12 شجرة. كم عدد الأشجار في المزرعة؟",
-        "fr": "Dans une ferme, il y a 8 rangées d'arbres, avec 12 arbres dans chaque rangée. Combien y a-t-il d'arbres au total ?",
-        "en": "In a farm, there are 8 rows of trees, with 12 trees in each row. How many trees are there in total?"
+        "ar": "في مزرعة يوجد 8 صفوف من الأشجار، في كل صف 12 شجرة. إذا قُطعت 18 شجرة، كم يتبقى في المزرعة؟",
+        "fr": "Dans une ferme, il y a 8 rangées d'arbres avec 12 arbres dans chaque rangée. Si 18 arbres sont abattus, combien en reste-t-il ?",
+        "en": "In a farm, there are 8 rows of trees with 12 trees in each row. If 18 trees are cut down, how many trees remain?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 8, "operand2": 12 }
+        { "operation": "Multiplication", "operand1": 8, "operand2": 12 },
+        { "operation": "Subtraction", "operand1": 96, "operand2": 18 }
       ]
     },
     {
       "text": {
-        "ar": "إذا كنت تملك 90 درهماً وتريد تقسيمها على 6 أصدقاء بالتساوي، كم سيحصل كل واحد؟",
-        "fr": "Si vous avez 90 dirhams et que vous voulez les partager également entre 6 amis, combien chaque personne recevra-t-elle ?",
-        "en": "If you have 90 dirhams and want to divide it equally among 6 friends, how much will each person get?"
+        "ar": "تملك 90 درهمًا وتريد تقسيمها بالتساوي على 6 أصدقاء. إذا أنفق كل واحد 5 دراهم، كم يتبقى مع كل شخص؟",
+        "fr": "Vous avez 90 dirhams et voulez les partager également entre 6 amis. Si chacun dépense 5 dirhams, combien chaque personne a-t-elle maintenant ?",
+        "en": "You have 90 dirhams and divide them equally among 6 friends. If each person spends 5 dirhams, how much does each person have left?"
       },
       "operations": [
-        { "operation": "Division", "operand1": 90, "operand2": 6 }
+        { "operation": "Division", "operand1": 90, "operand2": 6 },
+        { "operation": "Subtraction", "operand1": 15, "operand2": 5 }
       ]
     },
     {
@@ -55,12 +57,13 @@
     },
     {
       "text": {
-        "ar": "إذا كان لديك 72 ورقة، وقررت تقسيمها على 9 أشخاص بالتساوي. كم ورقة سيحصل عليها كل شخص؟",
-        "fr": "Si vous avez 72 feuilles et décidez de les partager également entre 9 personnes, combien de feuilles chaque personne recevra-t-elle ?",
-        "en": "If you have 72 sheets and decide to divide them equally among 9 people, how many sheets will each person get?"
+        "ar": "لديك 72 ورقة، قسّمتها بالتساوي على 9 أشخاص. ثم أعطى المعلم كل شخص 4 أوراق إضافية. كم ورقة مع كل شخص الآن؟",
+        "fr": "Vous avez 72 feuilles, partagées également entre 9 personnes. Ensuite, l'enseignant donne 4 feuilles supplémentaires à chaque personne. Combien de feuilles chaque personne a-t-elle maintenant ?",
+        "en": "You have 72 sheets divided equally among 9 people. The teacher then gives each person 4 more sheets. How many sheets does each person have now?"
       },
       "operations": [
-        { "operation": "Division", "operand1": 72, "operand2": 9 }
+        { "operation": "Division", "operand1": 72, "operand2": 9 },
+        { "operation": "Addition", "operand1": 8, "operand2": 4 }
       ]
     },
     {
@@ -137,12 +140,13 @@
     },
     {
       "text": {
-        "ar": "في معرض الكتب، سعر الكتاب الواحد 35 درهمًا. إذا اشترت سارة 3 كتب، فكم ستدفع في المجمل؟",
-        "fr": "Dans une librairie, le prix d'un livre est de 35 dirhams. Si Sarah achète 3 livres, combien va-t-elle payer au total ?",
-        "en": "In the bookstore, the price of one book is 35 dirhams. If Sarah buys 3 books, how much will she pay in total?"
+        "ar": "في معرض الكتب، سعر الكتاب الواحد 35 درهمًا. اشترت سارة 3 كتب ودفعت 150 درهمًا. كم تبقى لها من المبلغ؟",
+        "fr": "Dans une librairie, le prix d'un livre est de 35 dirhams. Sarah achète 3 livres et paie avec 150 dirhams. Combien lui reste-t-il ?",
+        "en": "In the bookstore, the price of one book is 35 dirhams. Sarah buys 3 books and pays with 150 dirhams. How much change does she receive?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 3, "operand2": 35 }
+        { "operation": "Multiplication", "operand1": 3, "operand2": 35 },
+        { "operation": "Subtraction", "operand1": 150, "operand2": 105 }
       ]
     },
     {
@@ -158,22 +162,24 @@
     },
     {
       "text": {
-        "ar": "في فندق يوجد 12 غرفة. كل غرفة تحتوي على 4 أسرّة. كم عدد الأسرّة في الفندق؟",
-        "fr": "Dans un hôtel, il y a 12 chambres. Chaque chambre contient 4 lits. Combien y a-t-il de lits dans l'hôtel ?",
-        "en": "In a hotel, there are 12 rooms. Each room has 4 beds. How many beds are there in the hotel?"
+        "ar": "في فندق يوجد 12 غرفة، كل غرفة تحتوي على 4 أسرّة. إذا كانت 18 سريرًا مشغولة، كم عدد الأسرّة الفارغة؟",
+        "fr": "Dans un hôtel, il y a 12 chambres, chaque chambre contient 4 lits. Si 18 lits sont occupés, combien de lits sont libres ?",
+        "en": "In a hotel, there are 12 rooms with 4 beds each. If 18 beds are occupied, how many beds are free?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 12, "operand2": 4 }
+        { "operation": "Multiplication", "operand1": 12, "operand2": 4 },
+        { "operation": "Subtraction", "operand1": 48, "operand2": 18 }
       ]
     },
     {
       "text": {
-        "ar": "أحمد زرع 3 صفوف من الأشجار. في كل صف 10 أشجار. كم عدد الأشجار في المزرعة؟",
-        "fr": "Ahmed a planté 3 rangées d'arbres. Il y a 10 arbres dans chaque rangée. Combien y a-t-il d'arbres dans la ferme ?",
-        "en": "Ahmed planted 3 rows of trees. Each row has 10 trees. How many trees are there in total?"
+        "ar": "أحمد زرع 3 صفوف من الأشجار، في كل صف 10 أشجار. ثم زرع 15 شجرة إضافية. كم عدد الأشجار في المجمل؟",
+        "fr": "Ahmed a planté 3 rangées d'arbres avec 10 arbres dans chaque rangée. Ensuite, il a planté 15 arbres supplémentaires. Combien y a-t-il d'arbres au total ?",
+        "en": "Ahmed planted 3 rows of trees with 10 trees each. He then planted 15 more individual trees. How many trees are there in total?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 3, "operand2": 10 }
+        { "operation": "Multiplication", "operand1": 3, "operand2": 10 },
+        { "operation": "Addition", "operand1": 30, "operand2": 15 }
       ]
     },
     {
@@ -189,22 +195,24 @@
     },
     {
       "text": {
-        "ar": "في قاعة العرض، عدد المقاعد في الصف الواحد 7، ويوجد 6 صفوف. كم عدد المقاعد في القاعة؟",
-        "fr": "Dans la salle d'exposition, le nombre de sièges par rangée est de 7, et il y a 6 rangées. Combien y a-t-il de sièges dans la salle ?",
-        "en": "In the exhibition hall, the number of seats in one row is 7, and there are 6 rows. How many seats are there in the hall?"
+        "ar": "في قاعة العرض، عدد المقاعد في الصف الواحد 7، ويوجد 6 صفوف. إذا كانت 20 مقعدًا مشغولة، كم عدد المقاعد الفارغة؟",
+        "fr": "Dans la salle d'exposition, il y a 7 sièges par rangée et 6 rangées. Si 20 sièges sont occupés, combien de sièges sont libres ?",
+        "en": "In the exhibition hall, there are 7 seats per row and 6 rows. If 20 seats are occupied, how many seats are free?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 7, "operand2": 6 }
+        { "operation": "Multiplication", "operand1": 7, "operand2": 6 },
+        { "operation": "Subtraction", "operand1": 42, "operand2": 20 }
       ]
     },
     {
       "text": {
-        "ar": "سامي يشتري 6 علب من الحليب. كل علبة تكلف 4 دراهم. كم سيدفع سامي مقابل جميع العلب؟",
-        "fr": "Sami achète 6 boîtes de lait. Chaque boîte coûte 4 dirhams. Combien Sami va-t-il payer pour toutes les boîtes ?",
-        "en": "Sami buys 6 boxes of milk. Each box costs 4 dirhams. How much will Sami pay for all the boxes?"
+        "ar": "سامي يشتري 6 علب من الحليب. كل علبة تكلف 4 دراهم. دفع سامي 40 درهمًا. كم تبقى له من الباقي؟",
+        "fr": "Sami achète 6 boîtes de lait à 4 dirhams chacune. Il paie avec 40 dirhams. Combien lui reste-t-il ?",
+        "en": "Sami buys 6 boxes of milk at 4 dirhams each. He pays with 40 dirhams. How much change does he receive?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 6, "operand2": 4 }
+        { "operation": "Multiplication", "operand1": 6, "operand2": 4 },
+        { "operation": "Subtraction", "operand1": 40, "operand2": 24 }
       ]
     },
     {
@@ -221,32 +229,703 @@
     },
     {
       "text": {
-        "ar": "في المكتبة يوجد 12 رفًا. على كل رف 8 كتب. كم عدد الكتب في المكتبة؟",
-        "fr": "Dans la bibliothèque, il y a 12 étagères. Sur chaque étagère, il y a 8 livres. Combien y a-t-il de livres dans la bibliothèque ?",
-        "en": "In the library, there are 12 shelves. On each shelf, there are 8 books. How many books are there in total?"
+        "ar": "في المكتبة يوجد 12 رفًا، على كل رف 8 كتب. تبرعت مدرسة بـ24 كتابًا إضافيًا. كم عدد الكتب الآن؟",
+        "fr": "Dans la bibliothèque, il y a 12 étagères avec 8 livres chacune. Une école donne 24 livres supplémentaires. Combien y a-t-il de livres maintenant ?",
+        "en": "In the library, there are 12 shelves with 8 books each. A school donates 24 more books. How many books are there now?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 12, "operand2": 8 }
+        { "operation": "Multiplication", "operand1": 12, "operand2": 8 },
+        { "operation": "Addition", "operand1": 96, "operand2": 24 }
       ]
     },
     {
       "text": {
-        "ar": "عادل يشتري 5 عبوات من الماء. كل عبوة تكلف 3 دراهم. كم سيدفع عادل مقابل جميع العبوات؟",
-        "fr": "Adil achète 5 bouteilles d'eau. Chaque bouteille coûte 3 dirhams. Combien Adil va-t-il payer pour toutes les bouteilles ?",
-        "en": "Adil buys 5 bottles of water. Each bottle costs 3 dirhams. How much will Adil pay for all the bottles?"
+        "ar": "عادل يشتري 5 عبوات من الماء بسعر 3 دراهم لكل عبوة. دفع 25 درهمًا. كم تبقى له من المبلغ؟",
+        "fr": "Adil achète 5 bouteilles d'eau à 3 dirhams chacune. Il paie avec 25 dirhams. Combien lui reste-t-il ?",
+        "en": "Adil buys 5 bottles of water at 3 dirhams each. He pays with 25 dirhams. How much change does he receive?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 5, "operand2": 3 }
+        { "operation": "Multiplication", "operand1": 5, "operand2": 3 },
+        { "operation": "Subtraction", "operand1": 25, "operand2": 15 }
       ]
     },
     {
       "text": {
-        "ar": "في حديقة يوجد 7 أسرة زهور. في كل سرير 9 زهور. كم عدد الزهور في الحديقة؟",
-        "fr": "Dans un jardin, il y a 7 parterres de fleurs. Dans chaque parterre, il y a 9 fleurs. Combien y a-t-il de fleurs dans le jardin ?",
-        "en": "In a garden, there are 7 flower beds. Each bed has 9 flowers. How many flowers are there in the garden?"
+        "ar": "في حديقة يوجد 7 أسرة زهور، في كل سرير 9 زهور. أضاف البستاني 18 زهرة إضافية. كم عدد الزهور في المجمل؟",
+        "fr": "Dans un jardin, il y a 7 parterres de fleurs avec 9 fleurs chacun. Le jardinier ajoute 18 fleurs supplémentaires. Combien y a-t-il de fleurs au total ?",
+        "en": "In a garden, there are 7 flower beds with 9 flowers each. The gardener adds 18 more flowers. How many flowers are there in total?"
       },
       "operations": [
-        { "operation": "Multiplication", "operand1": 7, "operand2": 9 }
+        { "operation": "Multiplication", "operand1": 7, "operand2": 9 },
+        { "operation": "Addition", "operand1": 63, "operand2": 18 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "فاطمة تملك 35 درهمًا، أعطتها والدتها 25 درهمًا إضافية. ثم اشترت دفترًا بـ15 درهمًا. كم تبقى معها؟",
+        "fr": "Fatima a 35 dirhams, sa mère lui donne 25 dirhams de plus. Elle achète ensuite un cahier à 15 dirhams. Combien lui reste-t-il ?",
+        "en": "Fatima has 35 dirhams, her mother gives her 25 more. She then buys a notebook for 15 dirhams. How much does she have left?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 35, "operand2": 25 },
+        { "operation": "Subtraction", "operand1": 60, "operand2": 15 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "باعت الدكان 48 برتقالة في الصباح و32 برتقالة في المساء. إذا كان سعر كل برتقالة 2 درهم، كم كسبت الدكان في المجمل؟",
+        "fr": "Une boutique a vendu 48 oranges le matin et 32 oranges le soir. Si chaque orange coûte 2 dirhams, combien la boutique a-t-elle gagné au total ?",
+        "en": "A shop sold 48 oranges in the morning and 32 in the evening. If each orange costs 2 dirhams, how much did the shop earn in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 48, "operand2": 32 },
+        { "operation": "Multiplication", "operand1": 80, "operand2": 2 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في القسم الأول 27 تلميذًا وفي القسم الثاني 33 تلميذًا. يحتاج كل تلميذ إلى دفترَين. كم دفترًا يُحتاج في المجمل؟",
+        "fr": "La classe A a 27 élèves et la classe B a 33 élèves. Chaque élève a besoin de 2 cahiers. Combien de cahiers sont nécessaires au total ?",
+        "en": "Class A has 27 students and class B has 33 students. Each student needs 2 notebooks. How many notebooks are needed in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 27, "operand2": 33 },
+        { "operation": "Multiplication", "operand1": 60, "operand2": 2 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "قطف فلاح 56 تفاحة يوم الاثنين و44 تفاحة يوم الثلاثاء. عبّأها في أكياس، كل كيس يحتوي على 5 تفاحات. كم عدد الأكياس؟",
+        "fr": "Un fermier a cueilli 56 pommes lundi et 44 pommes mardi. Il les emballe dans des sacs de 5 pommes chacun. Combien de sacs y a-t-il ?",
+        "en": "A farmer picked 56 apples on Monday and 44 on Tuesday. He packs them into bags of 5. How many bags does he fill?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 56, "operand2": 44 },
+        { "operation": "Division", "operand1": 100, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "يوسف يملك 65 درهمًا، أعطاه والده 35 درهمًا. ثم اشترى لعبة بـ40 درهمًا. كم تبقى معه؟",
+        "fr": "Youssef a 65 dirhams, son père lui donne 35 dirhams. Il achète ensuite un jouet à 40 dirhams. Combien lui reste-t-il ?",
+        "en": "Youssef has 65 dirhams, his father gives him 35 more. He then buys a toy for 40 dirhams. How much does he have left?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 65, "operand2": 35 },
+        { "operation": "Subtraction", "operand1": 100, "operand2": 40 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مكتبة 120 كتابًا على الرف الأول و80 كتابًا على الرف الثاني. بيع نصف الكتب. كم تبقى في المكتبة؟",
+        "fr": "Dans une librairie, il y a 120 livres sur la première étagère et 80 sur la deuxième. La moitié des livres est vendue. Combien en reste-t-il ?",
+        "en": "In a bookshop, there are 120 books on the first shelf and 80 on the second. Half of the books are sold. How many books remain?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 120, "operand2": 80 },
+        { "operation": "Division", "operand1": 200, "operand2": 2 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "سجّل عمر 78 نقطة في مباراة و22 نقطة في مباراة أخرى. يحتاج فريقه إلى 150 نقطة للفوز. كم نقطة يحتاجون بعد؟",
+        "fr": "Omar a marqué 78 points dans un match et 22 dans un autre. Son équipe a besoin de 150 points pour gagner. Combien de points leur manque-t-il encore ?",
+        "en": "Omar scored 78 points in one match and 22 in another. His team needs 150 points to win. How many more points do they need?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 78, "operand2": 22 },
+        { "operation": "Subtraction", "operand1": 150, "operand2": 100 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في الحديقة 36 وردة حمراء و24 وردة بيضاء. رُتِّبت الورود في باقات من 6 ورود. كم عدد الباقات؟",
+        "fr": "Dans le jardin, il y a 36 roses rouges et 24 roses blanches. Les roses sont arrangées en bouquets de 6. Combien y a-t-il de bouquets ?",
+        "en": "In the garden, there are 36 red roses and 24 white roses. The roses are arranged into bouquets of 6. How many bouquets are there?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 36, "operand2": 24 },
+        { "operation": "Division", "operand1": 60, "operand2": 6 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في المدرسة 250 تلميذًا و150 تلميذة. قُسِّموا إلى مجموعات من 5 أشخاص. كم عدد المجموعات؟",
+        "fr": "Dans une école, il y a 250 garçons et 150 filles. Ils sont divisés en groupes de 5 personnes. Combien y a-t-il de groupes ?",
+        "en": "In a school, there are 250 boys and 150 girls. They are divided into groups of 5. How many groups are there?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 250, "operand2": 150 },
+        { "operation": "Division", "operand1": 400, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "نادية قرأت 15 صفحة يوم السبت و20 صفحة يوم الأحد. الكتاب فيه 70 صفحة. كم صفحة تبقى عليها قراءتها؟",
+        "fr": "Nadia a lu 15 pages samedi et 20 pages dimanche. Le livre a 70 pages. Combien de pages lui reste-t-il à lire ?",
+        "en": "Nadia read 15 pages on Saturday and 20 on Sunday. The book has 70 pages. How many pages does she still need to read?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 15, "operand2": 20 },
+        { "operation": "Subtraction", "operand1": 70, "operand2": 35 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في متجر 80 دفترًا، بيع منها 35 دفترًا في الصباح و12 دفترًا في المساء. كم تبقى؟",
+        "fr": "Un magasin avait 80 cahiers, 35 ont été vendus le matin et 12 l'après-midi. Combien en reste-t-il ?",
+        "en": "A store had 80 notebooks. 35 were sold in the morning and 12 in the afternoon. How many are left?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 80, "operand2": 35 },
+        { "operation": "Subtraction", "operand1": 45, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "حسن يملك 120 درهمًا، أنفق 75 درهمًا على الطعام ثم اشترى قلمًا بـ8 دراهم. كم تبقى معه؟",
+        "fr": "Hassan a 120 dirhams, il dépense 75 dirhams sur la nourriture puis achète un stylo à 8 dirhams. Combien lui reste-t-il ?",
+        "en": "Hassan has 120 dirhams. He spends 75 dirhams on food and then buys a pen for 8 dirhams. How much does he have left?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 120, "operand2": 75 },
+        { "operation": "Subtraction", "operand1": 45, "operand2": 8 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مزرعة 96 دجاجة، بيع منها 24 ثم أُعطيت 12 دجاجة لجارة. كم تبقى في المزرعة؟",
+        "fr": "Dans une ferme, il y a 96 poulets, 24 ont été vendus puis 12 ont été donnés à une voisine. Combien en reste-t-il dans la ferme ?",
+        "en": "A farm had 96 chickens. 24 were sold and then 12 were given to a neighbour. How many chickens remain?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 96, "operand2": 24 },
+        { "operation": "Subtraction", "operand1": 72, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في المكتبة 150 كتابًا، استُعير منها 60 كتابًا. ثم تبرّع شخص بـ15 كتابًا. كم عدد الكتب الآن؟",
+        "fr": "Dans une bibliothèque, il y a 150 livres, 60 ont été empruntés. Ensuite, quelqu'un donne 15 livres. Combien y a-t-il de livres maintenant ?",
+        "en": "A library had 150 books, 60 were borrowed. Then someone donated 15 more books. How many books are there now?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 150, "operand2": 60 },
+        { "operation": "Addition", "operand1": 90, "operand2": 15 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في صندوق 48 حلوى، أكل التلاميذ 18 حلوى. ثم أضاف المعلم 12 حلوى. كم عدد الحلويات الآن؟",
+        "fr": "Dans une boîte, il y a 48 bonbons, les élèves en ont mangé 18. L'enseignant ajoute ensuite 12 bonbons. Combien y a-t-il de bonbons maintenant ?",
+        "en": "A box had 48 sweets, students ate 18. The teacher then added 12 more sweets. How many sweets are there now?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 48, "operand2": 18 },
+        { "operation": "Addition", "operand1": 30, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في القسم 40 تلميذًا، غاب منهم 12 تلميذًا. قُسِّم الحاضرون إلى مجموعات من 4. كم عدد المجموعات؟",
+        "fr": "Dans une classe de 40 élèves, 12 étaient absents. Les élèves présents sont divisés en groupes de 4. Combien y a-t-il de groupes ?",
+        "en": "In a class of 40 students, 12 were absent. The present students are divided into groups of 4. How many groups are there?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 40, "operand2": 12 },
+        { "operation": "Division", "operand1": 28, "operand2": 4 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "ليلى تملك 200 درهمًا، اشترت لعبة بـ85 درهمًا ثم كتابًا بـ30 درهمًا. كم تبقى لها؟",
+        "fr": "Leila a 200 dirhams, elle achète un jouet à 85 dirhams puis un livre à 30 dirhams. Combien lui reste-t-il ?",
+        "en": "Leila has 200 dirhams. She buys a toy for 85 dirhams and then a book for 30 dirhams. How much does she have left?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 200, "operand2": 85 },
+        { "operation": "Subtraction", "operand1": 115, "operand2": 30 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "مصنع أنتج 500 قطعة، 150 قطعة منها معيبة. ثم رجع العملاء بـ50 قطعة أخرى. كم عدد القطع الجيدة الآن؟",
+        "fr": "Une usine a produit 500 pièces, 150 étaient défectueuses. Ensuite, les clients retournent 50 pièces. Combien de bonnes pièces reste-t-il ?",
+        "en": "A factory made 500 pieces, 150 were defective. Customers then returned 50 more pieces. How many good pieces remain?"
+      },
+      "operations": [
+        { "operation": "Subtraction", "operand1": 500, "operand2": 150 },
+        { "operation": "Subtraction", "operand1": 350, "operand2": 50 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "صندوق به 6 صفوف من البيض، في كل صف 9 بيضات. استُخدمت 10 بيضات في الطبخ. كم تبقى؟",
+        "fr": "Une boîte a 6 rangées d'œufs avec 9 œufs dans chaque rangée. 10 œufs sont utilisés pour cuisiner. Combien en reste-t-il ?",
+        "en": "A box has 6 rows of eggs with 9 eggs in each row. 10 eggs are used for cooking. How many are left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 6, "operand2": 9 },
+        { "operation": "Subtraction", "operand1": 54, "operand2": 10 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مدرسة 8 فصول دراسية، وفي كل فصل 30 تلميذًا. غادر 40 تلميذًا مبكرًا. كم تلميذًا بقي؟",
+        "fr": "Dans une école, il y a 8 classes avec 30 élèves chacune. 40 élèves partent tôt. Combien d'élèves restent ?",
+        "en": "A school has 8 classrooms with 30 students each. 40 students leave early. How many students remain?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 8, "operand2": 30 },
+        { "operation": "Subtraction", "operand1": 240, "operand2": 40 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "زرع فلاح 5 صفوف من الذرة، في كل صف 20 نبتة. حصد 60 نبتة. كم تبقى في الحقل؟",
+        "fr": "Un fermier a planté 5 rangées de maïs avec 20 plants dans chaque rangée. Il en récolte 60. Combien en reste-t-il dans le champ ?",
+        "en": "A farmer planted 5 rows of corn with 20 plants each. He harvested 60 plants. How many plants remain in the field?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 5, "operand2": 20 },
+        { "operation": "Subtraction", "operand1": 100, "operand2": 60 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "مخبزة تُنتج 9 كعكات في اليوم. بعد 7 أيام، بيع منها 25 كعكة. كم تبقى؟",
+        "fr": "Une boulangerie produit 9 gâteaux par jour. Après 7 jours, 25 gâteaux sont vendus. Combien en reste-t-il ?",
+        "en": "A bakery makes 9 cakes per day. After 7 days, 25 cakes are sold. How many cakes remain?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 9, "operand2": 7 },
+        { "operation": "Subtraction", "operand1": 63, "operand2": 25 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "لكل طفل 6 حلويات وعدد الأطفال 8. أُضيفت 12 حلوى إضافية للمجموعة. كم عدد الحلويات في المجمل؟",
+        "fr": "Chaque enfant reçoit 6 bonbons et il y a 8 enfants. 12 bonbons supplémentaires sont ajoutés au groupe. Combien y a-t-il de bonbons au total ?",
+        "en": "Each child gets 6 sweets and there are 8 children. 12 more sweets are added to the group. How many sweets are there in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 6, "operand2": 8 },
+        { "operation": "Addition", "operand1": 48, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في صندوق 12 قلمًا ملونًا وهناك 5 صناديق. كُسر 15 قلمًا. كم قلمًا جيدًا تبقى؟",
+        "fr": "Une boîte contient 12 crayons de couleur et il y a 5 boîtes. 15 crayons sont cassés. Combien de bons crayons reste-t-il ?",
+        "en": "A box has 12 colored crayons and there are 5 boxes. 15 crayons are broken. How many good crayons remain?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 12, "operand2": 5 },
+        { "operation": "Subtraction", "operand1": 60, "operand2": 15 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مطعم 11 طاولة، ولكل طاولة 4 كراسي. إذا كانت 18 كرسيًا مشغولة، كم كرسيًا فارغًا تبقى؟",
+        "fr": "Dans un restaurant, il y a 11 tables avec 4 chaises chacune. Si 18 chaises sont occupées, combien de chaises sont libres ?",
+        "en": "In a restaurant, there are 11 tables with 4 chairs each. If 18 chairs are occupied, how many chairs are free?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 11, "operand2": 4 },
+        { "operation": "Subtraction", "operand1": 44, "operand2": 18 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "قطار يسير بسرعة 60 كيلومترًا في الساعة لمدة 4 ساعات. قطع قطار آخر 80 كيلومترًا بالفعل. كم المسافة الكلية؟",
+        "fr": "Un train roule à 60 kilomètres par heure pendant 4 heures. Un autre train a déjà parcouru 80 kilomètres. Quelle est la distance totale ?",
+        "en": "A train travels at 60 km per hour for 4 hours. Another train has already covered 80 km. What is the total distance covered by both trains?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 60, "operand2": 4 },
+        { "operation": "Addition", "operand1": 240, "operand2": 80 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "56 حلوى تُقسَّم على 8 أطفال بالتساوي. ثم أكل كل طفل 2 حلوى. كم حلوى تبقى مع كل طفل؟",
+        "fr": "56 bonbons sont partagés également entre 8 enfants. Chaque enfant mange ensuite 2 bonbons. Combien de bonbons chaque enfant a-t-il maintenant ?",
+        "en": "56 sweets are divided equally among 8 children. Each child then eats 2 sweets. How many sweets does each child have left?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 56, "operand2": 8 },
+        { "operation": "Subtraction", "operand1": 7, "operand2": 2 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "84 كتابًا يُوزَّع بالتساوي على 7 أرفف. أضاف أمين المكتبة 5 كتب لكل رف. كم كتابًا في كل رف الآن؟",
+        "fr": "84 livres sont répartis également sur 7 étagères. Le bibliothécaire ajoute 5 livres à chaque étagère. Combien y a-t-il de livres sur chaque étagère maintenant ?",
+        "en": "84 books are distributed equally among 7 shelves. The librarian adds 5 more books to each shelf. How many books are on each shelf now?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 84, "operand2": 7 },
+        { "operation": "Addition", "operand1": 12, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "60 تلميذًا يُقسَّمون إلى مجموعات من 5. تحتاج كل مجموعة إلى 3 دفاتر. كم دفترًا يُحتاج في المجمل؟",
+        "fr": "60 élèves sont divisés en groupes de 5. Chaque groupe a besoin de 3 cahiers. Combien de cahiers sont nécessaires au total ?",
+        "en": "60 students are divided into groups of 5. Each group needs 3 notebooks. How many notebooks are needed in total?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 60, "operand2": 5 },
+        { "operation": "Multiplication", "operand1": 12, "operand2": 3 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "96 برتقالة تُعبَّأ في أكياس، كل كيس يحتوي على 8 برتقالات. بيع كل كيس بـ10 دراهم. كم كُسب في المجمل؟",
+        "fr": "96 oranges sont emballées dans des sacs de 8. Chaque sac est vendu à 10 dirhams. Combien a-t-on gagné au total ?",
+        "en": "96 oranges are packed into bags of 8. Each bag is sold for 10 dirhams. How much money is earned in total?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 96, "operand2": 8 },
+        { "operation": "Multiplication", "operand1": 12, "operand2": 10 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "كريم يملك 100 درهم، يشتري 5 أقلام بسعر 8 دراهم لكل قلم. كم يتبقى معه بعد الشراء؟",
+        "fr": "Karim a 100 dirhams, il achète 5 stylos à 8 dirhams chacun. Combien lui reste-t-il après l'achat ?",
+        "en": "Karim has 100 dirhams and buys 5 pens at 8 dirhams each. How much does he have left after the purchase?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 5, "operand2": 8 },
+        { "operation": "Subtraction", "operand1": 100, "operand2": 40 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "سارة تملك 150 درهمًا، تشتري 6 كتب بسعر 20 درهمًا لكل كتاب. كم يتبقى معها بعد الشراء؟",
+        "fr": "Sara a 150 dirhams, elle achète 6 livres à 20 dirhams chacun. Combien lui reste-t-il après l'achat ?",
+        "en": "Sara has 150 dirhams and buys 6 books at 20 dirhams each. How much does she have left after the purchase?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 6, "operand2": 20 },
+        { "operation": "Subtraction", "operand1": 150, "operand2": 120 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "إيمان تملك 80 درهمًا وتشتري 4 ألعاب بسعر 15 درهمًا للعبة. كم يتبقى معها؟",
+        "fr": "Imane a 80 dirhams et achète 4 jouets à 15 dirhams chacun. Combien lui reste-t-il ?",
+        "en": "Imane has 80 dirhams and buys 4 toys at 15 dirhams each. How much does she have left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 4, "operand2": 15 },
+        { "operation": "Subtraction", "operand1": 80, "operand2": 60 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مستودع 120 قطعة. أُخذت منها 7 صناديق، كل صندوق يحتوي على 9 قطع. كم تبقى في المستودع؟",
+        "fr": "Dans un entrepôt, il y a 120 pièces. On en a retiré 7 boîtes, chaque boîte contient 9 pièces. Combien en reste-t-il dans l'entrepôt ?",
+        "en": "A warehouse had 120 items. 7 boxes of 9 items each were removed. How many are left in the warehouse?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 7, "operand2": 9 },
+        { "operation": "Subtraction", "operand1": 120, "operand2": 63 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "مراد يملك 75 درهمًا ويشتري 5 حقائب بسعر 12 درهمًا لكل حقيبة. كم يتبقى معه؟",
+        "fr": "Mouad a 75 dirhams et achète 5 sacs à 12 dirhams chacun. Combien lui reste-t-il ?",
+        "en": "Mouad has 75 dirhams and buys 5 bags at 12 dirhams each. How much does he have left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 5, "operand2": 12 },
+        { "operation": "Subtraction", "operand1": 75, "operand2": 60 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "عند فلاح 200 تفاحة، عبّأ منها 8 صناديق، كل صندوق يحتوي على 18 تفاحة. كم تبقى؟",
+        "fr": "Un fermier avait 200 pommes, il en a mis 8 boîtes de 18 pommes chacune. Combien en reste-t-il ?",
+        "en": "A farmer had 200 apples and packed 8 boxes of 18 apples each. How many are left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 8, "operand2": 18 },
+        { "operation": "Subtraction", "operand1": 200, "operand2": 144 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "سمية تملك 90 درهمًا وتشتري 3 هدايا بسعر 25 درهمًا للهدية. كم يتبقى معها؟",
+        "fr": "Samia a 90 dirhams et achète 3 cadeaux à 25 dirhams chacun. Combien lui reste-t-il ?",
+        "en": "Samia has 90 dirhams and buys 3 gifts at 25 dirhams each. How much does she have left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 3, "operand2": 25 },
+        { "operation": "Subtraction", "operand1": 90, "operand2": 75 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "استأجر أحمد غرفة في فندق لمدة 4 ليالٍ بسعر 35 درهمًا في الليلة. إذا دفع 200 درهم، كم يتبقى له من المبلغ؟",
+        "fr": "Ahmed a loué une chambre d'hôtel pendant 4 nuits à 35 dirhams par nuit. S'il a payé 200 dirhams, combien lui reste-t-il ?",
+        "en": "Ahmed rented a hotel room for 4 nights at 35 dirhams per night. If he paid 200 dirhams, how much does he have left?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 4, "operand2": 35 },
+        { "operation": "Subtraction", "operand1": 200, "operand2": 140 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "أحمد يكسب 30 درهمًا في اليوم. بعد 5 أيام من العمل، أعطاه والده 20 درهمًا إضافية. كم أصبح معه؟",
+        "fr": "Ahmed gagne 30 dirhams par jour. Après 5 jours de travail, son père lui donne 20 dirhams supplémentaires. Combien a-t-il maintenant ?",
+        "en": "Ahmed earns 30 dirhams a day. After 5 days of work, his father gives him 20 more dirhams. How much does he have now?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 5, "operand2": 30 },
+        { "operation": "Addition", "operand1": 150, "operand2": 20 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في الحديقة 4 أحواض من الورود، في كل حوض 8 ورود. أضاف البستاني 12 وردة إضافية. كم عدد الورود الآن؟",
+        "fr": "Dans un jardin, il y a 4 parterres de roses avec 8 roses chacun. Le jardinier a ajouté 12 roses supplémentaires. Combien y a-t-il de roses maintenant ?",
+        "en": "A garden has 4 flower beds with 8 roses each. The gardener added 12 more roses. How many roses are there now?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 4, "operand2": 8 },
+        { "operation": "Addition", "operand1": 32, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "نور اشترت 3 علب من الأقلام، في كل علبة 6 أقلام. وجدت في حقيبتها 5 أقلام أخرى. كم عدد الأقلام لديها؟",
+        "fr": "Nour a acheté 3 boîtes de crayons, chaque boîte contient 6 crayons. Elle a trouvé 5 autres crayons dans son sac. Combien de crayons a-t-elle en tout ?",
+        "en": "Nour bought 3 boxes of pencils with 6 pencils each, and found 5 more in her bag. How many pencils does she have in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 3, "operand2": 6 },
+        { "operation": "Addition", "operand1": 18, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "مصنع ينتج 9 قطع في الساعة. بعد 6 ساعات من العمل، أُضيفت إليه 15 قطعة من المخزون. كم عدد القطع الآن؟",
+        "fr": "Une usine produit 9 pièces par heure. Après 6 heures de travail, 15 pièces supplémentaires du stock ont été ajoutées. Combien de pièces y a-t-il maintenant ?",
+        "en": "A factory produces 9 items per hour. After 6 hours, 15 more items from storage were added. How many items are there now?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 9, "operand2": 6 },
+        { "operation": "Addition", "operand1": 54, "operand2": 15 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في صندوق 7 أكياس، في كل كيس 4 برتقالات. أُضيف إليه 8 برتقالات. كم عدد البرتقالات الآن؟",
+        "fr": "Dans une boîte, il y a 7 sacs, chaque sac contient 4 oranges. On y a ajouté 8 oranges. Combien y a-t-il d'oranges maintenant ?",
+        "en": "A box has 7 bags with 4 oranges each. 8 more oranges were added. How many oranges are there now?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 7, "operand2": 4 },
+        { "operation": "Addition", "operand1": 28, "operand2": 8 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "غرس 6 تلاميذ كل منهم 5 أشجار. ثم جاء المعلم وغرس 10 أشجار إضافية. كم عدد الأشجار في المجمل؟",
+        "fr": "6 élèves ont chacun planté 5 arbres. Ensuite, l'enseignant a planté 10 arbres supplémentaires. Combien y a-t-il d'arbres au total ?",
+        "en": "6 students each planted 5 trees. Then the teacher planted 10 more trees. How many trees are there in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 6, "operand2": 5 },
+        { "operation": "Addition", "operand1": 30, "operand2": 10 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في كل حوض 8 أسماك حمراء و7 أسماك زرقاء. إذا كان هناك 3 أحواض، كم عدد الأسماك في المجمل؟",
+        "fr": "Dans chaque aquarium, il y a 8 poissons rouges et 7 poissons bleus. S'il y a 3 aquariums, combien y a-t-il de poissons au total ?",
+        "en": "Each aquarium has 8 red fish and 7 blue fish. If there are 3 aquariums, how many fish are there in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 8, "operand2": 7 },
+        { "operation": "Multiplication", "operand1": 15, "operand2": 3 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "فريق كرة القدم يسجل 4 أهداف في الشوط الأول و3 في الشوط الثاني. إذا تكرر هذا في 5 مباريات، كم عدد الأهداف الكلي؟",
+        "fr": "Une équipe marque 4 buts en première mi-temps et 3 en deuxième mi-temps. Si ce score se répète sur 5 matchs, combien de buts au total ?",
+        "en": "A football team scores 4 goals in the first half and 3 in the second. If this happens in 5 matches, how many goals are there in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 4, "operand2": 3 },
+        { "operation": "Multiplication", "operand1": 7, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "على كل رف 12 كتابًا كبيرًا و8 كتبًا صغيرة. إذا كان هناك 4 أرفف، كم عدد الكتب في المجمل؟",
+        "fr": "Sur chaque étagère, il y a 12 grands livres et 8 petits livres. S'il y a 4 étagères, combien y a-t-il de livres au total ?",
+        "en": "Each shelf has 12 big books and 8 small books. If there are 4 shelves, how many books are there in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 12, "operand2": 8 },
+        { "operation": "Multiplication", "operand1": 20, "operand2": 4 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "ليلى تضع في كل سلة 6 تفاحات و4 برتقالات. إذا عبّأت 7 سلال، كم عدد الفواكه في المجمل؟",
+        "fr": "Leila met dans chaque panier 6 pommes et 4 oranges. Si elle remplit 7 paniers, combien y a-t-il de fruits au total ?",
+        "en": "Leila puts 6 apples and 4 oranges in each basket. If she fills 7 baskets, how many fruits are there in total?"
+      },
+      "operations": [
+        { "operation": "Addition", "operand1": 6, "operand2": 4 },
+        { "operation": "Multiplication", "operand1": 10, "operand2": 7 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "48 حلوى تُقسَّم على 6 أطفال. ثم تحصل كل طفل على 3 حلويات إضافية من المعلمة. كم حلوى مع كل طفل؟",
+        "fr": "48 bonbons sont partagés entre 6 enfants. Ensuite, chaque enfant reçoit 3 bonbons supplémentaires de son enseignante. Combien de bonbons chaque enfant a-t-il maintenant ?",
+        "en": "48 sweets are shared among 6 children. Then each child receives 3 more from the teacher. How many sweets does each child have?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 48, "operand2": 6 },
+        { "operation": "Addition", "operand1": 8, "operand2": 3 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "60 قلمًا يُوزَّع بالتساوي على 5 مجموعات. ثم تحصل كل مجموعة على 4 أقلام إضافية. كم قلمًا مع كل مجموعة؟",
+        "fr": "60 crayons sont distribués également entre 5 groupes. Ensuite, chaque groupe reçoit 4 crayons supplémentaires. Combien de crayons chaque groupe a-t-il ?",
+        "en": "60 pencils are distributed equally among 5 groups. Then each group gets 4 more. How many pencils does each group have?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 60, "operand2": 5 },
+        { "operation": "Addition", "operand1": 12, "operand2": 4 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مكتبة 72 كتابًا تُوزَّع على 8 فصول بالتساوي. ثم تتبرع مكتبة أخرى بـ5 كتب لكل فصل. كم عدد الكتب في كل فصل؟",
+        "fr": "Dans une bibliothèque, 72 livres sont distribués entre 8 classes. Ensuite, une autre bibliothèque donne 5 livres supplémentaires à chaque classe. Combien de livres chaque classe a-t-elle ?",
+        "en": "A library distributes 72 books equally among 8 classes. Then another library donates 5 books to each class. How many books does each class have?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 72, "operand2": 8 },
+        { "operation": "Addition", "operand1": 9, "operand2": 5 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "84 ملصقًا يُقسَّم على 7 أطفال بالتساوي. ثم يحصل كل طفل على ملصقَين إضافيَّين. كم ملصقًا مع كل طفل؟",
+        "fr": "84 autocollants sont partagés entre 7 enfants. Ensuite, chaque enfant reçoit 2 autocollants supplémentaires. Combien d'autocollants chaque enfant a-t-il ?",
+        "en": "84 stickers are shared equally among 7 children. Each child then gets 2 more stickers. How many stickers does each child have?"
+      },
+      "operations": [
+        { "operation": "Division", "operand1": 84, "operand2": 7 },
+        { "operation": "Addition", "operand1": 12, "operand2": 2 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "يوسف اشترى 3 أقلام بسعر 4 دراهم لكل قلم، و2 دفتر بسعر 8 دراهم لكل دفتر. كم أنفق يوسف في المجمل؟",
+        "fr": "Youssef a acheté 3 stylos à 4 dirhams chacun et 2 cahiers à 8 dirhams chacun. Combien Youssef a-t-il dépensé au total ?",
+        "en": "Youssef bought 3 pens at 4 dirhams each and 2 notebooks at 8 dirhams each. How much did Youssef spend in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 3, "operand2": 4 },
+        { "operation": "Multiplication", "operand1": 2, "operand2": 8 },
+        { "operation": "Addition", "operand1": 12, "operand2": 16 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مزرعة 5 أبقار تنتج كل بقرة 6 لترات من الحليب يوميًا، و4 ماعز تنتج كل ماعز 3 لترات. كم مجموع الحليب اليومي؟",
+        "fr": "Dans une ferme, il y a 5 vaches produisant chacune 6 litres de lait par jour, et 4 chèvres produisant chacune 3 litres. Quel est le total de lait produit par jour ?",
+        "en": "A farm has 5 cows each producing 6 liters of milk per day, and 4 goats each producing 3 liters. What is the total milk production per day?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 5, "operand2": 6 },
+        { "operation": "Multiplication", "operand1": 4, "operand2": 3 },
+        { "operation": "Addition", "operand1": 30, "operand2": 12 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مدرسة 3 فصول للبنين، في كل فصل 8 تلاميذ، و4 فصول للبنات، في كل فصل 7 تلميذات. كم عدد التلاميذ في المجمل؟",
+        "fr": "Dans une école, il y a 3 classes de garçons avec 8 élèves chacune, et 4 classes de filles avec 7 élèves chacune. Combien y a-t-il d'élèves au total ?",
+        "en": "A school has 3 boys' classes with 8 students each, and 4 girls' classes with 7 students each. How many students are there in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 3, "operand2": 8 },
+        { "operation": "Multiplication", "operand1": 4, "operand2": 7 },
+        { "operation": "Addition", "operand1": 24, "operand2": 28 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "6 أولاد جاء كل منهم بـ4 كراسي، و5 بنات جاءت كل منهن بـ3 كراسي. كم عدد الكراسي في المجمل؟",
+        "fr": "6 garçons ont chacun apporté 4 chaises, et 5 filles ont chacune apporté 3 chaises. Combien y a-t-il de chaises au total ?",
+        "en": "6 boys each brought 4 chairs and 5 girls each brought 3 chairs. How many chairs are there in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 6, "operand2": 4 },
+        { "operation": "Multiplication", "operand1": 5, "operand2": 3 },
+        { "operation": "Addition", "operand1": 24, "operand2": 15 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "عامل يكسب 15 درهمًا في الساعة. يعمل 8 ساعات اليوم الأول و9 ساعات اليوم الثاني. كم مجموع أجره في اليومين؟",
+        "fr": "Un ouvrier gagne 15 dirhams par heure. Il travaille 8 heures le premier jour et 9 heures le deuxième jour. Quel est le total de son salaire pour les deux jours ?",
+        "en": "A worker earns 15 dirhams per hour. He works 8 hours on the first day and 9 hours on the second. What is his total wage for both days?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 15, "operand2": 8 },
+        { "operation": "Multiplication", "operand1": 15, "operand2": 9 },
+        { "operation": "Addition", "operand1": 120, "operand2": 135 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في مكتبة مدرسية 4 أرفف كبيرة، كل رف يحتوي على 12 كتابًا، و3 أرفف صغيرة، كل رف يحتوي على 10 كتب. كم عدد الكتب في المجمل؟",
+        "fr": "Dans une bibliothèque scolaire, il y a 4 grandes étagères contenant chacune 12 livres, et 3 petites étagères contenant chacune 10 livres. Combien y a-t-il de livres au total ?",
+        "en": "A school library has 4 large shelves with 12 books each, and 3 small shelves with 10 books each. How many books are there in total?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 4, "operand2": 12 },
+        { "operation": "Multiplication", "operand1": 3, "operand2": 10 },
+        { "operation": "Addition", "operand1": 48, "operand2": 30 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في محل نوعان من العصير: النوع الأول 15 علبة بسعر 2 درهم، والنوع الثاني 10 علب بسعر 3 دراهم. كم تكلف جميع العلب؟",
+        "fr": "Dans une boutique, il y a 2 types de jus : 15 boîtes à 2 dirhams chacune, et 10 boîtes à 3 dirhams chacune. Combien coûtent toutes les boîtes ?",
+        "en": "A shop has 2 types of juice: 15 boxes at 2 dirhams each and 10 boxes at 3 dirhams each. How much do all the boxes cost?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 15, "operand2": 2 },
+        { "operation": "Multiplication", "operand1": 10, "operand2": 3 },
+        { "operation": "Addition", "operand1": 30, "operand2": 30 }
+      ]
+    },
+    {
+      "text": {
+        "ar": "في متجر 8 أكياس من التفاح يزن كل كيس 5 كيلوغرامات، و6 أكياس من البرتقال يزن كل كيس 4 كيلوغرامات. ما الوزن الكلي؟",
+        "fr": "Dans un magasin, il y a 8 sacs de pommes de 5 kilogrammes chacun et 6 sacs d'oranges de 4 kilogrammes chacun. Quel est le poids total ?",
+        "en": "A shop has 8 bags of apples weighing 5 kg each and 6 bags of oranges weighing 4 kg each. What is the total weight?"
+      },
+      "operations": [
+        { "operation": "Multiplication", "operand1": 8, "operand2": 5 },
+        { "operation": "Multiplication", "operand1": 6, "operand2": 4 },
+        { "operation": "Addition", "operand1": 40, "operand2": 24 }
       ]
     }
   ]

@@ -15,7 +15,16 @@ export interface FindCompositionsConfig {
 }
 
 export interface VerticalOperationsConfig {
-  numOperations: number;
+  // NEW: Per-operation counts (replaces numOperations)
+  operationCounts?: {
+    Addition: number;
+    Subtraction: number;
+    Multiplication: number;
+    Division: number;
+  };
+  // LEGACY: Keep for backwards compatibility
+  numOperations?: number;
+
   maxNumberRange: number;
   operationsAllowed: Operation[];
   requiredCorrectAnswersMinimumPercent: number;
@@ -160,3 +169,39 @@ export const operationLabels: Record<string, string> = {
 };
 
 export type TimeCategory = "fast" | "medium" | "slow";
+
+/** Return type of buildFuzzyInputsFromResults. subAxes is passive (pilot-safe). */
+export type FuzzyOutput = {
+  axes: {
+    arithmetic_fluency: number;
+    number_sense: number;
+    sequential_thinking: number;
+    comparison_skill: number;
+    visual_matching: number;
+    audio_recognition: number;
+  };
+  coverage: Record<string, number>;
+  subAxes?: {
+    addition_fluency?: number;
+    subtraction_fluency?: number;
+    multiplication_fluency?: number;
+    division_fluency?: number;
+  };
+};
+
+/**
+ * Convert operationCounts to total numOperations (for logging/display)
+ */
+export function getTotalOperationsFromConfig(
+  config: VerticalOperationsConfig,
+): number {
+  if (config.operationCounts) {
+    return (
+      config.operationCounts.Addition +
+      config.operationCounts.Subtraction +
+      config.operationCounts.Multiplication +
+      config.operationCounts.Division
+    );
+  }
+  return config.numOperations || 10;
+}

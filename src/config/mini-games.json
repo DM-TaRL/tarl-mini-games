@@ -79,7 +79,12 @@
       "defaultConfig": {
         "gradeConfig": {
           "default": {
-            "numOperations": 1,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 0,
+              "Multiplication": 0,
+              "Division": 0
+            },
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition"],
             "requiredCorrectAnswersMinimumPercent": 50,
@@ -89,7 +94,12 @@
             "allowMultiStepDiv": false
           },
           "1": {
-            "numOperations": 1,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 0,
+              "Multiplication": 0,
+              "Division": 0
+            },
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition"],
             "requiredCorrectAnswersMinimumPercent": 50,
@@ -99,7 +109,12 @@
             "allowMultiStepDiv": false
           },
           "2": {
-            "numOperations": 1,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 0,
+              "Multiplication": 0,
+              "Division": 0
+            },
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition"],
             "requiredCorrectAnswersMinimumPercent": 50,
@@ -109,7 +124,12 @@
             "allowMultiStepDiv": false
           },
           "3": {
-            "numOperations": 2,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 1,
+              "Multiplication": 0,
+              "Division": 0
+            },
             "maxNumberRange": 2,
             "operationsAllowed": ["Addition", "Subtraction"],
             "requiredCorrectAnswersMinimumPercent": 50,
@@ -119,7 +139,12 @@
             "allowMultiStepDiv": false
           },
           "4": {
-            "numOperations": 3,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 1,
+              "Multiplication": 1,
+              "Division": 0
+            },
             "maxNumberRange": 3,
             "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
             "requiredCorrectAnswersMinimumPercent": 75,
@@ -129,7 +154,12 @@
             "allowMultiStepDiv": false
           },
           "5": {
-            "numOperations": 4,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 1,
+              "Multiplication": 1,
+              "Division": 1
+            },
             "maxNumberRange": 3,
             "operationsAllowed": [
               "Addition",
@@ -141,10 +171,15 @@
             "allowCarry": true,
             "allowBorrow": true,
             "allowMultiStepMul": true,
-            "allowMultiStepDiv": true
+            "allowMultiStepDiv": false
           },
           "6": {
-            "numOperations": 4,
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 1,
+              "Multiplication": 1,
+              "Division": 1
+            },
             "maxNumberRange": 4,
             "operationsAllowed": [
               "Addition",
@@ -156,7 +191,7 @@
             "allowCarry": true,
             "allowBorrow": true,
             "allowMultiStepMul": true,
-            "allowMultiStepDiv": true
+            "allowMultiStepDiv": false
           }
         },
         "skills": [
