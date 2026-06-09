@@ -1,0 +1,8 @@
+pattern,count,student_count,support_students
+choose_answer:ComputationError -> choose_answer:ComputationError,7,2,0.1111111111111111
+identify_place_value:PlaceValueMisidentification -> identify_place_value:PlaceValueMisidentification,6,2,0.1111111111111111
+compare_numbers:ReversedSign -> compare_numbers:ReversedSign,3,2,0.1111111111111111
+choose_answer:ComputationError -> vertical_operations:ComputationError,2,2,0.1111111111111111
+order_numbers:ReversedAscending -> order_numbers:ReversedAscending,2,2,0.1111111111111111
+vertical_operations:ComputationError -> vertical_operations:ComputationError,2,1,0.05555555555555555
+order_numbers:ReversedDescending -> order_numbers:ReversedDescending,2,1,0.05555555555555555

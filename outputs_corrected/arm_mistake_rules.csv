@@ -1,0 +1,5 @@
+antecedent,consequent,support,confidence,count,basket_count
+vertical_operations:ComputationError,find_previous_next_number:RangeUncertainty,0.23809523809523808,1.0,5,21
+choose_answer:MisidentifiedOperation,find_previous_next_number:RangeUncertainty,0.23809523809523808,0.8333333333333334,5,21
+order_numbers:MultipleMisplacements,find_previous_next_number:RangeUncertainty,0.14285714285714285,1.0,3,21
+order_numbers:ReversedDescending,find_previous_next_number:RangeUncertainty,0.14285714285714285,1.0,3,21

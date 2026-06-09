@@ -1,0 +1,14 @@
+game_type,mistake_type,events,weighted_count
+find_previous_next_number,RangeUncertainty,61,61
+choose_answer,MisidentifiedOperation,15,15
+vertical_operations,ComputationError,7,7
+order_numbers,ReversedDescending,6,6
+compare_numbers,ReversedSign,5,5
+order_numbers,MultipleMisplacements,4,5
+order_numbers,ReversedAscending,4,5
+find_previous_next_number,RepeatedNumber,1,2
+find_previous_next_number,TensTransitionMistake,1,2
+identify_place_value,PlaceValueMisidentification,1,2
+choose_answer,ComputationError,1,1
+order_numbers,OneMisplacedNumber,1,1
+what_number_do_you_hear,DigitLengthMistake,1,1
