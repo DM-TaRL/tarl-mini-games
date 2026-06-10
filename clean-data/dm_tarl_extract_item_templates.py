@@ -9,7 +9,7 @@ columns, while analytics should group by item_template_id and config_context_id.
 
 Run:
   python dm_tarl_extract_item_templates.py ^
-    --assessments dm-tarl-default-rtdb-assessments-export-to-analyze.json ^
+    --assessments cleaned_assessments_data_v2.json ^
     --test-definitions dm-tarl-default-rtdb-test_definitions-export.json ^
     --taxonomy DM_TARL_TEMPLATE_TAXONOMY.json ^
     --outdir outputs_templates

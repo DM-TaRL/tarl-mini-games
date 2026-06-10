@@ -1,0 +1,387 @@
+{
+  "description": "DM-TaRL Item Template Taxonomy: Maps game types to pedagogical skills and learning axes",
+  "version": "2.0",
+  "axes": [
+    "arithmetic_fluency",
+    "number_sense",
+    "sequential_thinking",
+    "comparison_skill",
+    "visual_matching",
+    "audio_recognition"
+  ],
+  "template_rules": {
+    "vertical_operations": {
+      "fine_skill": "procedural_fluency",
+      "axis_projection": {
+        "arithmetic_fluency": 1.0
+      }
+    },
+    "choose_answer": {
+      "fine_skill": "operation_identification_from_context",
+      "axis_projection": {
+        "arithmetic_fluency": 0.4,
+        "number_sense": 0.4,
+        "sequential_thinking": 0.2
+      }
+    },
+    "multi_step_problem": {
+      "fine_skill": "multi_step_problem_solving",
+      "axis_projection": {
+        "arithmetic_fluency": 0.3,
+        "sequential_thinking": 0.7
+      }
+    },
+    "find_compositions": {
+      "fine_skill": "number_composition",
+      "axis_projection": {
+        "arithmetic_fluency": 0.5,
+        "number_sense": 0.5
+      }
+    },
+    "find_previous_next_number": {
+      "fine_skill": "number_sequencing",
+      "axis_projection": {
+        "sequential_thinking": 0.6,
+        "number_sense": 0.4
+      }
+    },
+    "order_numbers": {
+      "fine_skill": "number_ordering",
+      "axis_projection": {
+        "sequential_thinking": 0.7,
+        "number_sense": 0.3
+      }
+    },
+    "compare_numbers": {
+      "fine_skill": "number_comparison",
+      "axis_projection": {
+        "comparison_skill": 1.0
+      }
+    },
+    "tap_matching_pairs": {
+      "fine_skill": "visual_matching",
+      "axis_projection": {
+        "visual_matching": 1.0
+      }
+    },
+    "decompose_number": {
+      "fine_skill": "place_value_decomposition",
+      "axis_projection": {
+        "number_sense": 0.7,
+        "visual_matching": 0.3
+      }
+    },
+    "identify_place_value": {
+      "fine_skill": "place_value_identification",
+      "axis_projection": {
+        "number_sense": 1.0
+      }
+    },
+    "write_number_in_letters": {
+      "fine_skill": "number_writing",
+      "axis_projection": {
+        "number_sense": 0.7,
+        "sequential_thinking": 0.3
+      }
+    },
+    "what_number_do_you_hear": {
+      "fine_skill": "audio_number_recognition",
+      "axis_projection": {
+        "audio_recognition": 1.0
+      }
+    },
+    "read_number_aloud": {
+      "fine_skill": "number_reading_aloud",
+      "axis_projection": {
+        "audio_recognition": 0.8,
+        "number_sense": 0.2
+      }
+    }
+  },
+  "skill_hierarchy": {
+    "arithmetic_fluency": {
+      "description": "Speed and accuracy in arithmetic operations",
+      "sub_skills": [
+        "procedural_fluency",
+        "operation_identification_from_context",
+        "number_composition"
+      ]
+    },
+    "number_sense": {
+      "description": "Understanding of number magnitude, decomposition, and place value",
+      "sub_skills": [
+        "place_value_identification",
+        "place_value_decomposition",
+        "number_writing",
+        "number_composition"
+      ]
+    },
+    "sequential_thinking": {
+      "description": "Understanding of order, sequence, and multi-step processes",
+      "sub_skills": [
+        "number_ordering",
+        "number_sequencing",
+        "multi_step_problem_solving"
+      ]
+    },
+    "comparison_skill": {
+      "description": "Ability to compare and establish relationships between numbers",
+      "sub_skills": [
+        "number_comparison"
+      ]
+    },
+    "visual_matching": {
+      "description": "Visual recognition and matching abilities",
+      "sub_skills": [
+        "visual_matching",
+        "place_value_decomposition"
+      ]
+    },
+    "audio_recognition": {
+      "description": "Recognition of numbers from auditory input",
+      "sub_skills": [
+        "audio_number_recognition",
+        "number_reading_aloud"
+      ]
+    }
+  },
+  "moroccan_curriculum_mapping": {
+    "grade_1": {
+      "axes": ["number_sense", "arithmetic_fluency"],
+      "target_skills": [
+        "number_recognition",
+        "counting",
+        "simple_addition",
+        "simple_subtraction"
+      ]
+    },
+    "grade_2": {
+      "axes": ["number_sense", "arithmetic_fluency", "sequential_thinking"],
+      "target_skills": [
+        "place_value_understanding",
+        "addition_with_carry",
+        "subtraction_with_borrow",
+        "number_composition"
+      ]
+    },
+    "grade_3": {
+      "axes": ["arithmetic_fluency", "sequential_thinking", "number_sense"],
+      "target_skills": [
+        "multiplication_facts",
+        "division_understanding",
+        "multi_step_problems",
+        "number_ordering"
+      ]
+    },
+    "grade_4": {
+      "axes": ["arithmetic_fluency", "sequential_thinking", "number_sense", "comparison_skill"],
+      "target_skills": [
+        "multi_digit_multiplication",
+        "division_with_remainder",
+        "decimal_concepts",
+        "number_comparison"
+      ]
+    },
+    "grade_5": {
+      "axes": ["arithmetic_fluency", "sequential_thinking", "number_sense", "comparison_skill"],
+      "target_skills": [
+        "advanced_multiplication",
+        "long_division",
+        "fraction_concepts",
+        "problem_solving"
+      ]
+    },
+    "grade_6": {
+      "axes": ["arithmetic_fluency", "sequential_thinking", "number_sense", "comparison_skill"],
+      "target_skills": [
+        "fraction_operations",
+        "decimal_operations",
+        "ratio_concepts",
+        "advanced_problem_solving"
+      ]
+    }
+  },
+  "game_type_metadata": {
+    "vertical_operations": {
+      "category": "Procedural Fluency",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "allowCarry",
+        "allowBorrow",
+        "allowMultiStepMul",
+        "allowMultiStepDiv",
+        "operationCounts"
+      ],
+      "primary_axis": "arithmetic_fluency",
+      "moroccan_connection": "Essential for algorithmic fluency required in Grade 2+ curriculum"
+    },
+    "choose_answer": {
+      "category": "Conceptual Understanding",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numOptions",
+        "numQuestions",
+        "operationsAllowed"
+      ],
+      "primary_axis": "arithmetic_fluency",
+      "moroccan_connection": "Tests operation recognition in context-based problems"
+    },
+    "multi_step_problem": {
+      "category": "Problem Solving",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numSteps",
+        "operationsAllowed"
+      ],
+      "primary_axis": "sequential_thinking",
+      "moroccan_connection": "Develops multi-step reasoning required by Grade 3+ curriculum"
+    },
+    "find_compositions": {
+      "category": "Number Sense",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "minNumCompositions",
+        "operation"
+      ],
+      "primary_axis": "number_sense",
+      "moroccan_connection": "Foundational for understanding number relationships and addition/subtraction"
+    },
+    "find_previous_next_number": {
+      "category": "Sequencing",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "sequential_thinking",
+      "moroccan_connection": "Develops counting and number sequence understanding"
+    },
+    "order_numbers": {
+      "category": "Comparison & Ordering",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "maxNumbersInSequence",
+        "numQuestions"
+      ],
+      "primary_axis": "sequential_thinking",
+      "moroccan_connection": "Essential for understanding magnitude and number lines (Grade 1+)"
+    },
+    "compare_numbers": {
+      "category": "Comparison",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "comparison_skill",
+      "moroccan_connection": "Foundational comparison skills (greater than, less than, equal)"
+    },
+    "tap_matching_pairs": {
+      "category": "Visual Matching",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numPairs"
+      ],
+      "primary_axis": "visual_matching",
+      "moroccan_connection": "Supports visual processing and number recognition"
+    },
+    "decompose_number": {
+      "category": "Place Value",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "number_sense",
+      "moroccan_connection": "Critical for place value understanding (Grade 1+)"
+    },
+    "identify_place_value": {
+      "category": "Place Value",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "number_sense",
+      "moroccan_connection": "Mandatory for understanding units, tens, hundreds (Grade 1+)"
+    },
+    "write_number_in_letters": {
+      "category": "Number Representation",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "number_sense",
+      "moroccan_connection": "Writing numbers in words (Arabic/Darija) - cultural and linguistic component"
+    },
+    "what_number_do_you_hear": {
+      "category": "Audio Recognition",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "numQuestions"
+      ],
+      "primary_axis": "audio_recognition",
+      "moroccan_connection": "Listening comprehension in Arabic/Darija - important for learners with literacy challenges"
+    },
+    "read_number_aloud": {
+      "category": "Audio Production",
+      "difficulty_factors": [
+        "maxNumberRange",
+        "displayTime",
+        "numQuestions"
+      ],
+      "primary_axis": "audio_recognition",
+      "moroccan_connection": "Speaking numbers aloud in Arabic - oral fluency component"
+    }
+  },
+  "item_template_naming_convention": {
+    "description": "Describes how item_template_id is constructed from game type and key dimensions",
+    "pattern": "{game_type}__{dimension1_value}__{dimension2_value}__...",
+    "examples": {
+      "vertical_operations": "vertical_operations__Addition__2digits__carry",
+      "choose_answer": "choose_answer__Multiplication__OneStepProblem__2digits__3options",
+      "identify_place_value": "identify_place_value__2digits__all_digits_distinct",
+      "order_numbers": "order_numbers__asc__seq6__3digits",
+      "compare_numbers": "compare_numbers__Greater__2digits"
+    }
+  },
+  "config_context_naming_convention": {
+    "description": "Describes how config_context_id is constructed from game type and config parameters",
+    "pattern": "{game_type}__cfg_range{maxNumberRange}__...",
+    "examples": {
+      "vertical_operations": "vertical_operations__cfg_range3__ops_Addition-Subtraction__carry_true__borrow_false",
+      "choose_answer": "choose_answer__cfg_range2__ops_Addition-Subtraction__options4",
+      "order_numbers": "order_numbers__cfg_range4__maxseq6"
+    }
+  },
+  "validation_rules": {
+    "axis_projection": {
+      "description": "Weights for each axis_projection must sum to approximately 1.0",
+      "tolerance": 0.01
+    },
+    "fine_skill": {
+      "description": "Each game_type must have a fine_skill defined",
+      "required": true
+    },
+    "game_type_consistency": {
+      "description": "Game types in template_rules must match mini-games.json definitions",
+      "expected_count": 13
+    }
+  },
+  "notes_for_research": {
+    "design_principles": [
+      "TaRL alignment: Games target actual learner ability level, not grade level",
+      "Pedagogical validity: Each game maps to specific learning axes",
+      "Moroccan context: Arabic/Darija support and curriculum alignment",
+      "Data clarity: Item templates group procedurally-generated items into reusable concepts"
+    ],
+    "analytics_usage": [
+      "Templates aggregate across multiple config contexts for statistical power",
+      "Axis projections support multi-dimensional learner state estimation (PFA, BKT)",
+      "Fine skills enable skill-by-skill mastery tracking and remediation routing",
+      "Sparse templates (< 5 attempts, < 3 students) are flagged for exclusion from modeling"
+    ],
+    "jla_paper_connection": [
+      "Taxonomy documents the design-architecture: how procedurally-generated items map to reusable pedagogical templates",
+      "Axis projections support Learning Analytics claims about skill estimation",
+      "Moroccan curriculum mapping justifies relevance to local context",
+      "Game metadata provides context for ARM/SPM analysis of error patterns by skill/difficulty"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+metric,value
+total_assessments,49
+completed_original,45
+completed_reconstructed,1
+partial,3
+empty,0
+total_item_interactions,1363
+total_weak_skill_events,277
+total_fuzzy_profiles,49
+students_with_repeated_assessments,9
+maximum_assessment_depth_per_student,6
+assessment_level_analysis_assessments,46
+item_level_analysis_assessments,49

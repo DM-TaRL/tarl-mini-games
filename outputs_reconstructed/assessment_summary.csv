@@ -1,0 +1,50 @@
+student_id,assessment_id,assessment_status,completion_reason,num_games_passed,total_games,last_completed_game,item_interactions,weak_skill_count,fuzzy_status,mastery_score,started_at,estimated_finished_at
+stu_1776848582102_8186,test_1776848340577_ghi7b5y,completed_original,finished=true,4,9,,23,4,full_assessment,1,2026-04-22T09:16:22.083Z,2026-04-22T09:31:59.670Z
+stu_1776848747452_2240,test_1776848340577_ghi7b5y,completed_original,finished=true,1,9,,14,9,full_assessment,1.4,2026-04-22T09:46:48.063Z,2026-04-22T09:55:59.368Z
+stu_1776848878846_8648,test_1776848340577_ghi7b5y,completed_original,finished=true,8,9,,31,5,full_assessment,1,2026-04-22T09:20:24.572Z,2026-04-22T09:42:30.113Z
+stu_1776848879378_2063,test_1776848340577_ghi7b5y,completed_original,finished=true,3,9,,13,6,full_assessment,1.4,2026-04-22T09:49:30.978Z,2026-04-22T09:50:49.341Z
+stu_1776848879823_1392,test_1776848340577_ghi7b5y,partial,interaction logs exist but completion criteria not met,,9,,15,2,partial_assessment,1,2026-04-22T08:39:01.391Z,2026-04-22T09:53:31.410Z
+stu_1777023080044_2956,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,24,4,full_assessment,5.61,2026-04-24T09:46:19.010Z,2026-04-24T11:08:35.647Z
+stu_1777023761242_7194,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,20,3,full_assessment,5.61,2026-04-24T09:46:19.070Z,2026-04-24T11:17:17.042Z
+stu_1777023761468_62,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,27,10,full_assessment,5.61,2026-04-24T09:46:19.129Z,2026-04-28T13:01:20.559Z
+stu_1777023761689_8905,test_1777023978840_kask7x7,completed_original,finished=true,2,6,,24,8,full_assessment,1,2026-04-24T09:46:19.188Z,2026-04-24T10:52:24.834Z
+stu_1777023761689_8905,test_1781049725283_3of3fqe,completed_original,finished=true,3,6,vertical_operations,47,24,full_assessment,3,2026-06-10T00:02:05.627Z,2026-06-10T10:14:25.157Z
+stu_1777023761898_3121,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,25,4,full_assessment,5.61,2026-04-24T09:46:19.253Z,2026-04-28T13:04:07.625Z
+stu_1777023762111_459,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,20,4,full_assessment,5.61,2026-04-24T09:46:19.312Z,2026-04-24T11:01:32.532Z
+stu_1777023762305_6832,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,23,5,full_assessment,5.61,2026-04-24T09:46:19.372Z,2026-04-24T10:49:35.237Z
+stu_1777023762504_1364,test_1777023978840_kask7x7,completed_original,finished=true,5,6,,25,6,full_assessment,5.13,2026-04-24T09:46:19.434Z,2026-04-28T13:31:42.162Z
+stu_1777023762504_1364,test_1781048227348_yh9wms9,completed_reconstructed,lastCompletedGame equals final configured mini-game,,4,vertical_operations,22,9,full_assessment,5,2026-06-09T23:37:07.921Z,2026-06-10T10:12:28.503Z
+stu_1777023762699_4024,test_1777023978840_kask7x7,completed_original,finished=true,0,6,,6,2,full_assessment,1.39,2026-04-24T09:46:19.494Z,2026-04-24T10:39:31.876Z
+stu_1777023762699_4024,test_1781049725283_3of3fqe,completed_original,finished=true,4,6,vertical_operations,52,12,full_assessment,5.02,2026-06-10T00:02:05.947Z,2026-06-10T10:16:25.089Z
+stu_1777023762902_7362,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,20,3,full_assessment,5.16,2026-04-24T09:46:19.559Z,2026-04-24T11:05:22.736Z
+stu_1777023763129_6667,test_1777023978840_kask7x7,completed_original,finished=true,6,6,,25,6,full_assessment,5.14,2026-04-24T09:46:19.717Z,2026-04-28T13:37:51.091Z
+stu_1777340051462_9691,test_1777341418390_7p46nbr,completed_original,finished=true,6,6,,27,5,full_assessment,1,2026-04-28T01:56:58.519Z,2026-04-28T11:06:28.715Z
+stu_1777340052046_4165,test_1777341418390_7p46nbr,completed_original,finished=true,6,6,,31,4,full_assessment,5.12,2026-04-28T01:56:58.685Z,2026-04-28T11:10:55.751Z
+stu_1777340052233_9667,test_1777341418390_7p46nbr,completed_original,finished=true,6,6,,27,4,full_assessment,5.1,2026-04-28T01:56:58.741Z,2026-04-28T11:10:06.670Z
+stu_1777340052756_4794,test_1777341418390_7p46nbr,completed_original,finished=true,1,6,,17,11,full_assessment,1.37,2026-04-28T01:56:58.905Z,2026-04-28T11:31:10.153Z
+stu_1777340052928_1612,test_1777341418390_7p46nbr,completed_original,finished=true,6,6,,27,3,full_assessment,5.12,2026-04-28T01:56:58.959Z,2026-04-28T11:54:22.207Z
+stu_1777374905378_409,test_1777341418390_7p46nbr,completed_original,finished=true,2,6,,14,5,full_assessment,1.37,2026-04-28T11:32:42.687Z,2026-04-28T11:38:57.382Z
+stu_1780967494580_4312,test_1780996897356_kspg977,completed_original,finished=true,8,10,vertical_operations,66,23,full_assessment,1,2026-06-09T09:21:37.546Z,2026-06-10T11:27:43.384Z
+stu_1780967494580_4312,test_1781051031467_d8q3s6i,completed_original,finished=true,8,8,vertical_operations,32,4,full_assessment,5.65,2026-06-10T00:23:51.602Z,2026-06-10T10:59:42.412Z
+stu_1780967494580_4312,test_1781093235410_7hlnif4,completed_original,finished=true,1,2,vertical_operations,7,3,full_assessment,2.03,2026-06-10T12:07:15.764Z,2026-06-10T12:27:30.512Z
+stu_1780967494776_5259,test_1780996897356_kspg977,completed_original,finished=true,10,10,vertical_operations,43,5,full_assessment,1,2026-06-09T09:21:37.606Z,2026-06-10T10:53:38.142Z
+stu_1780967494776_5259,test_1781051031467_d8q3s6i,completed_original,finished=true,7,8,vertical_operations,30,8,full_assessment,5.06,2026-06-10T00:23:51.662Z,2026-06-10T10:46:41.916Z
+stu_1780967494776_5259,test_1781089532764_fckxbu0,completed_original,finished=true,8,8,vertical_operations,29,3,full_assessment,5.59,2026-06-10T11:05:34.749Z,2026-06-10T11:13:40.321Z
+stu_1780967494776_5259,test_1781091763213_4cfhvjq,completed_original,finished=true,9,9,vertical_operations,48,4,full_assessment,5.59,2026-06-10T11:42:44.257Z,2026-06-10T12:16:14.747Z
+stu_1780967494776_5259,test_1781093235410_7hlnif4,completed_original,finished=true,1,2,vertical_operations,12,3,full_assessment,3.13,2026-06-10T12:07:15.864Z,2026-06-10T12:24:41.636Z
+stu_1780967494964_3113,test_1780996897356_kspg977,completed_original,finished=true,10,10,vertical_operations,42,5,full_assessment,5.65,2026-06-09T09:21:37.665Z,2026-06-10T11:14:58.047Z
+stu_1780967494964_3113,test_1781051031467_d8q3s6i,completed_original,finished=true,8,8,vertical_operations,27,2,full_assessment,1,2026-06-10T00:23:51.724Z,2026-06-10T10:53:45.352Z
+stu_1780967494964_3113,test_1781089532764_fckxbu0,completed_original,finished=true,8,8,vertical_operations,28,2,full_assessment,5.61,2026-06-10T11:05:34.829Z,2026-06-10T11:30:38.521Z
+stu_1780967494964_3113,test_1781091763213_4cfhvjq,completed_original,finished=true,9,9,vertical_operations,33,3,full_assessment,5.67,2026-06-10T11:42:44.363Z,2026-06-10T11:57:41.061Z
+stu_1780967494964_3113,test_1781093235410_7hlnif4,completed_original,finished=true,1,2,vertical_operations,7,2,full_assessment,1,2026-06-10T12:07:15.942Z,2026-06-10T12:21:13.473Z
+stu_1780967494964_3113,test_1781094588909_etc7w2i,completed_original,finished=true,6,6,vertical_operations,26,2,full_assessment,1,2026-06-10T12:29:49.461Z,2026-06-10T12:42:14.296Z
+stu_1780967760765_5855,test_1781051031467_d8q3s6i,completed_original,finished=true,6,8,vertical_operations,40,8,full_assessment,5.61,2026-06-10T00:23:51.846Z,2026-06-10T11:37:33.992Z
+stu_1780967760954_1871,test_1781051031467_d8q3s6i,completed_original,finished=true,7,8,choose_answer,69,3,full_assessment,5,2026-06-10T00:23:51.906Z,2026-06-10T12:11:04.155Z
+stu_1780967760954_1871,test_1781091763213_4cfhvjq,partial,interaction logs exist but completion criteria not met,,9,identify_place_value,34,3,partial_assessment,1,2026-06-10T11:42:44.927Z,2026-06-10T12:28:15.611Z
+stu_1780967760954_1871,test_1781093235410_7hlnif4,completed_original,finished=true,1,2,vertical_operations,7,2,full_assessment,1,2026-06-10T12:07:16.168Z,2026-06-10T12:57:22.151Z
+stu_1780967760954_1871,test_1781094588909_etc7w2i,completed_original,finished=true,6,6,vertical_operations,28,5,full_assessment,1,2026-06-10T12:29:49.723Z,2026-06-10T12:46:12.839Z
+stu_1780967761139_4648,test_1780996897356_kspg977,completed_original,finished=true,9,10,vertical_operations,51,13,full_assessment,5.02,2026-06-09T09:21:37.902Z,2026-06-10T11:25:57.168Z
+stu_1780967761139_4648,test_1781051031467_d8q3s6i,completed_original,finished=true,7,8,vertical_operations,39,8,full_assessment,5.6,2026-06-10T00:23:51.967Z,2026-06-10T10:59:15.559Z
+stu_1780967761139_4648,test_1781093235410_7hlnif4,completed_original,finished=true,1,2,vertical_operations,12,3,full_assessment,1,2026-06-10T12:07:16.246Z,2026-06-10T12:17:02.165Z
+stu_1780967877464_7804,test_1781051031467_d8q3s6i,completed_original,finished=true,8,8,vertical_operations,34,3,full_assessment,1,2026-06-10T00:23:52.027Z,2026-06-10T12:02:36.598Z
+stu_1780967877464_7804,test_1781091763213_4cfhvjq,partial,interaction logs exist but completion criteria not met,,9,choose_answer,20,2,partial_assessment,3,2026-06-10T11:42:45.854Z,2026-06-10T13:09:31.559Z

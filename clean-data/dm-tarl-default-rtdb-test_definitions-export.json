@@ -1,0 +1,1510 @@
+{
+  "test_1770774804846_yw2g278": {
+    "classId": "1770771409096",
+    "createdAt": 1770774804847,
+    "id": "test_1770774804846_yw2g278",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "maxNumbersInSequence": 6,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": 4,
+          "numQuestions": 4,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 4
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 3,
+          "numOperations": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 6
+      }
+    ],
+    "openedAt": 1770779686218,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "open",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Test12",
+    "updatedAt": 1776820560416
+  },
+  "test_1773683831084_08ldbk6": {
+    "classId": "1770771409096",
+    "createdAt": 1773683831084,
+    "id": "test_1773683831084_08ldbk6",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "maxNumbersInSequence": 6,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": 4,
+          "numQuestions": 1,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numPairs": 4,
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "compare_numbers",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 6
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "what_number_do_you_hear",
+        "order": 7
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 1,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "write_number_in_letters",
+        "order": 8
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 3,
+          "numOperations": 2,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 9
+      }
+    ],
+    "openedAt": 1773683848887,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Test14",
+    "updatedAt": 1773684847299
+  },
+  "test_1773684435476_u2n3ekj": {
+    "classId": "1770771409096",
+    "createdAt": 1773684435476,
+    "id": "test_1773684435476_u2n3ekj",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": "3",
+          "maxNumbersInSequence": 6,
+          "numQuestions": "1",
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": "1",
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": "1",
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": 4,
+          "numQuestions": 4,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 3
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": "2",
+          "numOperations": "2",
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 4
+      }
+    ],
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "draft",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Test 17",
+    "updatedAt": 1773684435476
+  },
+  "test_1773694921373_uzni9j0": {
+    "classId": "1770771409096",
+    "createdAt": 1773694921374,
+    "id": "test_1773694921373_uzni9j0",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "displayTime": 20,
+          "maxNumberRange": 4,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "read_number_aloud",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "maxNumbersInSequence": 6,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 4,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": 4,
+          "numQuestions": 4,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "minNumCompositions": 2,
+          "operation": "Multiplication",
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_compositions",
+        "order": 5
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 3,
+          "numOperations": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 6
+      }
+    ],
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "draft",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Test 134",
+    "updatedAt": 1773694937821
+  },
+  "test_1776848340577_ghi7b5y": {
+    "classId": "1776848110585",
+    "createdAt": 1776848340578,
+    "id": "test_1776848340577_ghi7b5y",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "compare_numbers",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 76
+        },
+        "gameType": "identify_place_value",
+        "order": 6
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "write_number_in_letters",
+        "order": 7
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 8
+      },
+      {
+        "config": {
+          "allowBorrow": false,
+          "allowCarry": false,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "numOperations": 2,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 9
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numQuestions": 6,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "what_number_do_you_hear",
+        "order": 10
+      }
+    ],
+    "openedAt": 1776848359996,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Siraj Eddine",
+    "updatedAt": 1776849254068
+  },
+  "test_1777023978840_kask7x7": {
+    "classId": "1777022731950",
+    "createdAt": 1777023978840,
+    "id": "test_1777023978840_kask7x7",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "maxNumbersInSequence": 7,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": 3,
+          "numQuestions": 5,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication",
+            "Division"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 2
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 4,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "compare_numbers",
+        "order": 6
+      }
+    ],
+    "openedAt": 1777023985115,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test 1",
+    "updatedAt": 1781100572873
+  },
+  "test_1777208723408_upmw895": {
+    "classId": "1776848110585",
+    "createdAt": 1777208723408,
+    "id": "test_1777208723408_upmw895",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": true,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 3,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 1,
+            "Subtraction": 2
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations"
+      }
+    ],
+    "openedAt": 1777208727121,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "open",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "testing home",
+    "updatedAt": 1780880975895
+  },
+  "test_1777341418390_7p46nbr": {
+    "classId": "class_1753557365077",
+    "createdAt": 1777341418391,
+    "id": "test_1777341418390_7p46nbr",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "numQuestions": 6,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "what_number_do_you_hear",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 5,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "maxNumbersInSequence": 7,
+          "numQuestions": 5,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "numOptions": 4,
+          "numQuestions": 5,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication",
+            "Division"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 4
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": true,
+          "maxNumberRange": 3,
+          "numOperations": 4,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 5
+      }
+    ],
+    "openedAt": 1777341422792,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "Siraj Eddine Test 2",
+    "updatedAt": 1777341518749
+  },
+  "test_1780587145043_bblagzt": {
+    "classId": "1776848110585",
+    "createdAt": 1780587145043,
+    "id": "test_1780587145043_bblagzt",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "allowBorrow": false,
+          "allowCarry": false,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 3,
+          "operationCounts": {
+            "Addition": 0,
+            "Division": 1,
+            "Multiplication": 0,
+            "Subtraction": 0
+          },
+          "operationsAllowed": [
+            "Division"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations"
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "numQuestions": 1,
+          "numSteps": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "multi_step_problem"
+      }
+    ],
+    "openedAt": 1780587175784,
+    "schoolId": "school_001",
+    "secured": false,
+    "status": "open",
+    "teacherId": "Fw7EAbFou6XWofPUhimf1HL8we93",
+    "title": "testing home 2",
+    "updatedAt": 1780588520096
+  },
+  "test_1780996897356_kspg977": {
+    "classId": "1780967266623",
+    "createdAt": 1780996897357,
+    "id": "test_1780996897356_kspg977",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numQuestions": 6,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "what_number_do_you_hear",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numPairs": 6,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "compare_numbers",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 6
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "write_number_in_letters",
+        "order": 7
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 8
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 9
+      }
+    ],
+    "openedAt": 1780996904042,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test du 9 Juin ",
+    "updatedAt": 1781006952632
+  },
+  "test_1781048227348_yh9wms9": {
+    "classId": "1777022731950",
+    "createdAt": 1781048227348,
+    "id": "test_1781048227348_yh9wms9",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "maxNumbersInSequence": 7,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 6,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 5,
+          "numOptions": 4,
+          "numQuestions": 5,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication",
+            "Division"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 2
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": true,
+          "allowMultiStepMul": true,
+          "maxNumberRange": 3,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 1,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 3
+      }
+    ],
+    "openedAt": 1781048289976,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "open",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test 5B-Hard",
+    "updatedAt": 1781050280931
+  },
+  "test_1781049725283_3of3fqe": {
+    "classId": "1777022731950",
+    "createdAt": 1781049725283,
+    "id": "test_1781049725283_3of3fqe",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "compare_numbers",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": "2",
+          "maxNumbersInSequence": 7,
+          "numQuestions": "3",
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numOptions": "3",
+          "numQuestions": "5",
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction",
+            "Multiplication",
+            "Division"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "choose_answer",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": "2",
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 4
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 4,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "vertical_operations",
+        "order": 5
+      }
+    ],
+    "openedAt": 1781049730806,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test 5B-Equal",
+    "updatedAt": 1781049725283
+  },
+  "test_1781051031467_d8q3s6i": {
+    "classId": "1780967266623",
+    "createdAt": 1781051031467,
+    "id": "test_1781051031467_d8q3s6i",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numPairs": 6,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "compare_numbers",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "write_number_in_letters",
+        "order": 6
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 7
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 8
+      }
+    ],
+    "openedAt": 1781051042269,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test 10 Juin",
+    "updatedAt": 1781087495725
+  },
+  "test_1781089532764_fckxbu0": {
+    "classId": "1780967266623",
+    "createdAt": 1781089532765,
+    "id": "test_1781089532764_fckxbu0",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numPairs": 8,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "compare_numbers",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "write_number_in_letters",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 6
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 7
+      }
+    ],
+    "openedAt": 1781089541539,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "TEST 3 SECOND RAYAN",
+    "updatedAt": 1781089532765
+  },
+  "test_1781091763213_4cfhvjq": {
+    "classId": "1780967266623",
+    "createdAt": 1781091763213,
+    "id": "test_1781091763213_4cfhvjq",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numPairs": 8,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "compare_numbers",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "decompose_number",
+        "order": 4
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 5
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 4,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "write_number_in_letters",
+        "order": 6
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 7
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 8
+      }
+    ],
+    "openedAt": 1781091768930,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "TEST AHMED",
+    "updatedAt": 1781091763213
+  },
+  "test_1781093235410_7hlnif4": {
+    "classId": "1780967266623",
+    "createdAt": 1781093235411,
+    "id": "test_1781093235410_7hlnif4",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "displayTime": 25,
+          "maxNumberRange": 3,
+          "numQuestions": 5,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "read_number_aloud",
+        "order": 0
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 1,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 1
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 1
+      }
+    ],
+    "openedAt": 1781093240575,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test Maroua",
+    "updatedAt": 1781095937765
+  },
+  "test_1781094588909_etc7w2i": {
+    "classId": "1780967266623",
+    "createdAt": 1781094588910,
+    "id": "test_1781094588909_etc7w2i",
+    "language": "ar",
+    "maxErrors": 0,
+    "miniGames": [
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numPairs": 8,
+          "requiredCorrectAnswersMinimumPercent": 85
+        },
+        "gameType": "tap_matching_pairs",
+        "order": 0
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 2,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "find_previous_next_number",
+        "order": 1
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "maxNumbersInSequence": 5,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "order_numbers",
+        "order": 2
+      },
+      {
+        "config": {
+          "maxNumberRange": 3,
+          "numQuestions": 3,
+          "requiredCorrectAnswersMinimumPercent": 75
+        },
+        "gameType": "identify_place_value",
+        "order": 3
+      },
+      {
+        "config": {
+          "maxNumberRange": 2,
+          "numOptions": 3,
+          "numQuestions": 3,
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 60
+        },
+        "gameType": "choose_answer",
+        "order": 4
+      },
+      {
+        "config": {
+          "allowBorrow": true,
+          "allowCarry": true,
+          "allowMultiStepDiv": false,
+          "allowMultiStepMul": false,
+          "maxNumberRange": 2,
+          "operationCounts": {
+            "Addition": 2,
+            "Division": 0,
+            "Multiplication": 0,
+            "Subtraction": 2
+          },
+          "operationsAllowed": [
+            "Addition",
+            "Subtraction"
+          ],
+          "requiredCorrectAnswersMinimumPercent": 50
+        },
+        "gameType": "vertical_operations",
+        "order": 5
+      }
+    ],
+    "openedAt": 1781094593955,
+    "schoolId": "school_002",
+    "secured": false,
+    "status": "closed",
+    "teacherId": "XaA9zlZDvdfpgocWlZrqAGxZNwJ3",
+    "title": "Test Houssam",
+    "updatedAt": 1781094588910
+  }
+}

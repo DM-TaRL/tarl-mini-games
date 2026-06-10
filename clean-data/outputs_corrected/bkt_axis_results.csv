@@ -1,0 +1,7 @@
+axis,students,sequences,mean_sequence_length,mean_final_mastery,median_final_mastery,note
+arithmetic_fluency,23,40,7.95,0.9682193322913928,0.9999877489249082,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
+number_sense,24,41,12.878048780487806,0.9498300821496036,0.9999999991376074,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
+sequential_thinking,28,41,13.317073170731707,0.9767494902245816,0.9999999992880688,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
+comparison_skill,22,30,3.466666666666667,0.9963507501073466,0.9984518090010126,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
+visual_matching,7,17,8.117647058823529,0.9999994822688422,0.9999999551044839,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
+audio_recognition,11,11,6.545454545454546,0.9999875859832407,0.9999989109147986,Exploratory fixed-parameter BKT; not a robust learning-rate estimate.
