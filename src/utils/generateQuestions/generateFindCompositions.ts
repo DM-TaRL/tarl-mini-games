@@ -29,12 +29,12 @@ export function generateFindCompositions(
   const { minNumCompositions, maxNumberRange, operation } = config;
 
   const questions: FindCompositionsQuestion[] = [];
-  const maxAttempts = 60; // a few more tries so we rarely need to relax
+  const maxAttempts = 1000;
   const numQuestions = 1;
 
   // Target range by digit count (same as you had)
   const maxValue = Math.pow(10, maxNumberRange) - 1;
-  const minValue = Math.pow(10, maxNumberRange - 1);
+  const minValue = maxNumberRange === 1 ? 2 : Math.pow(10, maxNumberRange - 1);
 
   // keep attempting until we produce one feasible round
   let attempts = 0;
@@ -51,15 +51,11 @@ export function generateFindCompositions(
 
     // Track the best target we've seen so far (largest number of compositions)
     if (!bestSoFar || possibleCount > bestSoFar.comps.length) {
-      bestSoFar = {
-        target,
-        comps: buildCompositionsForTarget(operation, target, maxNumberRange),
-      };
+      bestSoFar = { target, comps: buildCompositionsForTarget(operation, target, maxNumberRange) };
     }
 
-    const all = buildCompositionsForTarget(operation, target, maxNumberRange);
-
     if (possibleCount >= minNumCompositions) {
+      const all = buildCompositionsForTarget(operation, target, maxNumberRange);
       const picked = shuffleArray(all).slice(0, minNumCompositions);
       questions.push({
         target,
@@ -69,15 +65,7 @@ export function generateFindCompositions(
       });
       break;
     } else if (possibleCount >= 2) {
-      // not enough for 3, but at least 2 are possible -> require 2
-      const picked = shuffleArray(all).slice(0, 2);
-      questions.push({
-        target,
-        operation,
-        compositions: picked,
-        correctAnswerCount: 2,
-      });
-      break;
+      bestSoFar = { target, comps: buildCompositionsForTarget(operation, target, maxNumberRange) };
     }
   }
 
@@ -88,7 +76,7 @@ export function generateFindCompositions(
       comps: buildCompositionsForTarget(operation, minValue, maxNumberRange),
     };
     const feasible = Math.max(1, fallback.comps.length);
-    const required = feasible >= 2 ? 2 : feasible >= 1 ? 1 : 0;
+    const required = feasible >= minNumCompositions ? minNumCompositions : feasible;
 
     questions.push({
       target: fallback.target,
@@ -149,22 +137,31 @@ function buildCompositionsForTarget(
 ): [number, number][] {
   const out: [number, number][] = [];
   const maxVal = Math.pow(10, maxNumberRange) - 1;
+  const MAX_PAIRS = 50;
 
   switch (op) {
     case "Addition": {
-      for (let a = 1; a < target; a++) {
-        const b = target - a;
-        if (b < 1) continue;
-        out.push([a, b]);
+      const limit = Math.min(target - 1, MAX_PAIRS);
+      const used = new Set<number>();
+      while (out.length < limit) {
+        const a = getRandomInt(1, target - 1);
+        if (!used.has(a)) {
+          used.add(a);
+          out.push([a, target - a]);
+        }
       }
       return out;
     }
 
     case "Subtraction": {
-      for (let a = target; a <= maxVal; a++) {
-        const b = a - target; // +1 to avoid b=0 case
-        if (b < 1) continue;
-        out.push([a, b]);
+      const limit = Math.min(maxVal - target, MAX_PAIRS);
+      const used = new Set<number>();
+      while (out.length < limit) {
+        const a = getRandomInt(target + 1, Math.max(target + 1, Math.min(target + 1000, maxVal)));
+        if (!used.has(a)) {
+          used.add(a);
+          out.push([a, a - target]);
+        }
       }
       return out;
     }
@@ -182,10 +179,8 @@ function buildCompositionsForTarget(
     }
 
     case "Division": {
-      // a = target * b, choose b freely in range
-      const maxB = maxVal; // keep b within same digit-range as target's max config
-      for (let b = 2; b <= maxB; b++) {
-        // start at 2 to avoid trivial divide-by-1
+      const maxDivisor = Math.min(maxVal, 20);
+      for (let b = 2; b <= maxDivisor; b++) {
         const a = target * b;
         if (!Number.isInteger(a)) continue;
         out.push([a, b]);
@@ -246,8 +241,7 @@ function countCompositions(
     }
 
     case "Division": {
-      // b in [2..maxVal]
-      return Math.max(0, maxVal - 1);
+      return Math.min(maxVal, 20) - 1;
     }
   }
 }

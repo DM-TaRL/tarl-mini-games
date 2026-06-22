@@ -7,50 +7,45 @@ export interface PreviousNextQuestion {
 }
 
 export function generateFindPreviousNextNumber(
-  config: FindPreviousNextNumberConfig
+  config: FindPreviousNextNumberConfig,
 ): { questions: PreviousNextQuestion[] } {
   const { numQuestions, maxNumberRange } = config;
 
-  // Calculate safe range to prevent overlap
-  const maxPossibleQuestions = Math.pow(10, maxNumberRange) - 2;
-  if (numQuestions > maxPossibleQuestions) {
-    throw new Error(
-      `Cannot generate ${numQuestions} unique questions with maxNumberRange ${maxNumberRange}`
-    );
-  }
+  // 1. Force EXACT digit length to respect teacher difficulty
+  // If maxNumberRange = 4: min = 1000, max = 9998
+  const minBaseNumber =
+    maxNumberRange === 1 ? 1 : Math.pow(10, maxNumberRange - 1);
+  const maxBaseNumber = Math.pow(10, maxNumberRange) - 2; // -2 to ensure 'next' doesn't exceed the digit bounds
 
-  const maxBaseNumber = Math.pow(10, maxNumberRange) - 2; // -2 to avoid next going out of range
-  const minBaseNumber = 1; // avoid 0 and negatives
+  // 2. Safeguard against infinite loops if teacher asks for more questions than possible
+  const maxPossibleQuestions = maxBaseNumber - minBaseNumber + 1;
+  const actualNumQuestions = Math.min(
+    numQuestions,
+    Math.max(0, maxPossibleQuestions),
+  );
+
+  if (actualNumQuestions <= 0) {
+    return { questions: [] };
+  }
 
   const questions: PreviousNextQuestion[] = [];
   const usedNumbers = new Set<number>();
 
-  // Create array of all possible numbers for better randomness
-  const allPossibleNumbers = Array.from(
-    { length: maxBaseNumber - minBaseNumber + 1 },
-    (_, i) => minBaseNumber + i
-  );
+  // 3. Fast random selection (Zero memory crash risk)
+  while (questions.length < actualNumQuestions) {
+    const number =
+      Math.floor(Math.random() * (maxBaseNumber - minBaseNumber + 1)) +
+      minBaseNumber;
 
-  // Fisher-Yates shuffle for better random distribution
-  for (let i = allPossibleNumbers.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [allPossibleNumbers[i], allPossibleNumbers[j]] = [
-      allPossibleNumbers[j],
-      allPossibleNumbers[i],
-    ];
+    if (!usedNumbers.has(number)) {
+      usedNumbers.add(number);
+      questions.push({
+        number,
+        previous: number - 1,
+        next: number + 1,
+      });
+    }
   }
 
-  // Take the first numQuestions numbers
-  for (let i = 0; i < numQuestions && i < allPossibleNumbers.length; i++) {
-    const number = allPossibleNumbers[i];
-    questions.push({
-      number,
-      previous: number - 1,
-      next: number + 1,
-    });
-  }
-
-  return {
-    questions,
-  };
+  return { questions };
 }

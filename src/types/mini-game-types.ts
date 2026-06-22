@@ -45,7 +45,6 @@ export interface ChooseAnswerConfig {
 export interface MultiStepProblemConfig {
   numQuestions: number;
   maxNumberRange: number;
-  numSteps: number;
   operationsAllowed: Operation[];
   requiredCorrectAnswersMinimumPercent: number;
 }

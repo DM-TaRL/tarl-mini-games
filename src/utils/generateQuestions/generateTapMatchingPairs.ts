@@ -25,22 +25,45 @@ export function generateTapMatchingPairs(
 ): TapMatchingPairsQuestionSet {
   const { numPairs, maxNumberRange } = config;
 
-  //  maxNumberRange is digit count: 1→9, 2→99, 3→999, 4→9999, 5→99999
-  const maxValue = Math.pow(10, maxNumberRange) - 1;
+  // 1. Group available pairs by their digit length
+  const buckets: Record<number, typeof allPairs.pairs> = {};
 
-  const validPairs = allPairs.pairs.filter((pair) => pair.number <= maxValue);
+  for (const pair of allPairs.pairs) {
+    // Ensure the pair has the requested language translation
+    if (!pair.match[language]) continue;
 
-  if (validPairs.length < numPairs) {
-    throw new Error(`Not enough valid pairs in range 0-${maxNumberRange}`);
+    const digitCount = String(pair.number).length;
+    if (!buckets[digitCount]) buckets[digitCount] = [];
+    buckets[digitCount].push(pair);
   }
 
-  // 2. Randomly pick `numPairs` entries
-  const selected = shuffle(validPairs).slice(0, numPairs);
+  const selectedPairs: typeof allPairs.pairs = [];
+  let currentDigitLevel = maxNumberRange;
+
+  // 2. Select pairs starting from the requested difficulty (digit count) and step down if needed
+  while (selectedPairs.length < numPairs && currentDigitLevel > 0) {
+    if (buckets[currentDigitLevel]) {
+      const shuffledBucket = shuffle(buckets[currentDigitLevel]);
+      const needed = numPairs - selectedPairs.length;
+      selectedPairs.push(...shuffledBucket.slice(0, needed));
+    }
+    currentDigitLevel--;
+  }
+
+  if (selectedPairs.length < numPairs) {
+    throw new Error(
+      `Not enough valid pairs for digit range up to ${maxNumberRange}`,
+    );
+  }
+
+  // 3. Shuffle again so they aren't strictly ordered by length if a fallback was used
+  const finalSelected = shuffle(selectedPairs);
 
   const gameItems: TapMatchingPairQuestion[] = [];
   const correctAnswers: { id1: string; id2: string }[] = [];
 
-  selected.forEach((pair, index) => {
+  // 4. Map to the expected game format
+  finalSelected.forEach((pair, index) => {
     const numberId = `n_${index}`;
     const wordId = `w_${index}`;
 

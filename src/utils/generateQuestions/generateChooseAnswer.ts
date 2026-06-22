@@ -35,15 +35,14 @@ export function generateChooseAnswer(
     maxDigits: maxNumberRange,
     operationsAllowed,
     numOptions,
-    count: Math.max(30, numQuestions * 5), // generate extra to avoid filtering starvation
+    count: Math.max(40, numQuestions * 5), // generate enough to survive strict filtering
   });
 
   const staticQs = data.questions as unknown as ChoiceQuestionSource[];
-
   const pool: ChoiceQuestionSource[] = [...staticQs, ...generated];
 
-  // 2) Filter using YOUR same rules
-  const filtered = pool.filter((q: any) => {
+  // 2) Validate basics: correct operations, enough options, and NO numbers exceed the max
+  const validPool = pool.filter((q: any) => {
     const matchesOperation =
       Array.isArray(q.operationsInOptions) &&
       q.operationsInOptions.some((op: Operation) =>
@@ -63,14 +62,23 @@ export function generateChooseAnswer(
     return matchesOperation && enoughOptions && numbersWithinRange;
   });
 
-  // 3) Sample + normalize to exactly one correct option (robust)
-  const questions: ChooseAnswerQuestion[] = shuffleArray(filtered)
+  // 3) STRICT Check: Guarantee the question actually hits the requested difficulty
+  const strictPool = validPool.filter((q: any) =>
+    q.numbersInOptions.some(
+      (n: unknown) => digits(n as number) === maxNumberRange,
+    ),
+  );
+
+  // 4) Safe Fallback: Use strict pool if we have enough, otherwise fallback to valid pool
+  const finalPool = strictPool.length >= numQuestions ? strictPool : validPool;
+
+  // 5) Sample + normalize to exactly one correct option
+  const questions: ChooseAnswerQuestion[] = shuffleArray(finalPool)
     .slice(0, numQuestions)
     .map((q, index) => {
       const correctOptions = q.options.filter((opt) => opt.correct);
       const correct = shuffleArray(correctOptions)[0]; // ChoiceOption | undefined
 
-      // Fallback safety (shouldn't happen if dataset is valid)
       const wrongs = shuffleArray(
         q.options.filter((opt) => !opt.correct),
       ).slice(0, numOptions - 1);
@@ -80,7 +88,7 @@ export function generateChooseAnswer(
         : shuffleArray(q.options).slice(0, numOptions);
 
       return {
-        id: `q${index + 1}`,
+        id: `q${index + 1}_${Date.now()}`,
         text: q.text,
         options: finalOptions,
       };

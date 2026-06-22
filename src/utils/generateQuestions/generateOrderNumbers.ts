@@ -10,17 +10,19 @@ interface OrderNumbersQuestion {
 }
 
 export function generateOrderNumbers(
-  config: OrderNumbersConfig
+  config: OrderNumbersConfig,
 ): OrderNumbersQuestion[] {
   const questions: OrderNumbersQuestion[] = [];
 
+  // Use exactly the sequence length the teacher requested (fallback to 5 if undefined)
+  const numInSequence = Math.max(2, config.maxNumbersInSequence ?? 5);
+
   for (let i = 0; i < config.numQuestions; i++) {
-    const numInSequence = getRandomInt(2, config.maxNumbersInSequence);
     const numbers = generateUniqueNumbers(numInSequence, config.maxNumberRange);
 
     const direction: OrderDirection = Math.random() < 0.5 ? "asc" : "desc";
     const correctOrder = [...numbers].sort((a, b) =>
-      direction === "asc" ? a - b : b - a
+      direction === "asc" ? a - b : b - a,
     );
 
     questions.push({
@@ -35,11 +37,17 @@ export function generateOrderNumbers(
 }
 
 function generateUniqueNumbers(count: number, maxDigits: number): number[] {
-  const min = Math.pow(10, maxDigits - 1);
+  // Fix the 1-digit bug so it can generate '0'
+  const min = maxDigits === 1 ? 0 : Math.pow(10, maxDigits - 1);
   const max = Math.pow(10, maxDigits) - 1;
   const set = new Set<number>();
 
-  while (set.size < count) {
+  // Safeguard: prevent infinite loop if teacher asks for more numbers than exist
+  // e.g., asking to sort 15 unique 1-digit numbers (only 10 exist: 0-9)
+  const maxPossible = max - min + 1;
+  const actualCount = Math.min(count, maxPossible);
+
+  while (set.size < actualCount) {
     set.add(getRandomInt(min, max));
   }
 
