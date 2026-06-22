@@ -10,15 +10,21 @@ export function generateDecomposeNumber(config: DecomposeNumberConfig): {
 } {
   const { numQuestions, maxNumberRange } = config;
 
-  // Define the range of numbers: e.g., if maxNumberRange = 2, max = 99
+  // 1. Force exact digit length AND fix the zero bug for 1-digit numbers
   const digitsCount = Math.max(1, maxNumberRange);
+  const min = digitsCount === 1 ? 0 : Math.pow(10, digitsCount - 1);
   const max = Math.pow(10, digitsCount) - 1;
-  const min = Math.pow(10, digitsCount - 1);
+
+  // 2. Safeguard against infinite loops if the teacher asks for more questions than exist mathematically
+  const maxPossibleQuestions = max - min + 1;
+  const actualNumQuestions = Math.min(numQuestions, maxPossibleQuestions);
+
+  if (actualNumQuestions <= 0) return { questions: [] };
 
   const used = new Set<number>();
   const questions: DecomposeNumberQuestion[] = [];
 
-  while (questions.length < numQuestions) {
+  while (questions.length < actualNumQuestions) {
     const number = Math.floor(Math.random() * (max - min + 1)) + min;
 
     if (used.has(number)) continue;

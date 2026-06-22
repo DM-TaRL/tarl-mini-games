@@ -13,15 +13,12 @@
         "en": "Find all possible compositions for the target result"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "minNumCompositions": 2,
-            "maxNumberRange": 2,
-            "operation": "Addition",
-            "requiredCorrectAnswersMinimumPercent": 50
-          },
           "1": {
             "minNumCompositions": 2,
             "maxNumberRange": 1,
@@ -57,9 +54,20 @@
             "maxNumberRange": 2,
             "operation": "Division",
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "minNumCompositions": 2,
+            "maxNumberRange": 2,
+            "operation": "Addition",
+            "requiredCorrectAnswersMinimumPercent": 50
           }
         },
-        "skills": ["Addition", "Subtraction", "Multiplication", "Division"]
+        "skills": [
+          "Addition",
+          "Subtraction",
+          "Multiplication",
+          "Division"
+        ]
       }
     },
     "vertical_operations": {
@@ -75,24 +83,12 @@
         "en": "Solve vertical operations"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "operationCounts": {
-              "Addition": 1,
-              "Subtraction": 0,
-              "Multiplication": 0,
-              "Division": 0
-            },
-            "maxNumberRange": 2,
-            "operationsAllowed": ["Addition"],
-            "requiredCorrectAnswersMinimumPercent": 50,
-            "allowCarry": false,
-            "allowBorrow": false,
-            "allowMultiStepMul": false,
-            "allowMultiStepDiv": false
-          },
           "1": {
             "operationCounts": {
               "Addition": 1,
@@ -101,7 +97,9 @@
               "Division": 0
             },
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition"],
+            "operationsAllowed": [
+              "Addition"
+            ],
             "requiredCorrectAnswersMinimumPercent": 50,
             "allowCarry": false,
             "allowBorrow": false,
@@ -116,7 +114,9 @@
               "Division": 0
             },
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition"],
+            "operationsAllowed": [
+              "Addition"
+            ],
             "requiredCorrectAnswersMinimumPercent": 50,
             "allowCarry": true,
             "allowBorrow": false,
@@ -131,7 +131,10 @@
               "Division": 0
             },
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition", "Subtraction"],
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction"
+            ],
             "requiredCorrectAnswersMinimumPercent": 50,
             "allowCarry": true,
             "allowBorrow": true,
@@ -146,7 +149,11 @@
               "Division": 0
             },
             "maxNumberRange": 3,
-            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75,
             "allowCarry": true,
             "allowBorrow": true,
@@ -192,6 +199,23 @@
             "allowBorrow": true,
             "allowMultiStepMul": true,
             "allowMultiStepDiv": false
+          },
+          "default": {
+            "operationCounts": {
+              "Addition": 1,
+              "Subtraction": 0,
+              "Multiplication": 0,
+              "Division": 0
+            },
+            "maxNumberRange": 2,
+            "operationsAllowed": [
+              "Addition"
+            ],
+            "requiredCorrectAnswersMinimumPercent": 50,
+            "allowCarry": false,
+            "allowBorrow": false,
+            "allowMultiStepMul": false,
+            "allowMultiStepDiv": false
           }
         },
         "skills": [
@@ -216,41 +240,48 @@
         "en": "Select the correct answer from the options"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numOptions": 3,
-            "maxNumberRange": 2,
-            "operationsAllowed": ["Addition"],
-            "numQuestions": 2,
-            "requiredCorrectAnswersMinimumPercent": 50
-          },
           "1": {
             "numOptions": 2,
             "maxNumberRange": 1,
-            "operationsAllowed": ["Addition"],
+            "operationsAllowed": [
+              "Addition"
+            ],
             "numQuestions": 2,
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "2": {
             "numOptions": 3,
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition"],
+            "operationsAllowed": [
+              "Addition"
+            ],
             "numQuestions": 2,
             "requiredCorrectAnswersMinimumPercent": 50
           },
           "3": {
             "numOptions": 3,
             "maxNumberRange": 2,
-            "operationsAllowed": ["Addition", "Subtraction"],
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction"
+            ],
             "numQuestions": 3,
             "requiredCorrectAnswersMinimumPercent": 60
           },
           "4": {
             "numOptions": 4,
             "maxNumberRange": 3,
-            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication"
+            ],
             "numQuestions": 4,
             "requiredCorrectAnswersMinimumPercent": 75
           },
@@ -277,6 +308,15 @@
             ],
             "numQuestions": 6,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numOptions": 3,
+            "maxNumberRange": 2,
+            "operationsAllowed": [
+              "Addition"
+            ],
+            "numQuestions": 2,
+            "requiredCorrectAnswersMinimumPercent": 50
           }
         },
         "skills": [
@@ -298,94 +338,78 @@
         "en": "Solve multi-step problems with multiple operations"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 5, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 5,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 1,
-            "maxNumberRange": 4,
-            "numSteps": 2,
-            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
-            "allowCarry": true,
-            "allowBorrow": true,
-            "allowMultiStepMul": true,
-            "allowMultiStepDiv": false,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "1": {
             "numQuestions": 1,
             "maxNumberRange": 2,
-            "numSteps": 2,
-            "operationsAllowed": ["Addition"],
-            "allowCarry": false,
-            "allowBorrow": false,
-            "allowMultiStepMul": false,
-            "allowMultiStepDiv": false,
+            "operationsAllowed": [
+              "Addition"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "2": {
             "numQuestions": 1,
             "maxNumberRange": 2,
-            "numSteps": 2,
-            "operationsAllowed": ["Addition", "Subtraction"],
-            "allowCarry": true,
-            "allowBorrow": false,
-            "allowMultiStepMul": false,
-            "allowMultiStepDiv": false,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "3": {
             "numQuestions": 1,
             "maxNumberRange": 2,
-            "numSteps": 2,
-            "operationsAllowed": ["Addition", "Subtraction"],
-            "allowCarry": true,
-            "allowBorrow": true,
-            "allowMultiStepMul": false,
-            "allowMultiStepDiv": false,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "4": {
             "numQuestions": 1,
             "maxNumberRange": 3,
-            "numSteps": 3,
-            "operationsAllowed": ["Addition", "Subtraction", "Multiplication"],
-            "allowCarry": true,
-            "allowBorrow": true,
-            "allowMultiStepMul": true,
-            "allowMultiStepDiv": false,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "5": {
             "numQuestions": 1,
             "maxNumberRange": 4,
-            "numSteps": 4,
             "operationsAllowed": [
               "Addition",
               "Subtraction",
               "Multiplication",
               "Division"
             ],
-            "allowCarry": true,
-            "allowBorrow": true,
-            "allowMultiStepMul": true,
-            "allowMultiStepDiv": true,
             "requiredCorrectAnswersMinimumPercent": 75
           },
           "6": {
             "numQuestions": 4,
             "maxNumberRange": 4,
-            "numSteps": 4,
             "operationsAllowed": [
               "Addition",
               "Subtraction",
               "Multiplication",
               "Division"
             ],
-            "allowCarry": true,
-            "allowBorrow": true,
-            "allowMultiStepMul": true,
-            "allowMultiStepDiv": true,
+            "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 1,
+            "maxNumberRange": 4,
+            "operationsAllowed": [
+              "Addition",
+              "Subtraction",
+              "Multiplication"
+            ],
             "requiredCorrectAnswersMinimumPercent": 75
           }
         },
@@ -412,14 +436,12 @@
         "en": "Identify the previous and next number in the sequence"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 3 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 3
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 2,
-            "maxNumberRange": 3,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "1": {
             "numQuestions": 2,
             "maxNumberRange": 1,
@@ -434,9 +456,16 @@
             "numQuestions": 3,
             "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Previous and Next Number Identification"]
+        "skills": [
+          "Previous and Next Number Identification"
+        ]
       }
     },
     "tap_matching_pairs": {
@@ -452,14 +481,12 @@
         "en": "Match numbers with their corresponding words"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 1, "max": 3 },
+      "suggestedGradeRange": {
+        "min": 1,
+        "max": 3
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numPairs": 4,
-            "maxNumberRange": 4,
-            "requiredCorrectAnswersMinimumPercent": 50
-          },
           "1": {
             "numPairs": 4,
             "maxNumberRange": 1,
@@ -474,9 +501,16 @@
             "numPairs": 6,
             "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 85
+          },
+          "default": {
+            "numPairs": 4,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 50
           }
         },
-        "skills": ["Matching Numbers with Written Form"]
+        "skills": [
+          "Matching Numbers with Written Form"
+        ]
       }
     },
     "order_numbers": {
@@ -492,15 +526,12 @@
         "en": "Arrange the numbers in ascending or descending order"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 2,
-            "maxNumberRange": 2,
-            "maxNumbersInSequence": 5,
-            "requiredCorrectAnswersMinimumPercent": 50
-          },
           "1": {
             "numQuestions": 2,
             "maxNumberRange": 1,
@@ -536,9 +567,17 @@
             "maxNumberRange": 5,
             "maxNumbersInSequence": 8,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "maxNumbersInSequence": 5,
+            "requiredCorrectAnswersMinimumPercent": 50
           }
         },
-        "skills": ["Numbers Ordering"]
+        "skills": [
+          "Numbers Ordering"
+        ]
       }
     },
     "compare_numbers": {
@@ -554,14 +593,12 @@
         "en": "Place comparison signs between numbers"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 3 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 3
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 3,
-            "maxNumberRange": 3,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "1": {
             "numQuestions": 3,
             "maxNumberRange": 1,
@@ -576,9 +613,16 @@
             "numQuestions": 3,
             "maxNumberRange": 3,
             "requiredCorrectAnswersMinimumPercent": 85
+          },
+          "default": {
+            "numQuestions": 3,
+            "maxNumberRange": 3,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Numbers Comparison"]
+        "skills": [
+          "Numbers Comparison"
+        ]
       }
     },
     "what_number_do_you_hear": {
@@ -594,14 +638,12 @@
         "en": "Identify numbers by listening to them"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 1, "max": 2 },
+      "suggestedGradeRange": {
+        "min": 1,
+        "max": 2
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 6,
-            "maxNumberRange": 2,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "1": {
             "numQuestions": 6,
             "maxNumberRange": 1,
@@ -611,18 +653,57 @@
             "numQuestions": 8,
             "maxNumberRange": 2,
             "requiredCorrectAnswersMinimumPercent": 80
+          },
+          "default": {
+            "numQuestions": 6,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Number Audio Recognition"],
+        "skills": [
+          "Number Audio Recognition"
+        ],
         "numbersAudioLinks": {
-          "0": { "ar": "", "fr": "", "en": "" },
-          "1": { "ar": "", "fr": "", "en": "" },
-          "2": { "ar": "", "fr": "", "en": "" },
-          "3": { "ar": "", "fr": "", "en": "" },
-          "4": { "ar": "", "fr": "", "en": "" },
-          "5": { "ar": "", "fr": "", "en": "" },
-          "6": { "ar": "", "fr": "", "en": "" },
-          "7": { "ar": "", "fr": "", "en": "" }
+          "0": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "1": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "2": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "3": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "4": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "5": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "6": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          },
+          "7": {
+            "ar": "",
+            "fr": "",
+            "en": ""
+          }
         }
       }
     },
@@ -639,14 +720,12 @@
         "en": "Decompose a number into its place value components"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 2, "max": 4 },
+      "suggestedGradeRange": {
+        "min": 2,
+        "max": 4
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 2,
-            "maxNumberRange": 4,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "2": {
             "numQuestions": 2,
             "maxNumberRange": 2,
@@ -661,9 +740,16 @@
             "numQuestions": 4,
             "maxNumberRange": 4,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 4,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Number Decomposition"]
+        "skills": [
+          "Number Decomposition"
+        ]
       }
     },
     "write_number_in_letters": {
@@ -679,14 +765,12 @@
         "en": "Write the number in words"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 1, "max": 3 },
+      "suggestedGradeRange": {
+        "min": 1,
+        "max": 3
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 2,
-            "maxNumberRange": 6,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "1": {
             "numQuestions": 2,
             "maxNumberRange": 1,
@@ -706,9 +790,16 @@
             "numQuestions": 4,
             "maxNumberRange": 4,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 6,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Numbers to Words"]
+        "skills": [
+          "Numbers to Words"
+        ]
       }
     },
     "identify_place_value": {
@@ -724,14 +815,12 @@
         "en": "Identify the place value of each digit in a number"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 3, "max": 6 },
+      "suggestedGradeRange": {
+        "min": 3,
+        "max": 6
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 2,
-            "maxNumberRange": 2,
-            "requiredCorrectAnswersMinimumPercent": 75
-          },
           "3": {
             "numQuestions": 3,
             "maxNumberRange": 3,
@@ -751,9 +840,16 @@
             "numQuestions": 4,
             "maxNumberRange": 6,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 2,
+            "maxNumberRange": 2,
+            "requiredCorrectAnswersMinimumPercent": 75
           }
         },
-        "skills": ["Place Value Identification"]
+        "skills": [
+          "Place Value Identification"
+        ]
       }
     },
     "read_number_aloud": {
@@ -769,15 +865,12 @@
         "en": "Read the following number aloud"
       },
       "version": "1.0",
-      "suggestedGradeRange": { "min": 1, "max": 4 },
+      "suggestedGradeRange": {
+        "min": 1,
+        "max": 4
+      },
       "defaultConfig": {
         "gradeConfig": {
-          "default": {
-            "numQuestions": 4,
-            "maxNumberRange": 5,
-            "displayTime": 30,
-            "requiredCorrectAnswersMinimumPercent": 50
-          },
           "1": {
             "numQuestions": 3,
             "maxNumberRange": 1,
@@ -801,9 +894,17 @@
             "maxNumberRange": 4,
             "displayTime": 20,
             "requiredCorrectAnswersMinimumPercent": 75
+          },
+          "default": {
+            "numQuestions": 4,
+            "maxNumberRange": 5,
+            "displayTime": 30,
+            "requiredCorrectAnswersMinimumPercent": 50
           }
         },
-        "skills": ["Number Recognition"]
+        "skills": [
+          "Number Recognition"
+        ]
       }
     }
   }

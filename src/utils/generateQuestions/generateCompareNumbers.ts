@@ -4,115 +4,80 @@ export interface CompareNumbersQuestion {
   id: string;
   left: number;
   right: number;
-  correctSign: ">" | "<" | "=";
+  correctSign: ">" | "<"; // "=" removed
 }
 
-/**
- * Generates a list of unique comparison questions with two numbers and the correct sign.
- */
 export function generateCompareNumbers(
-  config: CompareNumbersConfig
+  config: CompareNumbersConfig,
 ): CompareNumbersQuestion[] {
   const questions: CompareNumbersQuestion[] = [];
   const seenPairs = new Set<string>();
 
-  // Ensure we get balanced comparison types
-  const targetCounts = {
-    ">": Math.ceil(config.numQuestions / 3),
-    "<": Math.ceil(config.numQuestions / 3),
-    "=": Math.ceil(config.numQuestions / 3),
-  };
+  const numQ = config.numQuestions;
+
+  // 1. Safety: Calculate maximum mathematically possible unique pairs for the given digit length
+  const possibleNumbers =
+    config.maxNumberRange === 1
+      ? 10
+      : 9 * Math.pow(10, config.maxNumberRange - 1);
+  const maxPossiblePairs = (possibleNumbers * (possibleNumbers - 1)) / 2;
+  const actualNumQuestions = Math.min(numQ, maxPossiblePairs);
+
+  if (actualNumQuestions <= 0) return [];
+
+  // Target a perfect 50/50 split of > and <
+  const targetGreater = Math.ceil(actualNumQuestions / 2);
 
   let attempts = 0;
-  const maxAttempts = config.numQuestions * 10; // Prevent infinite loops
+  const maxAttempts = actualNumQuestions * 10;
 
-  while (questions.length < config.numQuestions && attempts < maxAttempts) {
+  // 2. Safely generate unique pairs
+  while (questions.length < actualNumQuestions && attempts < maxAttempts) {
     attempts++;
 
-    // Prioritize generating needed comparison types
-    let neededType: ">" | "<" | "=" | null = null;
-    const currentCounts = questions.reduce(
-      (acc, q) => {
-        acc[q.correctSign]++;
-        return acc;
-      },
-      { ">": 0, "<": 0, "=": 0 }
-    );
+    let num1 = generateNumber(config.maxNumberRange);
+    let num2 = generateNumber(config.maxNumberRange);
 
-    if (currentCounts[">"] < targetCounts[">"]) neededType = ">";
-    else if (currentCounts["<"] < targetCounts["<"]) neededType = "<";
-    else if (currentCounts["="] < targetCounts["="]) neededType = "=";
+    // No equal numbers allowed!
+    if (num1 === num2) continue;
 
-    let left = generateNumber(config.maxNumberRange);
-    let right = generateNumber(config.maxNumberRange);
-    let correctSign: ">" | "<" | "=";
+    const bigger = Math.max(num1, num2);
+    const smaller = Math.min(num1, num2);
 
-    // If we need a specific type, generate numbers that match
-    if (neededType === "=") {
-      left = right = generateNumber(config.maxNumberRange);
-      correctSign = "=";
-    } else if (neededType) {
-      // Generate numbers that will produce the needed comparison
-      do {
-        left = generateNumber(config.maxNumberRange);
-        right = generateNumber(config.maxNumberRange);
-      } while (
-        (neededType === ">" && left <= right) ||
-        (neededType === "<" && left >= right)
-      );
-      correctSign = neededType;
-    } else {
-      // No specific type needed, generate random
-      if (left > right) correctSign = ">";
-      else if (left < right) correctSign = "<";
-      else correctSign = "=";
-    }
-
-    const pairKey = `${left},${right}`;
-    const reversePairKey = `${right},${left}`;
-
-    // Skip if we've seen this exact pair or its reverse
+    // Normalize key to smaller-bigger so we don't ask 2>1 and then 1<2
+    const pairKey = `${smaller}-${bigger}`;
     if (seenPairs.has(pairKey)) continue;
-    seenPairs.add(pairKey);
-    seenPairs.add(reversePairKey); // Also prevent reverse pairs (2,5 vs 5,2)
 
+    // Check what sign we need to maintain our 50/50 balance
+    const currentGreater = questions.filter(
+      (q) => q.correctSign === ">",
+    ).length;
+    const currentLess = questions.length - currentGreater;
+
+    let neededSign: ">" | "<" = Math.random() < 0.5 ? ">" : "<";
+
+    // Force the sign if one side is lagging behind
+    if (currentGreater >= targetGreater) neededSign = "<";
+    else if (currentLess >= Math.floor(actualNumQuestions / 2))
+      neededSign = ">";
+
+    // Assign the bigger/smaller numbers to the left/right based on the needed sign
+    const left = neededSign === ">" ? bigger : smaller;
+    const right = neededSign === ">" ? smaller : bigger;
+
+    seenPairs.add(pairKey);
     questions.push({
-      id: `compare_${questions.length + 1}`,
+      id: `compare_${questions.length + 1}_${Date.now()}`,
       left,
       right,
-      correctSign,
+      correctSign: neededSign,
     });
   }
 
-  // If we didn't get enough unique questions, fill remaining with forced unique pairs
-  while (questions.length < config.numQuestions) {
-    const left = generateNumber(config.maxNumberRange);
-    // Generate a number guaranteed to be different
-    let right: number;
-    do {
-      right = generateNumber(config.maxNumberRange);
-    } while (right === left);
-
-    const correctSign = left > right ? ">" : "<";
-    const pairKey = `${left},${right}`;
-
-    if (!seenPairs.has(pairKey)) {
-      seenPairs.add(pairKey);
-      questions.push({
-        id: `compare_${questions.length + 1}`,
-        left,
-        right,
-        correctSign,
-      });
-    }
-  }
-
-  return questions;
+  // 3. Shuffle the final array so all the ">" questions aren't clumped together
+  return questions.sort(() => Math.random() - 0.5);
 }
 
-/**
- * Generates a random number with up to `digitCount` digits.
- */
 function generateNumber(digitCount: number): number {
   const min = digitCount === 1 ? 0 : Math.pow(10, digitCount - 1);
   const max = Math.pow(10, digitCount) - 1;

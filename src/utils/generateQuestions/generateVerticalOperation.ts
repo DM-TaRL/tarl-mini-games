@@ -27,6 +27,17 @@ function applyOperation(a: number, b: number, operation: Operation): number {
   }
 }
 
+// Helper to generate a random number of an EXACT digit length
+function generateExactLengthNumber(digits: number, minFirstDigit = 1): number {
+  let str = (
+    Math.floor(Math.random() * (10 - minFirstDigit)) + minFirstDigit
+  ).toString();
+  for (let i = 1; i < digits; i++) {
+    str += Math.floor(Math.random() * 10).toString();
+  }
+  return parseInt(str, 10);
+}
+
 export function generateVerticalOperation(
   config: VerticalOperationsConfig,
 ): VerticalOperationQuestion[] {
@@ -67,68 +78,86 @@ export function generateVerticalOperation(
     const targetCount = opCounts[operation] || 0;
 
     for (let i = 0; i < targetCount; i++) {
-      const max = Math.pow(10, maxNumberRange) - 1;
-      const min = operation === "Division" ? 1 : 0;
-
-      let a = getRandomInt(min, max);
-      let b = getRandomInt(min, max);
+      let a = 0;
+      let b = 0;
 
       // ── Operation-specific constraints ──
-      if (operation === "Addition" && !allowCarry) {
-        a = a - (a % 10); // force no carry from units
-        b = Math.min(9, b); // single-digit b to avoid carry
-      }
-
-      if (operation === "Subtraction") {
-        // Make sure a >= b to avoid negative results
-        if (b > a) [a, b] = [b, a];
-
-        // Additional check for no borrow if required
-        if (!allowBorrow) {
-          while (!digitsSafeSubtract(a, b)) {
-            a = getRandomInt(min, max);
-            b = getRandomInt(min, a); // ensure a >= b
-          }
-        }
-      }
-
-      if (operation === "Multiplication" && !allowMultiStepMul) {
-        b = getRandomInt(1, 9); // single-digit multiplier only
-      }
-
-      if (operation === "Division") {
-        // divisor must be at least 2 — avoid ÷0 and the trivial ÷1 case
-        b = Math.max(2, getRandomInt(2, max));
-
-        if (!allowMultiStepDiv) {
-          // Simple exact division: pick a clean multiple
-          const maxQuotient = Math.floor(max / b);
-          if (maxQuotient < 2) {
-            i--; // Retry this iteration
-            continue;
-          } // can't make a valid question, retry
-          const quotient = getRandomInt(2, maxQuotient);
-          a = b * quotient;
+      // ── ADDITION ──
+      if (operation === "Addition") {
+        if (allowCarry) {
+          a = generateExactLengthNumber(maxNumberRange);
+          b = generateExactLengthNumber(maxNumberRange);
         } else {
-          // Multi-step: make a exactly divisible, but enforce quality rules
-          a = getRandomInt(b + 1, max); // a must be strictly greater than b
-          a = a - (a % b); // round down to nearest multiple
-          if (a < b + 1) {
-            i--; // Retry
-            continue;
-          } // still too small after rounding, retry
+          // Build digit-by-digit ensuring a_i + b_i <= 9 to prevent carry
+          let aStr = "";
+          let bStr = "";
+          for (let d = 0; d < maxNumberRange; d++) {
+            const minVal = d === 0 ? 1 : 0; // Prevent leading zeros
+            const a_i = getRandomInt(minVal, 9 - minVal);
+            const b_i = getRandomInt(minVal, 9 - a_i);
+            aStr += a_i;
+            bStr += b_i;
+          }
+          a = parseInt(aStr, 10);
+          b = parseInt(bStr, 10);
         }
+      }
 
-        // ── Quality guards (apply to both paths) ──────────────────────────
-        const quotient = Math.floor(a / b);
+      // ── SUBTRACTION ──
+      else if (operation === "Subtraction") {
+        if (allowBorrow) {
+          a = generateExactLengthNumber(maxNumberRange);
+          b = generateExactLengthNumber(maxNumberRange);
+          if (a < b) [a, b] = [b, a]; // Ensure a is larger
+        } else {
+          // Build digit-by-digit ensuring a_i >= b_i to prevent borrow
+          let aStr = "";
+          let bStr = "";
+          for (let d = 0; d < maxNumberRange; d++) {
+            const minVal = d === 0 ? 1 : 0; // Prevent leading zeros
+            const a_i = getRandomInt(minVal, 9);
+            const b_i = getRandomInt(minVal, a_i);
+            aStr += a_i;
+            bStr += b_i;
+          }
+          a = parseInt(aStr, 10);
+          b = parseInt(bStr, 10);
+        }
+      }
 
-        // Rule 1: a ÷ a is always 1 — useless question
-        // Rule 2: quotient of 1 means a < 2b — barely larger, trivial
-        // Rule 3: divisor should not equal the answer (e.g. 12÷3=4, 4÷2=2 — ok;
-        //         but 4÷4=1 caught above; keep this for extra sanity)
-        if (a === b || quotient < 2 || (b === quotient && quotient === 1)) {
-          i--; // Retry
-          continue;
+      // ── MULTIPLICATION ──
+      else if (operation === "Multiplication") {
+        a = generateExactLengthNumber(maxNumberRange);
+        if (!allowMultiStepMul || maxNumberRange === 1) {
+          b = getRandomInt(2, 9); // 1-digit multiplier
+        } else {
+          b = generateExactLengthNumber(Math.min(2, maxNumberRange)); // max 2-digit multiplier for primary school
+        }
+      }
+
+      // ── DIVISION ──
+      else if (operation === "Division") {
+        // Typically division tests smaller divisors
+        b =
+          !allowMultiStepDiv || maxNumberRange === 1
+            ? getRandomInt(2, 9)
+            : getRandomInt(10, 99);
+
+        // We need 'a' to have EXACTLY maxNumberRange digits, and be divisible by 'b'
+        const minA =
+          maxNumberRange === 1 ? 1 : Math.pow(10, maxNumberRange - 1);
+        const maxA = Math.pow(10, maxNumberRange) - 1;
+
+        const minQuotient = Math.ceil(minA / b);
+        const maxQuotient = Math.floor(maxA / b);
+
+        if (minQuotient > maxQuotient || maxQuotient < 2) {
+          // Fallback if mathematically impossible (e.g. 1-digit divided by 99)
+          b = getRandomInt(2, 9);
+          a = b * getRandomInt(2, 9);
+        } else {
+          const quotient = getRandomInt(Math.max(2, minQuotient), maxQuotient);
+          a = b * quotient;
         }
       }
 

@@ -15,7 +15,9 @@ export function generateReadNumberAloudSet(
 
   const digits = Math.max(1, Math.min(6, Number(config?.maxNumberRange ?? 2)));
   const max = Math.pow(10, digits) - 1; // e.g., 6 → 999999
-  const min = 0; // allow 0; change to 10^(d-1) if we want *exact* digits
+  // Force EXACT digit length.
+  // If digits = 4: min = 1000, max = 9999.
+  const min = digits === 1 ? 0 : Math.pow(10, digits - 1);
 
   const used = new Set<number>();
   const out: ReadNumberItem[] = [];

@@ -197,13 +197,18 @@ export class DecisionTreeRunner {
    * @param success    whether the student passed that node
    * @returns the next nodeId, or null if the flow is over
    */
-  recordAndAdvance(nodeId: string, success: boolean): void {
+  recordAndAdvance(nodeId: string, success: boolean): string | null {
     const node = this.nodesById[nodeId];
     if (!node) throw new Error(`Unknown node "${nodeId}"`);
 
     // Commit the final outcome. Does NOT increment attempts.
     const state = this.nodeStates[nodeId];
     state.recordResult(success);
+
+    // Navigate: follow the child whose condition matches the outcome.
+    const condition = success ? "true" : "false";
+    const child = node.children?.find((c) => c.condition === condition);
+    return child?.nodeId ?? null;
   }
 
   isLastAttempt(nodeId: string): boolean {

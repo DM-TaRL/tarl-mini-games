@@ -8,23 +8,47 @@ interface WriteNumberInLettersQuestion {
 
 export function generateWriteNumberInLetters(
   config: WriteNumberInLettersConfig,
-  language: "ar" | "fr" | "en" = "ar"
+  language: "ar" | "fr" | "en" = "ar",
 ): { questions: WriteNumberInLettersQuestion[] } {
   const { numQuestions, maxNumberRange } = config;
 
-  const minValue = maxNumberRange === 1 ? 1 : Math.pow(10, maxNumberRange - 1);
-  const maxValue = Math.pow(10, maxNumberRange) - 1;
+  // 1. Group available words by their digit length
+  const buckets: Record<number, typeof numberWords.numbers> = {};
 
-  const eligible = numberWords.numbers.filter(
-    (entry) =>
-      entry.number >= minValue &&
-      entry.number <= maxValue &&
-      entry.answer[language]
-  );
+  for (const entry of numberWords.numbers) {
+    // Ensure the translation exists in the requested language
+    if (!entry.answer || !entry.answer[language]) continue;
 
-  const selected = eligible
-    .sort(() => 0.5 - Math.random())
-    .slice(0, numQuestions);
+    const digitCount = String(entry.number).length;
+    if (!buckets[digitCount]) buckets[digitCount] = [];
+    buckets[digitCount].push(entry);
+  }
+
+  const selectedEntries: typeof numberWords.numbers = [];
+  let currentDigitLevel = maxNumberRange;
+
+  // 2. Select entries starting from requested difficulty, stepping down if needed to hit the quota
+  while (selectedEntries.length < numQuestions && currentDigitLevel > 0) {
+    if (buckets[currentDigitLevel]) {
+      // Shuffle the bucket so questions aren't always the same
+      const shuffledBucket = buckets[currentDigitLevel].sort(
+        () => 0.5 - Math.random(),
+      );
+      const needed = numQuestions - selectedEntries.length;
+      selectedEntries.push(...shuffledBucket.slice(0, needed));
+    }
+    currentDigitLevel--;
+  }
+
+  // 3. Fallback check just in case the JSON is completely empty
+  if (selectedEntries.length < numQuestions) {
+    throw new Error(
+      `Not enough valid numbers in numbers-letters.json to fulfill ${numQuestions} questions.`,
+    );
+  }
+
+  // 4. Final shuffle so they aren't strictly ordered by length if a fallback was used
+  const finalSelected = selectedEntries.sort(() => 0.5 - Math.random());
 
   function tokenizeWords(answer: string): string[] {
     // Normalize extra spaces
@@ -48,7 +72,7 @@ export function generateWriteNumberInLetters(
   }
 
   return {
-    questions: selected.map((entry) => ({
+    questions: finalSelected.map((entry) => ({
       number: entry.number,
       correctWords: tokenizeWords(entry.answer[language]),
     })),

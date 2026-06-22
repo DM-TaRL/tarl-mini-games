@@ -49,10 +49,12 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Addition",
     variables: ["A", "B"],
+    // 1. addition-basic
     generateNumbers: (maxDigits) => {
+      const min = maxDigits === 1 ? 1 : Math.pow(10, maxDigits - 1);
       const max = Math.pow(10, maxDigits) - 1;
-      const A = Math.floor(Math.random() * (max / 2)) + 1;
-      const B = Math.floor(Math.random() * (max / 2)) + 1;
+      const A = Math.floor(Math.random() * (max - min + 1)) + min;
+      const B = Math.floor(Math.random() * (max - min + 1)) + min;
       return { A, B };
     },
     correctExpression: (nums) => `${nums.A} + ${nums.B}`,
@@ -73,10 +75,13 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Subtraction",
     variables: ["A", "B"],
+    // 2. subtraction-basic
     generateNumbers: (maxDigits) => {
+      const min = maxDigits === 1 ? 1 : Math.pow(10, maxDigits - 1);
       const max = Math.pow(10, maxDigits) - 1;
-      const A = Math.floor(Math.random() * max) + 10;
-      const B = Math.floor(Math.random() * (A - 1)) + 1;
+      const A = Math.floor(Math.random() * (max - min + 1)) + min;
+      // Ensure B is smaller than A, but still the same digit length
+      const B = Math.floor(Math.random() * (A - min + 1)) + min;
       return { A, B };
     },
     correctExpression: (nums) => `${nums.A} - ${nums.B}`,
@@ -97,10 +102,13 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Multiplication",
     variables: ["k", "p"],
+    // 3. multiplication-count
     generateNumbers: (maxDigits) => {
-      const maxFactor = Math.pow(10, Math.floor(maxDigits / 2));
-      const k = Math.floor(Math.random() * maxFactor) + 2;
-      const p = Math.floor(Math.random() * maxFactor) + 2;
+      const factorDigits = Math.max(1, Math.floor(maxDigits / 2));
+      const min = factorDigits === 1 ? 2 : Math.pow(10, factorDigits - 1);
+      const max = Math.pow(10, factorDigits) - 1;
+      const k = Math.floor(Math.random() * (max - min + 1)) + min;
+      const p = Math.floor(Math.random() * (max - min + 1)) + min;
       return { k, p };
     },
     correctExpression: (nums) => `${nums.k} × ${nums.p}`,
@@ -121,11 +129,13 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Multiplication",
     variables: ["k", "p"],
+    // 4. multiplication-price
     generateNumbers: (maxDigits) => {
-      const maxK = Math.min(100, Math.pow(10, Math.floor(maxDigits / 2)));
-      const maxP = Math.min(100, Math.pow(10, Math.floor(maxDigits / 2)));
-      const k = Math.floor(Math.random() * maxK) + 1;
-      const p = Math.floor(Math.random() * maxP) + 5;
+      const factorDigits = Math.max(1, Math.floor(maxDigits / 2));
+      const min = factorDigits === 1 ? 2 : Math.pow(10, factorDigits - 1);
+      const max = Math.pow(10, factorDigits) - 1;
+      const k = Math.floor(Math.random() * (max - min + 1)) + min;
+      const p = Math.floor(Math.random() * (max - min + 1)) + min;
       return { k, p };
     },
     correctExpression: (nums) => `${nums.k} × ${nums.p}`,
@@ -146,10 +156,17 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Division",
     variables: ["A", "b"],
+    // 5. division-basic
     generateNumbers: (maxDigits) => {
+      const min = maxDigits === 1 ? 1 : Math.pow(10, maxDigits - 1);
       const max = Math.pow(10, maxDigits) - 1;
-      const b = Math.floor(Math.random() * 12) + 2;
-      const A = b * (Math.floor(Math.random() * (max / b)) + 1);
+      const b = Math.floor(Math.random() * 8) + 2; // Keep divisor simple (2-9)
+
+      // Target A = b * x, ensuring A stays perfectly within the digit range
+      const minX = Math.ceil(min / b);
+      const maxX = Math.floor(max / b);
+      const x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+      const A = b * x;
       return { A, b };
     },
     correctExpression: (nums) => `${nums.A} ÷ ${nums.b}`,
@@ -170,10 +187,12 @@ export const templates: QuestionTemplate[] = [
     },
     operation: "Subtraction",
     variables: ["A", "B"],
+    // 6. subtraction-money
     generateNumbers: (maxDigits) => {
+      const min = maxDigits === 1 ? 1 : Math.pow(10, maxDigits - 1);
       const max = Math.pow(10, maxDigits) - 1;
-      const A = Math.floor(Math.random() * max) + 50;
-      const B = Math.floor(Math.random() * (A / 2)) + 1;
+      const A = Math.floor(Math.random() * (max - min + 1)) + min;
+      const B = Math.floor(Math.random() * (A - min + 1)) + min;
       return { A, B };
     },
     correctExpression: (nums) => `${nums.A} - ${nums.B}`,

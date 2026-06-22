@@ -11,13 +11,24 @@ export function generateIdentifyPlaceValue(config: IdentifyPlaceValueConfig): {
 } {
   const { numQuestions, maxNumberRange } = config;
 
-  const maxValue = Math.pow(10, maxNumberRange) - 1;
-  const minValue = Math.pow(10, maxNumberRange - 1);
+  // 1. Force exact digit length and fix the zero bug for 1-digit numbers
+  const digitsCount = Math.max(1, maxNumberRange);
+  const minValue = digitsCount === 1 ? 0 : Math.pow(10, digitsCount - 1);
+  const maxValue = Math.pow(10, digitsCount) - 1;
+
+  // 2. Safeguard against infinite loops (asking for more questions than exist mathematically)
+  const maxPossibleQuestions = maxValue - minValue + 1;
+  const actualNumQuestions = Math.min(
+    numQuestions,
+    Math.max(0, maxPossibleQuestions),
+  );
+
+  if (actualNumQuestions <= 0) return { questions: [] };
 
   const questions: PlaceValueQuestion[] = [];
   const usedNumbers = new Set<number>();
 
-  while (questions.length < numQuestions) {
+  while (questions.length < actualNumQuestions) {
     const number =
       Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 
