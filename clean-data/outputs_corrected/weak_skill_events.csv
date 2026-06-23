@@ -27,6 +27,8 @@ stu_1777023080044_2956,test_1777023978840_kask7x7,choose_answer,ComputationError
 stu_1777023080044_2956,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,910–919,1,[917],,,,
 stu_1777023080044_2956,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,400–409,1,[405],,,,
 stu_1777023080044_2956,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,750–759,1,[759],,,,
+stu_1777023080044_2956,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Multiplication,MultiStepMultiplication,,Vertical,3.0,hard,,,,,1,,,,,
+stu_1777023080044_2956,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Subtraction,SimpleSubtraction,,Vertical,2.0,easy,,,,,1,,,,,
 stu_1777023761242_7194,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,520–529,1,[529],,,,
 stu_1777023761242_7194,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,680–689,1,[684],,,,
 stu_1777023761242_7194,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,870–879,1,[878],,,,
@@ -76,15 +78,25 @@ stu_1777023761898_3121,test_1777023978840_kask7x7,choose_answer,MisidentifiedOpe
 stu_1777023761898_3121,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,470–479,1,[472],,,,
 stu_1777023761898_3121,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,270–279,1,[272],,,,
 stu_1777023761898_3121,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,930–939,1,[936],,,,
+stu_1777023761898_3121,test_1781048227348_yh9wms9,choose_answer,ComputationError,WrongAnswer,,,OneStepProblem,Horizontal,5.0,hard,,,,,1,,,,"[""Subtraction""]","[""Subtraction""]"
+stu_1777023761898_3121,test_1781048227348_yh9wms9,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,5.0,hard,,,,,1,,,,"[""Subtraction""]","[""Multiplication""]"
+stu_1777023761898_3121,test_1781048227348_yh9wms9,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,2.0,easy,,,,,1,,,,"[""Multiplication""]","[""Division""]"
+stu_1777023761898_3121,test_1781048227348_yh9wms9,order_numbers,MultipleMisplacements,WrongAnswer,,,Ordering,Visual,6.0,hard,,asc,7.0,,1,,,,,
+stu_1777023761898_3121,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Addition,AdditionWithCarry,,Vertical,3.0,hard,,,,,1,,,,,
 stu_1777023762111_459,test_1777023978840_kask7x7,choose_answer,ComputationError,WrongAnswer,,,OneStepProblem,Horizontal,2.0,easy,,,,,1,,,,"[""Subtraction""]","[""Subtraction""]"
 stu_1777023762111_459,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,30–39,1,[34],,,,
 stu_1777023762111_459,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,850–859,1,[854],,,,
 stu_1777023762111_459,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,700–709,1,[707],,,,
+stu_1777023762111_459,test_1781048227348_yh9wms9,order_numbers,ReversedDescending,WrongAnswer,,,Ordering,Visual,6.0,hard,,asc,5.0,,1,,,,,
+stu_1777023762111_459,test_1781048227348_yh9wms9,order_numbers,ReversedDescending,WrongAnswer,,,Ordering,Visual,6.0,hard,,asc,4.0,,1,,,,,
+stu_1777023762111_459,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Subtraction,SubtractionWithBorrow,,Vertical,3.0,medium,,,,,1,,,,,
+stu_1777023762111_459,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Subtraction,SubtractionWithBorrow,,Vertical,2.0,easy,,,,,1,,,,,
 stu_1777023762305_6832,test_1777023978840_kask7x7,choose_answer,MisidentifiedOperation,WrongAnswer,,,MultiStepProblem,Horizontal,3.0,medium,,,,,1,,,,"[""Subtraction"", ""Multiplication""]","[""Subtraction""]"
 stu_1777023762305_6832,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,210–219,1,[213],,,,
 stu_1777023762305_6832,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,490–499,1,[495],,,,
 stu_1777023762305_6832,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,480–489,1,[488],,,,
 stu_1777023762305_6832,test_1777023978840_kask7x7,order_numbers,ReversedDescending,WrongAnswer,,,Ordering,Visual,2.0,medium,,asc,3.0,,1,,,,,
+stu_1777023762305_6832,test_1781048227348_yh9wms9,choose_answer,MisidentifiedOperation,WrongAnswer,,,MultiStepProblem,Horizontal,3.0,medium,,,,,1,,,,"[""Subtraction"", ""Multiplication""]","[""Subtraction""]"
 stu_1777023762504_1364,test_1777023978840_kask7x7,compare_numbers,ReversedSign,WrongAnswer,,,Comparison,Horizontal,3.0,hard,Greater,,,,1,,,,,
 stu_1777023762504_1364,test_1777023978840_kask7x7,compare_numbers,ReversedSign,WrongAnswer,,,Comparison,Horizontal,2.0,medium,Greater,,,,1,,,,,
 stu_1777023762504_1364,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,280–289,1,[287],,,,
@@ -117,12 +129,22 @@ stu_1777023762699_4024,test_1781049725283_3of3fqe,order_numbers,ReversedDescendi
 stu_1777023762902_7362,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,550–559,1,[554],,,,
 stu_1777023762902_7362,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,90–99,1,[92],,,,
 stu_1777023762902_7362,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,120–129,1,[126],,,,
+stu_1777023762902_7362,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Addition,AdditionWithCarry,,Vertical,3.0,medium,,,,,1,,,,,
 stu_1777023763129_6667,test_1777023978840_kask7x7,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,2.0,easy,,,,,1,,,,"[""Multiplication""]","[""Addition""]"
 stu_1777023763129_6667,test_1777023978840_kask7x7,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,2.0,easy,,,,,1,,,,"[""Multiplication""]","[""Division""]"
 stu_1777023763129_6667,test_1777023978840_kask7x7,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,2.0,easy,,,,,1,,,,"[""Addition""]","[""Subtraction""]"
 stu_1777023763129_6667,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,280–289,1,[285],,,,
 stu_1777023763129_6667,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,530–539,1,[534],,,,
 stu_1777023763129_6667,test_1777023978840_kask7x7,find_previous_next_number,RangeUncertainty,,,,,,,,,,,80–89,1,[85],,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,choose_answer,ComputationError,WrongAnswer,,,OneStepProblem,Horizontal,3.0,medium,,,,,1,,,,"[""Subtraction""]","[""Subtraction""]"
+stu_1777023763129_6667,test_1781048227348_yh9wms9,choose_answer,MisidentifiedOperation,WrongAnswer,,,OneStepProblem,Horizontal,5.0,hard,,,,,1,,,,"[""Division""]","[""Multiplication""]"
+stu_1777023763129_6667,test_1781048227348_yh9wms9,choose_answer,ComputationError,WrongAnswer,,,OneStepProblem,Horizontal,4.0,hard,,,,,1,,,,"[""Subtraction""]","[""Subtraction""]"
+stu_1777023763129_6667,test_1781048227348_yh9wms9,order_numbers,ReversedAscending,WrongAnswer,,,Ordering,Visual,6.0,hard,,desc,2.0,,1,,,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,order_numbers,MultipleMisplacements,WrongAnswer,,,Ordering,Visual,6.0,hard,,desc,6.0,,1,,,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,order_numbers,MultipleMisplacements,WrongAnswer,,,Ordering,Visual,5.0,hard,,desc,4.0,,1,,,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Subtraction,SubtractionWithBorrow,,Vertical,3.0,easy,,,,,1,,,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Multiplication,MultiStepMultiplication,,Vertical,3.0,hard,,,,,1,,,,,
+stu_1777023763129_6667,test_1781048227348_yh9wms9,vertical_operations,ComputationError,WrongAnswer,Multiplication,MultiStepMultiplication,,Vertical,2.0,hard,,,,,1,,,,,
 stu_1777340051462_9691,test_1777341418390_7p46nbr,choose_answer,MisidentifiedOperation,WrongAnswer,,,MultiStepProblem,Horizontal,3.0,medium,,,,,1,,,,"[""Subtraction"", ""Multiplication""]","[""Subtraction""]"
 stu_1777340051462_9691,test_1777341418390_7p46nbr,find_previous_next_number,RangeUncertainty,,,,,,,,,,,18890–18899,1,[18892],,,,
 stu_1777340051462_9691,test_1777341418390_7p46nbr,find_previous_next_number,RangeUncertainty,,,,,,,,,,,24950–24959,1,[24951],,,,
@@ -269,3 +291,5 @@ stu_1780967761139_4648,test_1781093235410_7hlnif4,read_number_aloud,WrongAnswer,
 stu_1780967877464_7804,test_1781051031467_d8q3s6i,compare_numbers,ReversedSign,WrongAnswer,,,Comparison,Horizontal,3.0,medium,Greater,,,,1,,,,,
 stu_1780967877464_7804,test_1781051031467_d8q3s6i,find_previous_next_number,RangeUncertainty,,,,,,,,,,,800–809,1,[804],,,,
 stu_1780967877464_7804,test_1781051031467_d8q3s6i,find_previous_next_number,RangeUncertainty,,,,,,,,,,,200–209,1,[201],,,,
+stu_1781260589177_3730,test_1781260715447_0atmb25,order_numbers,ReversedAscending,WrongAnswer,,,Ordering,Visual,5.0,hard,,desc,5.0,,1,,,,,
+stu_1781260589177_3730,test_1781260715447_0atmb25,order_numbers,MultipleMisplacements,WrongAnswer,,,Ordering,Visual,5.0,hard,,asc,5.0,,1,,,,,

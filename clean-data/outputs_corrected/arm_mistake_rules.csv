@@ -1,7 +1,8 @@
 antecedent,consequent,support,confidence,count,basket_count
-vertical_operations:ComputationError,find_previous_next_number:RangeUncertainty,0.32608695652173914,0.8333333333333334,15,46
-choose_answer:MisidentifiedOperation,find_previous_next_number:RangeUncertainty,0.21739130434782608,0.8333333333333334,10,46
-choose_answer:ComputationError,find_previous_next_number:RangeUncertainty,0.17391304347826086,1.0,8,46
-order_numbers:ReversedDescending,find_previous_next_number:RangeUncertainty,0.15217391304347827,0.875,7,46
-order_numbers:MultipleMisplacements,find_previous_next_number:RangeUncertainty,0.13043478260869565,0.8571428571428571,6,46
-order_numbers:ReversedAscending,find_previous_next_number:RangeUncertainty,0.13043478260869565,0.75,6,46
+vertical_operations:ComputationError,find_previous_next_number:RangeUncertainty,0.2830188679245283,0.6521739130434783,15,53
+choose_answer:MisidentifiedOperation,find_previous_next_number:RangeUncertainty,0.18867924528301888,0.6666666666666666,10,53
+choose_answer:ComputationError,find_previous_next_number:RangeUncertainty,0.1509433962264151,0.8,8,53
+order_numbers:ReversedDescending,find_previous_next_number:RangeUncertainty,0.1320754716981132,0.7777777777777778,7,53
+order_numbers:MultipleMisplacements,find_previous_next_number:RangeUncertainty,0.11320754716981132,0.6,6,53
+order_numbers:ReversedAscending,find_previous_next_number:RangeUncertainty,0.11320754716981132,0.6,6,53
+order_numbers:MultipleMisplacements,vertical_operations:ComputationError,0.11320754716981132,0.6,6,53

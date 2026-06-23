@@ -1,6 +1,9 @@
 {
-  "totalAssessments": 49,
-  "alreadyCompleted": 45,
+  "totalAssessments": 103,
+  "alreadyCompleted": 60,
   "reconstructedCompleted": 1,
-  "partialRemaining": 3
+  "partialRemaining": 42,
+  "legacySchemaTests": 57,
+  "newSchemaTests": 17,
+  "falseCompletionsOverridden": 29
 }

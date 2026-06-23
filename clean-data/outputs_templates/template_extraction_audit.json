@@ -1,0 +1,34 @@
+{
+  "total_tests": 103,
+  "finished_tests": 61,
+  "config_misses": 0,
+  "alias_count": {},
+  "observed_games": {
+    "compare_numbers": 43,
+    "decompose_number": 19,
+    "find_previous_next_number": 51,
+    "identify_place_value": 54,
+    "order_numbers": 60,
+    "choose_answer": 52,
+    "vertical_operations": 55,
+    "what_number_do_you_hear": 46,
+    "write_number_in_letters": 24,
+    "tap_matching_pairs": 30,
+    "read_number_aloud": 5
+  },
+  "legacy_schema_tests": 57,
+  "new_schema_tests": 17,
+  "unique_templates": 147,
+  "non_sparse_templates": 76,
+  "sparse_templates": 71,
+  "non_sparse_templates_by_axis": {
+    "arithmetic_fluency": 24,
+    "audio_recognition": 4,
+    "comparison_skill": 5,
+    "number_sense": 50,
+    "sequential_thinking": 40,
+    "visual_matching": 10
+  },
+  "partial_session_rows": 464,
+  "students_from_partial_only": 12
+}

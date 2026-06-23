@@ -11,14 +11,26 @@ const {
 const { inferFuzzyGrade } = require("../dist/utils/fuzzy-evaluator.js");
 
 const ROOT = path.resolve(__dirname, "..");
-const DEFAULT_INPUT = path.join(ROOT, "clean-data", "cleaned_assessments_data_v2.json");
+const DEFAULT_INPUT = path.join(
+  ROOT,
+  "clean-data",
+  "cleaned_assessments_data_v2.json",
+);
 const DEFAULT_TEST_DEFINITIONS = path.join(
   ROOT,
   "clean-data",
-  "dm-tarl-default-rtdb-test_definitions-export.json"
+  "dm-tarl-default-rtdb-test_definitions-export.json",
 );
-const DEFAULT_OUTPUT = path.join(ROOT, "clean-data", "cleaned_assessments_data_v3.json");
-const DEFAULT_AUDIT = path.join(ROOT, "clean-data", "reconstruction_audit.json");
+const DEFAULT_OUTPUT = path.join(
+  ROOT,
+  "clean-data",
+  "cleaned_assessments_data_v3.json",
+);
+const DEFAULT_AUDIT = path.join(
+  ROOT,
+  "clean-data",
+  "reconstruction_audit.json",
+);
 
 function parseArgs(argv) {
   const args = {
@@ -45,7 +57,7 @@ function parseArgs(argv) {
       i++;
     } else if (arg === "--help") {
       console.log(
-        "Usage: node clean-data/dm_tarl_repair_assessments.js [--input file] [--test-definitions file] [--output file] [--audit file]"
+        "Usage: node clean-data/dm_tarl_repair_assessments.js [--input file] [--test-definitions file] [--output file] [--audit file]",
       );
       process.exit(0);
     }
@@ -89,12 +101,15 @@ function getConfiguredMiniGames(testDefinition) {
 
 function hasNonEmptyLogs(miniGames, gameType) {
   return (miniGames[gameType] || []).some(
-    (attempt) => Array.isArray(attempt && attempt.logs) && attempt.logs.length > 0
+    (attempt) =>
+      Array.isArray(attempt && attempt.logs) && attempt.logs.length > 0,
   );
 }
 
 function hasAnyLogs(miniGames) {
-  return Object.keys(miniGames).some((gameType) => hasNonEmptyLogs(miniGames, gameType));
+  return Object.keys(miniGames).some((gameType) =>
+    hasNonEmptyLogs(miniGames, gameType),
+  );
 }
 
 function countLogs(miniGames) {
@@ -110,12 +125,34 @@ function countLogs(miniGames) {
 function allConfiguredGamesHaveLogs(miniGames, configuredMiniGames) {
   return (
     configuredMiniGames.length > 0 &&
-    configuredMiniGames.every((entry) => hasNonEmptyLogs(miniGames, entry.gameType))
+    configuredMiniGames.every((entry) =>
+      hasNonEmptyLogs(miniGames, entry.gameType),
+    )
   );
 }
 
 function isAlreadyCompleted(assessment) {
-  return assessment.finished === true || assessment.session_status === "complete";
+  return (
+    assessment.finished === true || assessment.session_status === "complete"
+  );
+}
+
+// Known platform bug (test_1782070942512_t2m2dhm and similar): the runtime
+// sometimes flags a session finished/complete right after the FIRST
+// configured mini-game, even though the student never advanced further -
+// they were stuck, not done. A session claiming completion with real
+// evidence covering at most one configured game (out of several) matches
+// this exact failure signature, so the flag can't be trusted as-is.
+function isSuspiciousFalseCompletion(session, miniGames, configuredMiniGames) {
+  if (configuredMiniGames.length <= 1) return false;
+  const claimsFinished =
+    session.finished === true || session.session_status === "complete";
+  if (!claimsFinished) return false;
+
+  const gamesWithLogs = configuredMiniGames.filter((entry) =>
+    hasNonEmptyLogs(miniGames, entry.gameType),
+  ).length;
+  return gamesWithLogs <= 1;
 }
 
 function shouldRepairAsCompleted(assessment, miniGames, configuredMiniGames) {
@@ -124,11 +161,13 @@ function shouldRepairAsCompleted(assessment, miniGames, configuredMiniGames) {
     ? configuredMiniGames[expectedGames - 1].gameType
     : "";
   const gamesPassed = Number(
-    assessment.numberGamesPassed ?? assessment.numGamesPassed
+    assessment.numberGamesPassed ?? assessment.numGamesPassed,
   );
 
   const indicatorA =
-    expectedGames > 0 && Number.isFinite(gamesPassed) && gamesPassed === expectedGames;
+    expectedGames > 0 &&
+    Number.isFinite(gamesPassed) &&
+    gamesPassed === expectedGames;
   const indicatorB =
     Boolean(assessment.lastCompletedGame) &&
     Boolean(lastConfiguredGame) &&
@@ -201,12 +240,16 @@ function runFuzzyEngine(assessment, miniGames, configuredMiniGames) {
   const includedGameTypes = configuredMiniGames.length
     ? configuredMiniGames.map((entry) => entry.gameType)
     : Object.keys(miniGames);
-  const fuzzyInputs = buildFuzzyInputsFromResults(miniGames, includedGameTypes, {});
+  const fuzzyInputs = buildFuzzyInputsFromResults(
+    miniGames,
+    includedGameTypes,
+    {},
+  );
   const fuzzyResult = inferFuzzyGrade(
     fuzzyInputs.axes,
     fuzzyInputs.coverage,
     configuredMiniGames,
-    true
+    true,
   );
 
   assessment.fuzzyInputs = fuzzyInputs.axes;
@@ -217,48 +260,108 @@ function runFuzzyEngine(assessment, miniGames, configuredMiniGames) {
   assessment.evaluatedGrade = fuzzyResult.inferredGrade;
 }
 
+// A "session" is one completed/attempted run of a test: either the legacy
+// assessment object itself (flat schema), or one entry under assessment.attempts
+// (new schema: assessments/{uid}/{testId}/attempts/{attemptId}/). Both shapes
+// carry the same fields (finished, miniGames, evaluatedGrade, ...), so the same
+// repair logic applies to either - we just need to find the right objects to mutate.
+function getSessionsForRepair(assessment) {
+  const attempts = assessment.attempts;
+  if (attempts && typeof attempts === "object" && !Array.isArray(attempts)) {
+    return Object.values(attempts).filter(
+      (session) => session && typeof session === "object",
+    );
+  }
+  return [assessment];
+}
+
+function repairSession(session, configuredMiniGames, audit) {
+  audit.totalAssessments++;
+
+  const miniGames = normalizeMiniGames(session.miniGames);
+
+  if (isSuspiciousFalseCompletion(session, miniGames, configuredMiniGames)) {
+    // Preserve the original raw signal for traceability (useful for the
+    // platform-bug writeup), then correct it so downstream consumers -
+    // fuzzy engine, dashboard, this same script - don't treat a stuck
+    // session as a genuine full assessment.
+    session.originalFinishedValue = session.finished;
+    session.originalSessionStatus = session.session_status;
+    session.finished = false;
+    session.session_status = "incomplete";
+    session.finishedFlagOverrideReason =
+      "Claimed finished/complete but evidence covers at most 1 of " +
+      configuredMiniGames.length +
+      " configured mini-games - matches known technical failure (session stuck after the first mini-game, never advanced).";
+    audit.falseCompletionsOverridden++;
+  }
+
+  if (isAlreadyCompleted(session)) {
+    audit.alreadyCompleted++;
+  } else if (shouldRepairAsCompleted(session, miniGames, configuredMiniGames)) {
+    session.finished = true;
+    session.session_status = "complete";
+    if (!session.finishedAt) {
+      const reconstructedFinishedAt = detectFinishedAt(miniGames);
+      if (reconstructedFinishedAt) session.finishedAt = reconstructedFinishedAt;
+    }
+    audit.reconstructedCompleted++;
+  } else {
+    audit.partialRemaining++;
+  }
+
+  runWeakSkillDetector(session, miniGames);
+  runFuzzyEngine(session, miniGames, configuredMiniGames);
+
+  if (session.finished === true && !session.finishedAt) {
+    const reconstructedFinishedAt = detectFinishedAt(miniGames);
+    if (reconstructedFinishedAt) session.finishedAt = reconstructedFinishedAt;
+  }
+}
+
 function repairAssessments(data, testDefinitions) {
   const audit = {
     totalAssessments: 0,
     alreadyCompleted: 0,
     reconstructedCompleted: 0,
     partialRemaining: 0,
+    legacySchemaTests: 0,
+    newSchemaTests: 0,
+    falseCompletionsOverridden: 0,
   };
 
   for (const [studentId, assessments] of Object.entries(data || {})) {
-    if (!assessments || typeof assessments !== "object" || String(studentId).startsWith("_")) {
+    if (
+      !assessments ||
+      typeof assessments !== "object" ||
+      String(studentId).startsWith("_")
+    ) {
       continue;
     }
 
     for (const [assessmentId, assessment] of Object.entries(assessments)) {
       if (!assessment || typeof assessment !== "object") continue;
 
-      audit.totalAssessments++;
-
-      const miniGames = normalizeMiniGames(assessment.miniGames);
-      const testDefinition = getTestDefinition(assessmentId, assessment, testDefinitions);
+      // Test definition/config is per-test, not per-attempt, so it's looked up
+      // once here and reused for every session (attempt) found below.
+      const testDefinition = getTestDefinition(
+        assessmentId,
+        assessment,
+        testDefinitions,
+      );
       const configuredMiniGames = getConfiguredMiniGames(testDefinition);
 
-      if (isAlreadyCompleted(assessment)) {
-        audit.alreadyCompleted++;
-      } else if (shouldRepairAsCompleted(assessment, miniGames, configuredMiniGames)) {
-        assessment.finished = true;
-        assessment.session_status = "complete";
-        if (!assessment.finishedAt) {
-          const reconstructedFinishedAt = detectFinishedAt(miniGames);
-          if (reconstructedFinishedAt) assessment.finishedAt = reconstructedFinishedAt;
-        }
-        audit.reconstructedCompleted++;
+      const isNewSchema =
+        assessment.attempts && typeof assessment.attempts === "object";
+      if (isNewSchema) {
+        audit.newSchemaTests++;
       } else {
-        audit.partialRemaining++;
+        audit.legacySchemaTests++;
       }
 
-      runWeakSkillDetector(assessment, miniGames);
-      runFuzzyEngine(assessment, miniGames, configuredMiniGames);
-
-      if (assessment.finished === true && !assessment.finishedAt) {
-        const reconstructedFinishedAt = detectFinishedAt(miniGames);
-        if (reconstructedFinishedAt) assessment.finishedAt = reconstructedFinishedAt;
+      const sessions = getSessionsForRepair(assessment);
+      for (const session of sessions) {
+        repairSession(session, configuredMiniGames, audit);
       }
     }
   }

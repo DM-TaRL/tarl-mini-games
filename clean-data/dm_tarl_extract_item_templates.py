@@ -8,11 +8,7 @@ numbers as conceptual item IDs. Exact runtime fields are preserved in audit
 columns, while analytics should group by item_template_id and config_context_id.
 
 Run:
-  python dm_tarl_extract_item_templates.py ^
-    --assessments cleaned_assessments_data_v2.json ^
-    --test-definitions dm-tarl-default-rtdb-test_definitions-export.json ^
-    --taxonomy DM_TARL_TEMPLATE_TAXONOMY.json ^
-    --outdir outputs_templates
+  python dm_tarl_extract_item_templates.py --assessments cleaned_assessments_data_v3.json --test-definitions dm-tarl-default-rtdb-test_definitions-export.json --taxonomy DM_TARL_TEMPLATE_TAXONOMY.json --outdir outputs_templates
 """
 
 from __future__ import annotations
@@ -101,6 +97,7 @@ OUTPUT_COLUMNS = [
     "mistake_type",
     "started_at",
     "finished_at",
+    "session_finished",
     "definition_order",
     "config_found",
     "config_source",
@@ -647,6 +644,36 @@ def template_label(game_type: str, dims: Dict[str, Any]) -> str:
     return " | ".join(parts)
 
 
+def iter_test_sessions(
+    test_key: str, test: Dict[str, Any]
+) -> Iterable[Tuple[str, str, Dict[str, Any]]]:
+    """Yield (config_test_id, output_test_id, session) for one test entry.
+
+    Supports both:
+      - legacy schema: the test object itself IS the session
+        (finished/miniGames/... live directly on it)
+      - new schema: assessments/{uid}/{testId}/attempts/{attemptId}/, where
+        each attempt carries its own finished/miniGames/... fields
+
+    config_test_id is always the bare test definition id (never suffixed),
+    used to join against test_definition_index for configs. output_test_id
+    is what lands in the test_id output column - suffixed with
+    "::attemptId" for new-schema sessions so each attempt stays traceable
+    back to its parent test, mirroring the same convention already used in
+    dm_tarl_reconstruction_pipeline.js.
+    """
+    attempts = test.get("attempts")
+    if isinstance(attempts, dict) and attempts:
+        for attempt_id, session in attempts.items():
+            if not isinstance(session, dict):
+                continue
+            config_test_id = str(session.get("testId") or test.get("testId") or test_key)
+            yield config_test_id, f"{config_test_id}::{attempt_id}", session
+    else:
+        config_test_id = str(test.get("testId") or test_key)
+        yield config_test_id, config_test_id, test
+
+
 def build_rows(
     assessments: Dict[str, Any],
     test_definition_index: Dict[str, Dict[str, Dict[str, Any]]],
@@ -660,6 +687,8 @@ def build_rows(
     alias_count = Counter()
     observed_games = Counter()
     rules = as_dict(taxonomy.get("template_rules"))
+    legacy_schema_tests = 0
+    new_schema_tests = 0
 
     for student_id, tests in (assessments or {}).items():
         if not isinstance(tests, dict) or str(student_id).startswith("_"):
@@ -667,111 +696,127 @@ def build_rows(
         for test_key, test in tests.items():
             if not isinstance(test, dict):
                 continue
-            total_tests += 1
-            if not test.get("finished"):
-                continue
-            finished_tests += 1
-            test_id = str(test.get("testId") or test_key)
-            mini_games = as_dict(test.get("miniGames"))
-            for raw_game_type, game_data in mini_games.items():
-                game_type = canonical_game_type(str(raw_game_type))
-                if raw_game_type != game_type:
-                    alias_count[f"{raw_game_type}->{game_type}"] += 1
-                observed_games[game_type] += 1
-                rule = as_dict(rules.get(game_type))
-                axis_projection = as_dict(rule.get("axis_projection"))
-                fine_skill = rule.get("fine_skill") or game_type
-                config, order, language, config_found, config_source = get_config(
-                    test_id, game_type, test_definition_index, default_config_index
+
+            if isinstance(test.get("attempts"), dict) and test.get("attempts"):
+                new_schema_tests += 1
+            else:
+                legacy_schema_tests += 1
+
+            for config_test_id, output_test_id, session in iter_test_sessions(test_key, test):
+                total_tests += 1
+                # Item-level logs are real evidence even when the overall
+                # session never reached "finished" (technical dropout,
+                # student disengagement, etc.) - keep the status as a
+                # column instead of discarding the data outright. Callers
+                # who want finished-only assessments can filter on
+                # session_finished afterwards.
+                session_finished = bool(
+                    session.get("finished") is True or session.get("session_status") == "complete"
                 )
-                if not config_found:
-                    config_misses += 1
+                if session_finished:
+                    finished_tests += 1
+                test_id = output_test_id
+                mini_games = as_dict(session.get("miniGames"))
+                for raw_game_type, game_data in mini_games.items():
+                    game_type = canonical_game_type(str(raw_game_type))
+                    if raw_game_type != game_type:
+                        alias_count[f"{raw_game_type}->{game_type}"] += 1
+                    observed_games[game_type] += 1
+                    rule = as_dict(rules.get(game_type))
+                    axis_projection = as_dict(rule.get("axis_projection"))
+                    fine_skill = rule.get("fine_skill") or game_type
+                    config, order, language, config_found, config_source = get_config(
+                        config_test_id, game_type, test_definition_index, default_config_index
+                    )
+                    if not config_found:
+                        config_misses += 1
 
-                attempts = as_list(game_data.get("attempts")) if isinstance(game_data, dict) else as_list(game_data)
-                for attempt_idx, attempt in enumerate(attempts):
-                    if not isinstance(attempt, dict):
-                        continue
-                    for log_idx, log in enumerate(as_list(attempt.get("logs"))):
-                        if not isinstance(log, dict):
+                    attempts = as_list(game_data.get("attempts")) if isinstance(game_data, dict) else as_list(game_data)
+                    for attempt_idx, attempt in enumerate(attempts):
+                        if not isinstance(attempt, dict):
                             continue
-                        dims = base_dimensions(game_type, log, config, language)
-                        dims["fine_skill"] = fine_skill
-                        item_template_id = template_id(game_type, dims)
-                        mistake_type = classify_mistake(game_type, log, dims)
-                        base = {
-                            "student_id": student_id,
-                            "test_id": test_id,
-                            "game_type": game_type,
-                            "attempt_idx": attempt_idx,
-                            "log_idx": log_idx,
-                            "_runtime_event_key": f"{student_id}|{test_id}|{game_type}|{attempt_idx}|{log_idx}",
-                            "fine_skill": fine_skill,
-                            "item_template_id": item_template_id,
-                            "template_label": template_label(game_type, dims),
-                            "config_context_id": config_context_id(game_type, config),
-                            "correct": int(bool(log.get("isCorrect"))),
-                            "time_spent_ms": log.get("timeSpentMs"),
-                            "answer_time_category": log.get("answerTimeCategory"),
-                            "is_slow": int(str(log.get("answerTimeCategory", "")).lower() == "slow"),
-                            "mistake_type": mistake_type,
-                            "started_at": attempt.get("startedAt") or test.get("createdAt"),
-                            "finished_at": attempt.get("finishedAt") or test.get("finishedAt"),
-                            "definition_order": order,
-                            "config_found": int(config_found),
-                            "config_source": config_source,
-                            "sparse_template": None,
-                            "template_attempts": None,
-                            "template_students": None,
-                            "runtime_question": safe_json(log.get("question")),
-                            "runtime_selected": safe_json(log.get("selected")),
-                            "runtime_answered": safe_json(log.get("answered")),
-                            "runtime_correct_answer": safe_json(log.get("correctAnswer")),
-                            "runtime_expected": safe_json(log.get("expected")),
-                            "runtime_given": safe_json(log.get("given")),
-                            "runtime_options": safe_json(log.get("options")),
-                            "runtime_numbers": safe_json(log.get("numbers")),
-                            "runtime_left": safe_json(log.get("left")),
-                            "runtime_right": safe_json(log.get("right")),
-                            "runtime_number": safe_json(log.get("number")),
-                            "config_json": safe_json(config),
-                        }
-                        for key in [
-                            "operation",
-                            "operations_expected",
-                            "operations_used",
-                            "skill_subtype",
-                            "question_type",
-                            "format",
-                            "num_digits",
-                            "complexity_level",
-                            "boundary_type",
-                            "difficulty_zone",
-                            "sequence_length",
-                            "comparison_type",
-                            "order_direction",
-                            "decomposition_parts",
-                            "has_zero_place",
-                            "place_value_pattern",
-                            "num_options",
-                            "num_steps",
-                            "num_pairs",
-                            "display_time",
-                            "max_number_range",
-                            "min_num_compositions",
-                        ]:
-                            base[key] = dims.get(key)
+                        for log_idx, log in enumerate(as_list(attempt.get("logs"))):
+                            if not isinstance(log, dict):
+                                continue
+                            dims = base_dimensions(game_type, log, config, language)
+                            dims["fine_skill"] = fine_skill
+                            item_template_id = template_id(game_type, dims)
+                            mistake_type = classify_mistake(game_type, log, dims)
+                            base = {
+                                "student_id": student_id,
+                                "test_id": test_id,
+                                "game_type": game_type,
+                                "attempt_idx": attempt_idx,
+                                "log_idx": log_idx,
+                                "_runtime_event_key": f"{student_id}|{test_id}|{game_type}|{attempt_idx}|{log_idx}",
+                                "fine_skill": fine_skill,
+                                "item_template_id": item_template_id,
+                                "template_label": template_label(game_type, dims),
+                                "config_context_id": config_context_id(game_type, config),
+                                "correct": int(bool(log.get("isCorrect"))),
+                                "time_spent_ms": log.get("timeSpentMs"),
+                                "answer_time_category": log.get("answerTimeCategory"),
+                                "is_slow": int(str(log.get("answerTimeCategory", "")).lower() == "slow"),
+                                "mistake_type": mistake_type,
+                                "started_at": attempt.get("startedAt") or session.get("startedAt") or test.get("createdAt"),
+                                "finished_at": attempt.get("finishedAt") or session.get("finishedAt"),
+                                "session_finished": session_finished,
+                                "definition_order": order,
+                                "config_found": int(config_found),
+                                "config_source": config_source,
+                                "sparse_template": None,
+                                "template_attempts": None,
+                                "template_students": None,
+                                "runtime_question": safe_json(log.get("question")),
+                                "runtime_selected": safe_json(log.get("selected")),
+                                "runtime_answered": safe_json(log.get("answered")),
+                                "runtime_correct_answer": safe_json(log.get("correctAnswer")),
+                                "runtime_expected": safe_json(log.get("expected")),
+                                "runtime_given": safe_json(log.get("given")),
+                                "runtime_options": safe_json(log.get("options")),
+                                "runtime_numbers": safe_json(log.get("numbers")),
+                                "runtime_left": safe_json(log.get("left")),
+                                "runtime_right": safe_json(log.get("right")),
+                                "runtime_number": safe_json(log.get("number")),
+                                "config_json": safe_json(config),
+                            }
+                            for key in [
+                                "operation",
+                                "operations_expected",
+                                "operations_used",
+                                "skill_subtype",
+                                "question_type",
+                                "format",
+                                "num_digits",
+                                "complexity_level",
+                                "boundary_type",
+                                "difficulty_zone",
+                                "sequence_length",
+                                "comparison_type",
+                                "order_direction",
+                                "decomposition_parts",
+                                "has_zero_place",
+                                "place_value_pattern",
+                                "num_options",
+                                "num_steps",
+                                "num_pairs",
+                                "display_time",
+                                "max_number_range",
+                                "min_num_compositions",
+                            ]:
+                                base[key] = dims.get(key)
 
-                        if axis_projection:
-                            for axis, weight in axis_projection.items():
+                            if axis_projection:
+                                for axis, weight in axis_projection.items():
+                                    row = dict(base)
+                                    row["axis"] = axis
+                                    row["axis_weight"] = weight
+                                    rows.append(row)
+                            else:
                                 row = dict(base)
-                                row["axis"] = axis
-                                row["axis_weight"] = weight
+                                row["axis"] = "unknown"
+                                row["axis_weight"] = 0.0
                                 rows.append(row)
-                        else:
-                            row = dict(base)
-                            row["axis"] = "unknown"
-                            row["axis_weight"] = 0.0
-                            rows.append(row)
 
     evidence = pd.DataFrame(rows)
     if not evidence.empty:
@@ -790,12 +835,47 @@ def build_rows(
                 evidence[column] = None
         evidence = evidence[OUTPUT_COLUMNS]
 
+    if evidence.empty:
+        unique_templates = 0
+        non_sparse_templates = 0
+        sparse_templates = 0
+        non_sparse_by_axis: Dict[str, int] = {}
+        partial_session_rows = 0
+        students_from_partial_only = 0
+    else:
+        is_sparse = evidence["sparse_template"].astype(bool)
+        unique_templates = int(evidence["item_template_id"].nunique())
+        # sparse_template is computed per item_template_id (consistent across
+        # any axis-duplicated rows for the same template), so this dedupes
+        # correctly rather than counting summary rows.
+        non_sparse_templates = int(evidence.loc[~is_sparse, "item_template_id"].nunique())
+        sparse_templates = int(evidence.loc[is_sparse, "item_template_id"].nunique())
+        non_sparse_by_axis = (
+            evidence.loc[~is_sparse]
+            .groupby("axis")["item_template_id"]
+            .nunique()
+            .to_dict()
+        )
+        is_finished_row = evidence["session_finished"].astype(bool)
+        partial_session_rows = int((~is_finished_row).sum())
+        students_with_finished = set(evidence.loc[is_finished_row, "student_id"])
+        students_with_any = set(evidence["student_id"])
+        students_from_partial_only = len(students_with_any - students_with_finished)
+
     audit = {
         "total_tests": total_tests,
         "finished_tests": finished_tests,
         "config_misses": config_misses,
         "alias_count": dict(alias_count),
         "observed_games": dict(observed_games),
+        "legacy_schema_tests": legacy_schema_tests,
+        "new_schema_tests": new_schema_tests,
+        "unique_templates": unique_templates,
+        "non_sparse_templates": non_sparse_templates,
+        "sparse_templates": sparse_templates,
+        "non_sparse_templates_by_axis": non_sparse_by_axis,
+        "partial_session_rows": partial_session_rows,
+        "students_from_partial_only": students_from_partial_only,
     }
     return evidence, audit
 
@@ -873,12 +953,15 @@ def save_outputs(
     template_summary: pd.DataFrame,
     student_template_summary: pd.DataFrame,
     test_template_coverage: pd.DataFrame,
+    audit: Dict[str, Any],
 ) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     evidence.to_csv(outdir / "item_template_evidence.csv", index=False)
     template_summary.to_csv(outdir / "template_summary.csv", index=False)
     student_template_summary.to_csv(outdir / "student_template_summary.csv", index=False)
     test_template_coverage.to_csv(outdir / "test_template_coverage.csv", index=False)
+    with (outdir / "template_extraction_audit.json").open("w", encoding="utf-8") as f:
+        json.dump(audit, f, indent=2, ensure_ascii=False)
     with pd.ExcelWriter(outdir / "template_extraction_audit.xlsx") as writer:
         evidence.to_excel(writer, sheet_name="item_template_evidence", index=False)
         template_summary.to_excel(writer, sheet_name="template_summary", index=False)
@@ -897,10 +980,22 @@ def print_audit(
     print("\n" + "=" * 80)
     print("DM-TaRL item template extraction audit")
     print("=" * 80)
+    print(f"Total sessions evaluated (legacy tests + individual attempts): {audit['total_tests']}")
+    print(f"  - Legacy schema (flat):      {audit['legacy_schema_tests']}")
+    print(f"  - New schema (attempts):     {audit['new_schema_tests']}")
     print(f"Finished assessments processed: {audit['finished_tests']}")
     print(f"Runtime item-axis rows:         {len(evidence)}")
+    print(f"  - From partial (non-finished) sessions: {audit['partial_session_rows']}")
     print(f"Unique students:                {evidence['student_id'].nunique() if not evidence.empty else 0}")
-    print(f"Unique templates:               {evidence['item_template_id'].nunique() if not evidence.empty else 0}")
+    print(f"  - Students with evidence only from partial sessions: {audit['students_from_partial_only']}")
+    print(f"Unique item templates identified: {audit['unique_templates']}")
+    print(f"  - Non-sparse (>=5 attempts, >=3 students - robust for PFA/BKT): {audit['non_sparse_templates']}")
+    print(f"  - Sparse (excluded from modeling):                              {audit['sparse_templates']}")
+    if audit["non_sparse_templates_by_axis"]:
+        print("  - Non-sparse templates by axis:")
+        for axis in AXES:
+            count = audit["non_sparse_templates_by_axis"].get(axis, 0)
+            print(f"      {axis:22s} {count}")
     print(f"Config joins missed:            {audit['config_misses']}")
     if audit["alias_count"]:
         print(f"Aliases observed:               {audit['alias_count']}")
@@ -918,6 +1013,7 @@ def print_audit(
 
     print("\nModeling note:")
     print("  No PFA/BKT was run. Templates with fewer than 5 attempts or fewer than 3 students are flagged sparse_template=True.")
+    print("  Evidence is included from partial (non-finished) sessions too - filter on session_finished=True to restrict to completed assessments only.")
     print("  Exact generated numbers are preserved in audit columns but are not used as conceptual item IDs.")
     print(f"\nSaved outputs to: {outdir}")
 
@@ -949,7 +1045,7 @@ def main() -> None:
     student_template_summary = build_student_template_summary(evidence)
     test_template_coverage = build_test_template_coverage(evidence)
 
-    save_outputs(outdir, evidence, template_summary, student_template_summary, test_template_coverage)
+    save_outputs(outdir, evidence, template_summary, student_template_summary, test_template_coverage, audit)
     print_audit(evidence, template_summary, student_template_summary, test_template_coverage, audit, outdir)
 
 
